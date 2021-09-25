@@ -11,7 +11,7 @@ const columnDefinitions = {
             flex: 1
           },
           {
-            field: 'phone_number',
+            field: 'supplier_phone_number',
             headerName: 'Phone Number',
             flex: 1,
             sortable: false
@@ -23,7 +23,7 @@ const columnDefinitions = {
             sortable: false
           },
           {
-            field: 'address',
+            field: 'supplier_address',
             headerName: 'Address',
             flex: 1,
             sortable: false
