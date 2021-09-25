@@ -1,24 +1,25 @@
 const express = require("express");
-const suppliersController = require("../controllers/suppliersController");
+
+const supplierController = require("../controllers/supplierController");
 
 const router = express.Router();
 
-router.get("/api/suppliers", suppliersController.getAllSuppliers, (req, res) =>
-res.status(200).json(res.locals.suppliers)
-)
+router.get("/suppliers", supplierController.getAllSuppliers, (req, res) =>
+    res.status(200).json(res.locals.suppliers)
+);
 
-router.get()
+// router.get("/api/suppliers/:id", )
 
-router.post("/",  
+// router.post("/",  
 
-)
+// )
 
-router.put("/", 
+// router.put("/", 
 
-)
+// )
 
-router.delete("/", 
+// router.delete("/", 
 
-)
+// )
 
 module.exports = router;

@@ -2,11 +2,9 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const cors = require('cors');
+const { PRIORITY_LOW } = require("constants");
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
-   console.log(`The app server is running on port: ${port}`);
-});
 
 const DIST_DIR = path.join(__dirname, "dist");
 const HTML_FILE = path.join(DIST_DIR, "index.html");
@@ -16,18 +14,17 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(express.static("dist"));
 
-const apiRouter = require(path.join(__dirname, '/routes/api.js'))
+const apiRouter = require('./routes/api.js');
 
-app.use('/api', apiRouter);
+app.use('/api', apiRouter); 
 
-
-// router handler to respond with main app
+//router handler to respond with main app
 // app.get("/", (req, res) => {
-//    res.sendFile(HTML_FILE, function(err){
-//       if(err){
-//          res.status(500).send(err);
-//       }
-//    });
+//   res.sendFile(HTML_FILE, function(err){
+//      if(err){
+//         res.status(500).send(err);
+//      }
+//   });
 // });
 
 
@@ -42,3 +39,7 @@ app.use((err, req, res, next) => {
    console.log(errorObj.log);
    return res.status(errorObj.status).json(errorObj.message);
  });
+
+ app.listen(port, () => {
+  console.log(`The app server is running on port: ${port}`);
+});
