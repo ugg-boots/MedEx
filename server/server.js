@@ -16,13 +16,20 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(express.static("dist"));
 
-app.get("/", (req, res) => {
-   res.sendFile(HTML_FILE, function(err){
-      if(err){
-         res.status(500).send(err);
-      }
-   });
-});
+const apiRouter = require(path.join(__dirname, '/routes/api.js'))
+
+app.use('/api', apiRouter);
+
+
+// router handler to respond with main app
+// app.get("/", (req, res) => {
+//    res.sendFile(HTML_FILE, function(err){
+//       if(err){
+//          res.status(500).send(err);
+//       }
+//    });
+// });
+
 
 // global error handler
 app.use((err, req, res, next) => {
