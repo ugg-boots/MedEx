@@ -1,50 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Table from './Table.jsx';
+import columnDefinitions from './columns.js';
+import { Button, Typography } from '@material-ui/core';
 
-class TableContainer extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {};
-    }
+function TableContainer(props) {
+  const {table} = props;
+  const name = table[0].toUpperCase() + table.slice(1);
+  const columns = columnDefinitions[table];
 
-    render() {
-        const supplierColumns = [
-            { 
-              field: 'id',
-              headerName: 'ID',
-              width: 50
-            },
-            {
-              field: 'supplier_name',
-              headerName: 'Supplier Name',
-              flex: 1
-            },
-            {
-              field: 'phone_number',
-              headerName: 'Phone Number',
-              flex: 1,
-              sortable: false
-            },
-            {
-              field: 'key_contact',
-              headerName: 'Key Contact',
-              flex: 1,
-              sortable: false
-            },
-            {
-              field: 'address',
-              headerName: 'Address',
-              flex: 1,
-              sortable: false
-            }, 
-          ];
-
-        return (
-            <div>
-                <Table tableType='suppliers' tableColumns={supplierColumns}/>
-            </div>
-        )
-      }
+  return (
+    <div>
+        <Typography variant='h5'>{name}</Typography>
+        <Button variant='outlined' color='secondary' size='small'>Add Entry</Button>
+        <Table tableType={table} tableColumns={columns}/>
+    </div>
+  )
 }
 
 export default TableContainer;

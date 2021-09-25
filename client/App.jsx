@@ -1,10 +1,10 @@
 import React from "react";
-import TableContainer from './components/TableContainer.jsx';
+import MainContainer from './components/MainContainer.jsx';
 
 const App = () => {
    return (
    <div>
-      <TableContainer/>
+      <MainContainer/>
    </div>
    )
 };
