@@ -1,10 +1,5 @@
 const columnDefinitions = {
     suppliers: [
-        { 
-            field: 'id',
-            headerName: 'ID',
-            width: 50
-          },
           {
             field: 'supplier_name',
             headerName: 'Supplier Name',
@@ -31,11 +26,6 @@ const columnDefinitions = {
     ],
     catalog: [
       {
-        field: 'id',
-        headerName: 'ID',
-        width: 50
-      },
-      {
         field: 'product_name',
         headerName: 'Product Name',
         flex: 1
@@ -59,6 +49,44 @@ const columnDefinitions = {
       {
         field: 'qty_per_unit',
         headerName: 'Quantity per Unit',
+        flex: 1
+      },
+    ],
+    procedures: [
+      {
+        field: 'procedure_name',
+        headerName: 'Procedure Name',
+        flex: 1,
+      },{
+        field: 'procedure_desc',
+        headerName: 'Procedure Description',
+        flex: 1,
+        sortable: false
+      },{
+        field: 'product_name',
+        headerName: 'Needed Materials',
+        flex: 1
+      },
+      {
+        field: 'quantity',
+        headerName: 'Quantity',
+        flex: 1,
+      },
+    ],
+    inventory: [
+      {
+        field: 'product_name',
+        headerName: 'Product Name',
+        flex: 1
+      },
+      {
+        field: 'quantity',
+        headerName: 'Quantity',
+        flex: 1,
+      },
+      {
+        field: 'expy_date',
+        headerName: 'Expiration Date',
         flex: 1
       },
     ]
