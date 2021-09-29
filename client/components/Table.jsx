@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
 function Table (props) {
-    const {tableType, tableColumns} = props;
+    const { tableType, tableColumns } = props;
     const [data, setData] = useState([]);
 
     const getData = (tableType) => {
+      console.log(tableType);
       fetch('/api/' + tableType)
         .then(res => res.json())
         .then((tableElements) => {

@@ -35,12 +35,12 @@ supplierController.getAllSuppliers = async (req, res, next) => {
 // app.post("/api/suppliers", async(req, res) => {
 //     try {
 //           const { supplier_name, key_contact, supplier_phone_number, supplier_address } = req.body;
-//       const newSupplier = await pool.query("INSERT INTO {supplier_info} VALUE($1) RETURNING *",
+//       const newSupplier = await pool.query("INSERT INTO { } VALUE($1) RETURNING *",
 //       [ supplier_name, key_contact, supplier_phone_number, supplier_address ]
 //       );
 //       res.json(newSupplier);
 //     } catch(err) {
-//       console.error(message);
+//       console.error(err.message);
 //     }
 //   });
   
@@ -58,6 +58,16 @@ supplierController.getAllSuppliers = async (req, res, next) => {
 //       console.error(err.message)
 //     }
 //   });
+
+// app.delete("/suppliers/:id", async (req, res, next) => {
+//   try {
+//     const { id } = req.params;
+//     const deleteSupplier = await pool.query("DELETE FROM suppliers WHERE suppler_id = $1", [ id ]);
+//     res.json(`Supplier with id ${id} deleted`);
+//   } catch(err) {
+//     console.error(err.message);
+//   }
+// });
   
   
   
