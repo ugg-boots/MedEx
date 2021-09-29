@@ -24,7 +24,7 @@ function TableContainer(props) {
   }
 
   const deleteData = (table) => {
-    const toBeDeleted = [];
+    let toBeDeleted;
       let varName;
       switch (table) {
         case 'suppliers':
@@ -43,9 +43,7 @@ function TableContainer(props) {
 
       data.forEach(element => {
         if (selectionModel.includes(element.id)) {
-          const newObj = {};
-          newObj[varName] = element[varName];
-          toBeDeleted.push(newObj);
+          toBeDeleted = element[varName];
         }
       });
 
