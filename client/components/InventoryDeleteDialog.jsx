@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';
 
-function InventoryDeleteDialog() {
+function InventoryDeleteDialog(props) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -13,12 +13,10 @@ function InventoryDeleteDialog() {
   };
 
   return (
-    <div>
-      <div className="buttonContainer">
+    <div style={{display: "inline"}}>
       <Button variant="outlined" size="small" color="secondary" onClick={handleClickOpen}>
         Delete Item
       </Button>
-      </div>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -30,7 +28,7 @@ function InventoryDeleteDialog() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>No</Button>
-          <Button onClick={handleClose} autoFocus>
+          <Button onClick={(event) => {handleClose(event); props.deleteData(props.table)}} autoFocus>
             Yes
           </Button>
         </DialogActions>

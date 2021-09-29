@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import InventoryAddForm from "./InventoryAddForm.jsx";
+import CatalogAddForm from './CatalogAddForm.jsx';
 import { Button } from '@material-ui/core';
 
-class InventoryAddModal extends Component {
+class AddModal extends Component {
 
     constructor(props) {
       super(props);
@@ -17,30 +18,31 @@ class InventoryAddModal extends Component {
     showModal(event) {
       event.preventDefault();
       
-      this.state.showModal
-        ? (
-          this.setState({
-            showModal: false,
-          })
-          )
-          : (
-            this.setState({
-              showModal: true,
-            })
-          )
+      this.state.showModal ? (this.setState({showModal: false,})) : (this.setState({showModal: true,}))
     }
 
     render() {
-        return(
+      let addForm;
+      let buttonName;
+      if (this.props.table === 'inventory') {
+        addForm = <InventoryAddForm getData = {this.props.getData} closeModal = {this.showModal}/>
+        buttonName = 'Add Item'
+      }
+      else if (this.props.table === 'catalog') {
+        addForm = <CatalogAddForm getData={this.props.getData} closeModal = {this.showmodal}/>
+        buttonName = "Add Product"
+      }
+      
+      return(
           <div className="modalButton">
-            <Button variant="outlined" color="secondary" size="small" onClick={this.showModal}>Add Inventory</Button>
+            <Button variant="outlined" color="secondary" size="small" onClick={this.showModal}>{buttonName}</Button>
         {
           this.state.showModal
             ? (
               <div className = "modal">
                 <div className = "modalContent">
                   <div className = "modalBody">
-                    <InventoryAddForm getData = {this.props.getData} closeModal = {this.showModal}/>
+                    {addForm}
                     <div className="exitButton">
                     <Button onClick={this.showModal} variant="outlined" color="secondary" size="small">Exit</Button>
                     </div>
@@ -57,4 +59,4 @@ class InventoryAddModal extends Component {
     }
   }
 
-export default InventoryAddModal;
+export default AddModal;

@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import Table from './Table.jsx';
+import { Typography } from '@material-ui/core';
+import { DataGrid } from '@mui/x-data-grid';
 import columnDefinitions from './columns.js';
-import InventoryAddModal from './InventoryAddModal.jsx';
-import { Button, Typography } from '@material-ui/core';
+import AddModal from './InventoryAddModal.jsx';
 import InventoryDeleteDialog from './InventoryDeleteDialog.jsx';
 
 function TableContainer(props) {
@@ -11,15 +11,57 @@ function TableContainer(props) {
   const columns = columnDefinitions[table];
 
   const [data, setData] = useState([]);
+  const [selectionModel, setSelectionModel] = useState([]);
 
-  const getData = (tableType) => {
-    fetch('/api/' + tableType)
+  const getData = (table) => {
+    fetch('/api/' + table)
       .then(res => res.json())
       .then((tableElements) => {
         if (!Array.isArray(tableElements)) tableElements = [];
         setData(tableElements);
         })
       .catch(err => console.log('Table.componentDidMount: get tableElement: ERROR: ', err));
+  }
+
+  const deleteData = (table) => {
+    const toBeDeleted = [];
+      let varName;
+      switch (table) {
+        case 'suppliers':
+          varName = 'supplier_id';
+          break;
+        case 'procedures':
+          varName = 'junction_id';
+          break;
+        case 'catalog':
+          varName = 'product_id';
+          break;
+        case 'inventory':
+          varName = 'item_id';
+          break;
+        }
+
+      data.forEach(element => {
+        if (selectionModel.includes(element.id)) {
+          const newObj = {};
+          newObj[varName] = element[varName];
+          toBeDeleted.push(newObj);
+        }
+      });
+
+      fetch('/api/' + table, {
+        method: 'DELETE',
+        body: JSON.stringify(toBeDeleted),
+        headers: {
+          'Content-Type': 'Application/JSON'
+        },
+      })
+      .then(resp => resp.json())
+      .then((data) => {
+        getData();
+        setSelectionModel([]);
+      })
+      .catch(err => console.log(`Table fetch /api/${table}: ERROR: `, err));
   }
 
   useEffect(() => {
@@ -32,16 +74,31 @@ function TableContainer(props) {
       rows.push(element)});
 
   let addButton;
-  if (table === 'inventory') addButton = <InventoryAddModal getData={getData}/>;
-  else addButton = <Button variant='outlined' color='secondary' size='small'>Add Entry</Button>
-
+  let deleteButton;
+  if (table === 'inventory') {
+    addButton = <AddModal getData={getData} table={table}/>;
+    deleteButton = <InventoryDeleteDialog table={table} deleteData={deleteData}/>
+  }
+  else {
+    addButton = null;
+    deleteButton = null;
+  }
 
   return (
     <div>
         <Typography variant='h5'>{name}</Typography>
         {addButton}
-        <InventoryDeleteDialog />
-        <Table rows={rows} tableType={table} tableColumns={columns}/>
+        {deleteButton}
+        <div style={{ height: 400, width: '100%' }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          onSelectionModelChange={(newSelectionModel) => {
+            setSelectionModel(newSelectionModel);
+          }}
+          selectionModel={selectionModel}
+        />
+      </div>
     </div>
   )
 }

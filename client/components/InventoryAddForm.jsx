@@ -1,48 +1,52 @@
-import React, { Component } from 'react';
-import { TextField } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { Typography, Button } from '@material-ui/core';
+import { Autocomplete,TextField } from '@mui/material'
 
-class InventoryAddForm extends Component {
+
+function InventoryAddForm (props) {
     
-    constructor(props) {
-      super(props);
-      this.state = {
-        productName: '',
-        quantity: '',
-        expyDate: '',
-      };
+  const [productName, setProductName] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [expyDate, setExpyDate] = useState('');
+  const [allProductNames, setAllProductNames] = useState('');
+
+  const {table, getData, closeModal } = props;
   
-      this.handleInputChange = this.handleInputChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
-    }
-  
-    handleInputChange(event) {
-      const target = event.target;
-      const value = target.value;
-      const name = target.name;
-  
-      this.setState({
-        [name]: value
-      });
+    function getProductNames() {
+      const productNames = [];
+      fetch('/api/catalog')
+      .then(res => res.json())
+      .then((tableElements) => {
+        if (!Array.isArray(tableElements)) tableElements = [];
+        tableElements.forEach(element => {
+          productNames.push(element.product_name);
+        })
+        setAllProductNames(productNames);
+        })
+      .catch(err => console.log('InventoryAddForm.componentDidMount: getProductNames: ERROR: ', err));
     }
 
-    handleSubmit(event) {
+    useEffect(() => {
+      getProductNames();
+    }, [table])
+
+    function handleSubmit(event) {
       event.preventDefault();
 
       //validate data
-      if (this.state.productName === '') alert('Product Name is required');
-      if (this.state.quantity === '') alert('Quantity is required');
-      if (this.state.expyDate === '') alert('Expiration date is required');
+      if (productName === '') alert('Product Name is required');
+      else if (!allProductNames.includes(productName)) alert('Invalid product name');
+      else if (quantity === '') alert('Quantity is required');
+      else if (expyDate === '') alert('Expiration date is required');
  
+      //create request body
       else {
-      const body = {
-        product_name: this.state.productName,
-        quantity: this.state.quantity, 
-        expiration_date: this.state.expyDate
-      };
 
-      console.log(body);
-      console.log(JSON.stringify(body));
+      const body = {
+        product_name: productName,
+        quantity: quantity, 
+        expiration_date: expyDate
+      };
 
       fetch('/api/inventory', {
         method: 'POST',
@@ -53,50 +57,52 @@ class InventoryAddForm extends Component {
       })
         .then(resp => resp.json())
         .then((data) => {
-          console.log(data);
-          this.props.getData();
+          getData();
         })
         .catch(err => console.log('addInventoryForm fetch /api/inventory: ERROR: ', err));
       }
     }
 
-    render() {
       return (
         <div>
         <Typography variant="h4">Add Inventory</Typography>
-        <form onSubmit={(event) => {this.handleSubmit(event); this.props.closeModal(event);}}>
-            <TextField
-              id="outlined-name"
-              name="productName"
-              label="Product Name"
-              value={this.state.productName}
-              onChange={this.handleInputChange}
-              sx={{pb:2}}
-            />
+        <form onSubmit={(event) => {handleSubmit(event); closeModal(event);}}>
+        <Autocomplete
+          options={allProductNames}
+          sx={{ width: 270 }}
+          value={productName}
+          onChange={(event, newProductName) => {
+            setProductName(newProductName);
+          }}
+          name='productName'
+          renderInput={params => (
+            <TextField 
+              {...params} 
+              label="Product Name" 
+              variant="standard" />
+      )}
+    />
           <br/>
           <TextField
-              id="outlined-name"
-              name="quantity"
-              label="Quantity"
-              value={this.state.quantity}
-              onChange={this.handleInputChange}
-              sx={{pb:2}}
-            />
-           <br/> 
-           <TextField
-              id="outlined-name"
-              name="expyDate"
-              label="Expiration Date"
-              value={this.state.expyDate}
-              onChange={this.handleInputChange}
-              sx={{pb:2}}
-            />
-           <br/> 
-          <Button sx={{pb:2}} variant="contained" color="primary" type="submit">Submit</Button>
+            label="Quantity"
+            variant="standard"
+            value={quantity}
+            onChange={(event) => {
+              setQuantity(event.target.value);
+            }} />
+          <br/>
+          <input
+            style={{marginTop: '20px', marginBottom: '20px'}}
+            type='date'
+            value={expyDate}
+            onChange={(event) => {
+              setExpyDate(event.target.value);
+            }} />
+          <br/>
+          <Button variant="contained" color="primary" type="submit">Submit</Button>
         </form>
         </div>
       );
-    }
-  }
+}
 
   export default InventoryAddForm;
