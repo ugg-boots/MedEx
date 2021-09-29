@@ -6,7 +6,7 @@ import AddModal from './InventoryAddModal.jsx';
 import InventoryDeleteDialog from './InventoryDeleteDialog.jsx';
 
 function TableContainer(props) {
-  const {table} = props;
+  const { table } = props;
   const name = table[0].toUpperCase() + table.slice(1);
   const columns = columnDefinitions[table];
 
