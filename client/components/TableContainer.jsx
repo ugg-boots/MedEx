@@ -4,7 +4,7 @@ import columnDefinitions from './columns.js';
 import { Button, Typography } from '@material-ui/core';
 
 function TableContainer(props) {
-  const {table} = props;
+  const { table } = props;
   const name = table[0].toUpperCase() + table.slice(1);
   const columns = columnDefinitions[table];
 

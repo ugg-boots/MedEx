@@ -1,13 +1,14 @@
 const express = require("express");
+// require('dotenv').config();
 const app = express();
 const path = require("path");
 const cors = require('cors');
-const { PRIORITY_LOW } = require("constants");
+// const { PRIORITY_LOW } = require("constants");
 const port = process.env.PORT || 3000;
 
 
-const DIST_DIR = path.join(__dirname, "dist");
-const HTML_FILE = path.join(DIST_DIR, "index.html");
+// const DIST_DIR = path.join(__dirname, "dist");
+// const HTML_FILE = path.join(DIST_DIR, "index.html");
 
 app.use(cors());
 app.use(express.json());
