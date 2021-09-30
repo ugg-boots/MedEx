@@ -1,6 +1,3 @@
-const express = require("express");
-const { nextTick } = require('process');
-
 const pool = require("../models/inventoryModel")
 
 const supplierController = {};
@@ -50,21 +47,23 @@ supplierController.getAllSuppliers = async (req, res, next) => {
 //       const updateSupplier = await pool.query("UPDATE suppliers SET  key_contact = $1 WHERE supplier_id = $2",
 //       [ key_contact, id ]
 //       );
-//       res.json("Supplier updated...")
+//       res.locals.suppliers
 //     } catch(err) {
 //       console.error(err.message)
 //     }
 //   });
 
-// app.delete("/suppliers/:id", async (req, res, next) => {
-//   try {
-//     const { id } = req.params;
-//     const deleteSupplier = await pool.query("DELETE FROM suppliers WHERE suppler_id = $1", [ id ]);
-//     res.json(`Supplier with id ${id} deleted`);
-//   } catch(err) {
-//     console.error(err.message);
-//   }
-// });
+supplierController.deleteSupplier("/suppliers", async (req, res, next) => {
+  try {
+    const id = req.body[0];
+    const deletedSupplier = await pool.query("DELETE FROM suppliers WHERE supplier_id = $1", [id]);
+    res.locals.deletedSupplier = deletedSupplier;
+  } catch(err) {
+    console.error(err.message);
+    next(err);
+  }
+  next();
+});
   
   
   

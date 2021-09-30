@@ -1,4 +1,3 @@
-const express = require("express");
 const pool = require("../models/inventoryModel")
 
 const inventoryController = {};
@@ -45,10 +44,10 @@ inventoryController.addNewInventory = async (req, res, next) => {
 
 inventoryController.deleteInventory = async (req, res, next) => {
       try {
-        console.log(req.body);
+        // console.log(req.body);
         const id = req.body[0];
-        const deleteInventory = await pool.query("DELETE FROM inventory WHERE item_id = $1", [id]);
-        res.locals.deleteInventory = deleteInventory;
+        const deletedInventory = await pool.query("DELETE FROM inventory WHERE item_id = $1", [id]);
+        res.locals.deletedInventory = deletedInventory;
       } catch(err) {
         console.log(err)
         next(err)

@@ -14,7 +14,9 @@ router.get("/suppliers", supplierController.getAllSuppliers, (req, res) =>
 // router.get("/api/suppliers/:id", )
 // router.post("/", )
 // router.put("/",)
-// router.delete("/",)
+router.delete("/suppliers", supplierController.deleteSupplier, (req, res) =>
+    res.status(200).json(res.locals.deletedSupplier)
+);
 
 // Routes for CATALOG TABLE
 router.get("/catalog", catalogController.getAllProducts, (req, res) =>
@@ -33,7 +35,7 @@ router.get("/inventory/:id", inventoryController.getAllInventory, (req, res) => 
 
 router.post('/inventory', inventoryController.addNewInventory, (req, res) => res.status(200).json(res.locals.newInventory))
 
-router.delete("/inventory", inventoryController.deleteInventory, (req, res) => res.status(200).json(res.locals.deleteInventory))
+router.delete("/inventory", inventoryController.deleteInventory, (req, res) => res.status(200).json(res.locals.deletedInventory))
 
 // router.put("/inventory", inventoryController, (req, res) => res.status(200).json());
 
