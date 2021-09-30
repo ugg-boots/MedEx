@@ -1,15 +1,12 @@
 const express = require("express");
-const fs = require('fs');
-const path = require('path');
 const pool = require("../models/inventoryModel")
 
 const inventoryController = {};
 
 inventoryController.getAllInventory = async (req, res, next) => {
   try {
-    const inventory = await pool.query('SELECT * FROM inventory');
-    // need to query for product_name. involving an inner join?
-
+    const inventory = await pool.query('SELECT item_id, catalog.product_name, quantity, expiration_date FROM inventory INNER JOIN catalog ON inventory.product_id = catalog.product_id');
+    // SELECT item_id, catalog.product_name, quantity, expiration_date FROM catalog INNER JOIN inventory 
     // STRETCH FEATURE: have filter / dropdown on front end that toggles out-of-stock vs in-stock items. Update db query accordingly.
     res.locals.inventory = inventory.rows;
   } catch (err) {
@@ -27,16 +24,19 @@ inventoryController.getInventoryById = async (req, res, next) => {
         res.json(inventoryById.row)
       } catch (err) {
         console.error(err.message);
+        next(err);
       }
+      next();
     };
 
 inventoryController.addNewInventory = async (req, res, next) => {
   try {
-    const { product_id, quantity, expiration_date } = req.body;
-    const newInventory = await pool.query('INSERT INTO inventory (product_id, quantity, expiration_date) VALUES($1,$2,$3)', [product_id, quantity, expiration_date]);
+    const { product_name, quantity, expiration_date } = req.body;
+    const newInventory = await pool.query(`INSERT INTO inventory (quantity, expiration_date, product_id) VALUES
+    ($1, $2, (SELECT product_id FROM catalog WHERE product_name = $3))`, [quantity, expiration_date, product_name]);
+    // SELECT product_id FROM catalog WHERE product_name = $4
     res.locals.newInventory = newInventory;
-    res.json(newInventory);
-  } catch (err) {
+    } catch (err) {
     console.log(err)
     next(err)
   }
@@ -45,9 +45,10 @@ inventoryController.addNewInventory = async (req, res, next) => {
 
 inventoryController.deleteInventory = async (req, res, next) => {
       try {
-        const { id } = req.params;
-        const deleteSupplier = await pool.query("DELETE FROM inventory WHERE item_id = $1", [id]);
-        res.json(`Inventory with id ${id} deleted`);
+        console.log(req.body);
+        const id = req.body[0];
+        const deleteInventory = await pool.query("DELETE FROM inventory WHERE item_id = $1", [id]);
+        res.locals.deleteInventory = deleteInventory;
       } catch(err) {
         console.log(err)
         next(err)
