@@ -85,7 +85,7 @@ const columnDefinitions = {
         flex: 1,
       },
       {
-        field: 'expy_date',
+        field: 'expiration_date',
         headerName: 'Expiration Date',
         flex: 1,
       },

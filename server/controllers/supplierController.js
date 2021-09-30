@@ -1,6 +1,4 @@
 const express = require("express");
-const fs = require('fs');
-const path = require('path');
 const { nextTick } = require('process');
 
 const pool = require("../models/inventoryModel")
@@ -12,7 +10,6 @@ supplierController.getAllSuppliers = async (req, res, next) => {
       try {
         console.log("Supplier Controller....")
         const suppliers = await pool.query("SELECT * FROM suppliers");
-        console.log(suppliers);
         res.locals.suppliers = suppliers.rows
         } catch (err) {
             next(err);
