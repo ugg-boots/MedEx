@@ -9,7 +9,6 @@ inventoryController.getAllInventory = async (req, res, next) => {
   try {
     const inventory = await pool.query('SELECT * FROM inventory');
     // need to query for product_name. involving an inner join?
-
     // STRETCH FEATURE: have filter / dropdown on front end that toggles out-of-stock vs in-stock items. Update db query accordingly.
     res.locals.inventory = inventory.rows;
   } catch (err) {
@@ -43,6 +42,8 @@ inventoryController.addNewInventory = async (req, res, next) => {
   next();
 };
 
+// // MVP: handle one obj from req.body to be deleted
+// // STRETCH: handle multiple rows from req.body (array of objects) to be deleted
 inventoryController.deleteInventory = async (req, res, next) => {
       try {
         const { id } = req.params;
@@ -54,17 +55,6 @@ inventoryController.deleteInventory = async (req, res, next) => {
       }
       next();
     };
-
-// // MVP: handle one obj from req.body to be deleted
-// // STRETCH: handle multiple rows from req.body (array of objects) to be deleted
-// inventoryController.deleteInventory = async (req, res, next) => {
-//   try {
-
-//   } catch(err) {
-
-//   }
-//   next();
-// };
 
 // // inventoryController.updateInventory = async (req, res, next) => {
 // //   try { } catch(err) {}

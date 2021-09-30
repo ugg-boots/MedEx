@@ -16,9 +16,14 @@ catalogController.getAllProducts = async (req, res, next) => {
       next();
 };
 
-module.exports = catalogController;
+catalogController.addNewProduct = (req, res, next) => {
+  try {
+    const { product_id, product_name, product_desc, supplier_id} = req.body;
+  } catch(err) {
+    console.log(err);
+    next(err);
+  }
+  next();
+};
 
-// For api.js file...
-//router.get("/catalog", catalogController.getAllProducts, (req, res) =>
-//    res.status(200).json(res.locals.products)
-//);
+module.exports = catalogController;
