@@ -77,6 +77,5 @@ supplierController.deleteSupplier = async (req, res, next) => {
 };
   
   
-  
 
 module.exports = supplierController;
