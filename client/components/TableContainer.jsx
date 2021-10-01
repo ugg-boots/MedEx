@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Typography } from '@material-ui/core';
 import { DataGrid } from '@mui/x-data-grid';
 import columnDefinitions from './columns.js';
-import AddModal from './InventoryAddModal.jsx';
+import AddModal from './AddModal.jsx';
 import InventoryDeleteDialog from './InventoryDeleteDialog.jsx';
 
 function TableContainer(props) {
@@ -74,8 +74,12 @@ function TableContainer(props) {
   let addButton;
   let deleteButton;
   if (table === 'inventory') {
-    addButton = <AddModal getData={getData} table={table}/>;
+    addButton = <AddModal getData={getData} table={table} data={data}/>;
     deleteButton = <InventoryDeleteDialog table={table} deleteData={deleteData}/>
+  }
+  else if (table === 'catalog') {
+    addButton = <AddModal getData={getData} table={table} data={data}/>;
+    deleteButton = null;
   }
   else {
     addButton = null;
