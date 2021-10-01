@@ -10,7 +10,7 @@ function InventoryAddForm (props) {
   const [expyDate, setExpyDate] = useState('');
   const [allProductNames, setAllProductNames] = useState('');
 
-  const {table, getData, closeModal } = props;
+  const {table, getData, closeModal, openSnackBar } = props;
   
     function getProductNames() {
       const productNames = [];
@@ -60,6 +60,7 @@ function InventoryAddForm (props) {
         .then(resp => resp.json())
         .then((data) => {
           getData();
+          openSnackBar();
         })
         .catch(err => console.log('addInventoryForm fetch /api/inventory: ERROR: ', err));
       }
