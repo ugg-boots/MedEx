@@ -70,8 +70,8 @@ const columnDefinitions = {
         flex: 1
       },
       {
-        field: 'quantity',
-        headerName: 'Quantity',
+        field: 'qty_per_procedure',
+        headerName: 'Quantity Needed Per Procedure',
         flex: 1,
       },
     ],
