@@ -10,7 +10,7 @@ function SupplierAddForm (props) {
   const [supplierPhoneNumber, setSupplierPhoneNumber] = useState('');
   const [supplierAddress, setSupplierAddress] = useState('');
 
-  const { getData, closeModal, data } = props;
+  const { getData, closeModal, data, openSnackBar } = props;
 
     function handleSubmit(event) {
       event.preventDefault();
@@ -41,6 +41,7 @@ function SupplierAddForm (props) {
         .then(resp => resp.json())
         .then((data) => {
           getData();
+          openSnackBar();
         })
         .catch(err => console.log('SupplierAddForm fetch /api/supplier: ERROR: ', err));
       }

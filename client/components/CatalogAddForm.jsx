@@ -12,7 +12,7 @@ function CatalogAddForm (props) {
   const [qtyPerUnit, setQtyPerUnit] = useState('');
   const [allSupplierNames, setAllSupplierNames] = useState('');
 
-  const { table, getData, closeModal, data } = props;
+  const { table, getData, closeModal, data, openSnackBar } = props;
   
     function getSupplierNames() {
       const supplierNames = [];
@@ -64,6 +64,7 @@ function CatalogAddForm (props) {
         .then(resp => resp.json())
         .then((data) => {
           getData();
+          openSnackBar();
         })
         .catch(err => console.log('CatalogAddForm fetch /api/catalog: ERROR: ', err));
       }
