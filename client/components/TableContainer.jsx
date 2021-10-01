@@ -81,6 +81,10 @@ function TableContainer(props) {
     addButton = <AddModal getData={getData} table={table} data={data}/>;
     deleteButton = null;
   }
+  else if (table === 'suppliers') {
+    addButton = <AddModal getData={getData} table={table} data={data}/>;
+    deleteButton = null;
+  }
   else {
     addButton = null;
     deleteButton = null;
