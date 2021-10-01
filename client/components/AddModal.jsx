@@ -29,7 +29,7 @@ class AddModal extends Component {
         buttonName = 'Add Item'
       }
       else if (this.props.table === 'catalog') {
-        addForm = <CatalogAddForm getData={this.props.getData} closeModal = {this.showmodal}/>
+        addForm = <CatalogAddForm getData={this.props.getData} closeModal = {this.showModal} data={this.props.data}/>
         buttonName = "Add Product"
       }
       

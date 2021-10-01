@@ -12,7 +12,7 @@ function CatalogAddForm (props) {
   const [qtyPerUnit, setQtyPerUnit] = useState('');
   const [allSupplierNames, setAllSupplierNames] = useState('');
 
-  const {table, getData, closeModal, data } = props;
+  const { table, getData, closeModal, data } = props;
   
     function getSupplierNames() {
       const supplierNames = [];
@@ -54,7 +54,7 @@ function CatalogAddForm (props) {
         qty_per_unit: qtyPerUnit
       };
 
-      fetch('/api/inventory', {
+      fetch('/api/catalog', {
         method: 'POST',
         headers: {
           'Content-Type': 'Application/JSON'
@@ -77,16 +77,16 @@ function CatalogAddForm (props) {
             label="Product Name"
             variant="standard"
             value={productName}
-            onChange={(_event, newProductName) => {
-              setUnitPrice(newProductName);
+            onChange={(event) => {
+              setProductName(event.target.value);
             }} />
         <br/>
         <TextField
             label="Product Description"
             variant="standard"
             value={productDesc}
-            onChange={(_event, newProductDesc) => {
-              setUnitPrice(newProductDesc);
+            onChange={(event) => {
+              setProductDesc(event.target.value);
             }} />
         <br/>
         <Autocomplete
@@ -109,16 +109,16 @@ function CatalogAddForm (props) {
             label="Unit Price"
             variant="standard"
             value={unitPrice}
-            onChange={(_event, newUnitPrice) => {
-              setUnitPrice(newUnitPrice);
+            onChange={(event) => {
+              setUnitPrice(event.target.value);
             }} />
           <br/>
           <TextField
             label="Quantity per Unit"
             variant="standard"
             value={qtyPerUnit}
-            onChange={(_event, newQtyPerUnit) => {
-              setQtyPerUnit(newQtyPerUnit);
+            onChange={(event) => {
+              setQtyPerUnit(event.target.value);
             }} />
           <br/>
           <Button variant="contained" color="primary" type="submit">Submit</Button>
