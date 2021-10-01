@@ -11,7 +11,7 @@ const inventoryController = require('../controllers/inventoryController');
 router.get("/suppliers", supplierController.getAllSuppliers, (req, res) =>
     res.status(200).json(res.locals.suppliers)
 );
-// router.get("/api/suppliers/:id", )
+// router.get("/api/suppliers/:id", )`
 // router.post("/", )
 // router.put("/",)
 // router.delete("/",)
