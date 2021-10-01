@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import InventoryAddForm from "./InventoryAddForm.jsx";
 import CatalogAddForm from './CatalogAddForm.jsx';
+import SupplierAddForm from './SupplierAddForm.jsx';
 import { Button } from '@material-ui/core';
 
 class AddModal extends Component {
@@ -31,6 +32,10 @@ class AddModal extends Component {
       else if (this.props.table === 'catalog') {
         addForm = <CatalogAddForm getData={this.props.getData} closeModal = {this.showModal} data={this.props.data}/>
         buttonName = "Add Product"
+      }
+      else if (this.props.table === 'suppliers') {
+        addForm = <SupplierAddForm getData={this.props.getData} closeModal = {this.showModal} data={this.props.data}/>
+        buttonName = "Add Supplier"
       }
       
       return(
