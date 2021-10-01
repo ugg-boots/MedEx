@@ -17,9 +17,35 @@ proceduresController.getAllProcedures = async (req, res, next) => {
       next();
 };
 
-module.exports = proceduresController;
+proceduresController.addNewProcedure = async (req, res, next) => {
+    try {
+      const { procedure_id, procedure_name, procedure_desc } = req.body;
+      const newProcedure = await pool.query(
+        `INSERT INTO procedures (procedure_id, procedure_name, procedure_desc)
+        VALUES ($1, $2, $3)`, [procedure_id, procedure_name, procedure_desc]
+      );
+      res.locals.newProcedure = newProcedure;
+    } catch(err) {
+      next(err);
+    }
+    next();
+};
 
-// For api.js file...
-//router.get("/procedures", procedureController.getAllProcedures, (req, res) =>
-//    res.status(200).json(res.locals.procedures)
-//);
+// refactor this...
+proceduresController.deleteProcedure = async (req, res, next) => {
+  try {
+    console.log('req body for deleteProcedure -->', req.body);
+    const id  = req.body[0];
+    const deletedProcedure = await pool.query(
+      `DELETE FROM procedure 
+      WHERE procedure_id = $1`, 
+      [id]
+    );
+    res.locals.deletedProcedure = deletedProcedure;
+  } catch(err) {
+    next(err);
+  }
+  next();
+}
+
+module.exports = proceduresController;

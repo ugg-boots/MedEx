@@ -22,22 +22,36 @@ router.delete("/suppliers", supplierController.deleteSupplier, (req, res) =>
 );
 
 // routes for CATALOG TABLE
-router.get("/catalog", catalogController.getAllProducts, (req, res) =>
-    res.status(200).json(res.locals.products)
+router.get("/catalog", 
+    catalogController.getAllProducts, 
+    (req, res) => res.status(200).json(res.locals.products)
 );
 
-router.post('/catalog', );
-router.put('/catalog', );
-router.delete('/catalog', );
+router.post('/catalog', 
+    catalogController.addNewProduct, 
+    (req, res) => res.status(200).json(res.locals.newProduct)
+);
+
+router.delete('/catalog', 
+    catalogController.deleteProduct, 
+    (req, res) => res.status(200).json(res.locals.deletedProduct)
+);
 
 // routes for PROCEDURES TABLE
-router.get("/procedures", proceduresController.getAllProcedures, (req, res) =>
-    res.status(200).json(res.locals.procedures)
+router.get("/procedures", 
+    proceduresController.getAllProcedures, 
+    (req, res) => res.status(200).json(res.locals.procedures)
 );
 
-router.post('/procedures' );
-router.put('/procedures' );
-router.delete('/procedures' );
+router.post('/procedures', 
+    proceduresController.addNewProcedure, 
+    (req, res) => res.status(200).json(res.locals.newProcedure)
+);
+
+router.delete('/procedures', 
+    proceduresController.deleteProcedure, 
+    (req, res) => res.status(200).json(res.locals.deleteProcedure)
+);
 
 // routes for INVENTORY TABLE
 router.get("/inventory", inventoryController.getAllInventory, (req, res) => res.status(200).json(res.locals.inventory));
