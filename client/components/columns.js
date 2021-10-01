@@ -46,7 +46,8 @@ const columnDefinitions = {
       {
         field: 'unit_price',
         headerName: 'Price per Unit',
-        flex: 1
+        flex: 1,
+        valueFormatter: (params) => { return formatCurrency(params.value);},
       },
       {
         field: 'qty_per_unit',
@@ -98,6 +99,15 @@ const columnDefinitions = {
 const formatDate = (date) => {
   const newDate = dayjs(date);
   return newDate.format('YYYY MMM DD');
+}
+
+const formatCurrency = (value) => {
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+  
+  return formatter.format(value);
 }
 
 export default columnDefinitions;
