@@ -48,6 +48,8 @@ function InventoryAddForm (props) {
         expiration_date: expyDate
       };
 
+      console.log(body);
+
       fetch('/api/inventory', {
         method: 'POST',
         headers: {

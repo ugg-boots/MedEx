@@ -13,7 +13,7 @@ function TableContainer(props) {
   const [data, setData] = useState([]);
   const [selectionModel, setSelectionModel] = useState([]);
 
-  const getData = (table) => {
+  const getData = () => {
     fetch('/api/' + table)
       .then(res => res.json())
       .then((tableElements) => {
@@ -24,7 +24,7 @@ function TableContainer(props) {
   }
 
   const deleteData = (table) => {
-    let toBeDeleted;
+    let toBeDeleted = [];
       let varName;
       switch (table) {
         case 'suppliers':
@@ -43,7 +43,7 @@ function TableContainer(props) {
 
       data.forEach(element => {
         if (selectionModel.includes(element.id)) {
-          toBeDeleted = element[varName];
+          toBeDeleted.push(element[varName]);
         }
       });
 

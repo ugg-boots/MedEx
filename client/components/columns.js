@@ -1,3 +1,5 @@
+var dayjs = require('dayjs')
+
 const columnDefinitions = {
     suppliers: [
           {
@@ -85,11 +87,17 @@ const columnDefinitions = {
         flex: 1,
       },
       {
-        field: 'expy_date',
+        field: 'expiration_date',
         headerName: 'Expiration Date',
         flex: 1,
+        valueFormatter: (params) => { return formatDate(params.value);},
       },
     ]
+}
+
+const formatDate = (date) => {
+  const newDate = dayjs(date);
+  return newDate.format('YYYY MMM DD');
 }
 
 export default columnDefinitions;
