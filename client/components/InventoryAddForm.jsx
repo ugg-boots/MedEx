@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, Button } from '@material-ui/core';
-import { Autocomplete,TextField } from '@mui/material'
+import { Autocomplete, TextField, Alert } from '@mui/material'
 
 
 function InventoryAddForm (props) {
@@ -9,6 +9,8 @@ function InventoryAddForm (props) {
   const [quantity, setQuantity] = useState('');
   const [expyDate, setExpyDate] = useState('');
   const [allProductNames, setAllProductNames] = useState('');
+  const [warning, setWarning] = useState(null);
+  const [warningOn, setWarningOn] = useState(false);
 
   const {table, getData, closeModal, openSnackBar } = props;
   
@@ -34,10 +36,18 @@ function InventoryAddForm (props) {
       event.preventDefault();
 
       //validate data
-      if (productName === '') alert('Product Name is required');
-      else if (!allProductNames.includes(productName)) alert('Invalid product name');
-      else if (quantity === '') alert('Quantity is required');
-      else if (expyDate === '') alert('Expiration date is required');
+      if (productName === '') {
+        setWarning(<Alert severity="warning" onClose={() => {setWarningOn(false)}}>Product Name is required</Alert>);
+        setWarningOn(true);
+      }
+      else if (quantity === '') {
+        setWarning(<Alert severity="warning" onClose={() => {setWarningOn(false)}}>Quantity is required</Alert>);
+        setWarningOn(true);
+      }
+      else if (expyDate === '') {
+        setWarning(<Alert severity="warning" onClose={() => {setWarningOn(false)}}>Expiration date is required</Alert>);
+        setWarningOn(true);
+      }
  
       //create request body
       else {
@@ -60,16 +70,24 @@ function InventoryAddForm (props) {
         .then(resp => resp.json())
         .then((data) => {
           getData();
+          closeModal();
           openSnackBar();
         })
         .catch(err => console.log('addInventoryForm fetch /api/inventory: ERROR: ', err));
       }
     }
 
+    let renderWarning;
+    if (warningOn) {
+      renderWarning = warning;
+    }
+    else renderWarning = null;
+
       return (
         <div>
         <Typography variant="h4">Add Inventory</Typography>
-        <form onSubmit={(event) => {handleSubmit(event); closeModal(event);}}>
+        {renderWarning}
+        <form onSubmit={(event) => {handleSubmit(event)}}>
         <Autocomplete
           options={allProductNames}
           sx={{ width: 270 }}
