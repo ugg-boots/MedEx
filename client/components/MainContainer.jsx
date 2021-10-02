@@ -3,7 +3,7 @@ import { Box, CssBaseline, Toolbar } from '@mui/material';
 import TableContainer from './TableContainer.jsx';
 import Banner from './Banner.jsx';
 import NavSideBar from './NavSideBar.jsx';
-import HomeContainer from "./HomeContainer.jsx";
+import ShoppingList from "./ShoppingList.jsx";
 
 function MainContainer() {
     const [table, setTable] = useState('catalog');
@@ -35,6 +35,10 @@ function MainContainer() {
         case 'Suppliers':
           newTable = 'suppliers';
           newDisplay = 'table';
+          break;
+        case 'Shopping List':
+          newTable = null;
+          newDisplay = 'shop';
       }
 
       setDisplay(newDisplay);
@@ -43,7 +47,7 @@ function MainContainer() {
 
     let mainContent;
     if (display === 'table') mainContent = <TableContainer table={table}/>
-    if (display === 'home') mainContent = <HomeContainer/>
+    if (display === 'shop') mainContent = <ShoppingList/>
   
     return (
     <Box sx={{ display: 'flex' }}>
