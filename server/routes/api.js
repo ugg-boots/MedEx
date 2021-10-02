@@ -69,6 +69,11 @@ router.get("/catalog",
     (req, res) => res.status(200).json(res.locals.products)
 );
 
+router.get("/lowstock", 
+    catalogController.lowStock, 
+    (req, res) => res.status(200).json(res.locals.lowStock)
+);
+
 router.post('/catalog', 
     catalogController.addNewProduct, 
     (req, res) => res.status(200).json(res.locals.newProduct)

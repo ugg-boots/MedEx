@@ -55,7 +55,7 @@ catalogController.lowStock = async (req, res, next) => {
     const lowStock = await pool.query(
       `SELECT max_stock, product_name, inventory.quantity AS quantity FROM catalog INNER JOIN inventory ON catalog.product_id = inventory.product_id`
     );
-    res.locals.lowStock = lowStock;
+    res.locals.lowStock = lowStock.rows;
   } catch(err) {
     console.log(err);
     next(err);

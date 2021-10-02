@@ -185,7 +185,7 @@ const formatCurrency = (value) => {
 }
 
 const formatPercent = (value) => {
-  return parseFloat(value).toFixed(2)+"%"
+  return parseFloat(value * 100).toFixed(2)+"%"
 }
 
 export default columnDefinitions;
