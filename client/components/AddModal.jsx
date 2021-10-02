@@ -26,15 +26,15 @@ class AddModal extends Component {
       let addForm;
       let buttonName;
       if (this.props.table === 'inventory') {
-        addForm = <InventoryAddForm getData = {this.props.getData} closeModal = {this.showModal}/>
+        addForm = <InventoryAddForm getData = {this.props.getData} closeModal = {this.showModal} openSnackBar={this.props.openSnackBar}/>
         buttonName = 'Add Item'
       }
       else if (this.props.table === 'catalog') {
-        addForm = <CatalogAddForm getData={this.props.getData} closeModal = {this.showModal} data={this.props.data}/>
+        addForm = <CatalogAddForm getData={this.props.getData} closeModal = {this.showModal} data={this.props.data} openSnackBar={this.props.openSnackBar}/>
         buttonName = "Add Product"
       }
       else if (this.props.table === 'suppliers') {
-        addForm = <SupplierAddForm getData={this.props.getData} closeModal = {this.showModal} data={this.props.data}/>
+        addForm = <SupplierAddForm getData={this.props.getData} closeModal = {this.showModal} data={this.props.data} openSnackBar={this.props.openSnackBar}/>
         buttonName = "Add Supplier"
       }
       

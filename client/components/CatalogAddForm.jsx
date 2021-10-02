@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, Button } from '@material-ui/core';
-import { Autocomplete,TextField } from '@mui/material'
+import { Autocomplete, TextField, Alert } from '@mui/material'
 
 
 function CatalogAddForm (props) {
@@ -11,8 +11,10 @@ function CatalogAddForm (props) {
   const [unitPrice, setUnitPrice] = useState('');
   const [qtyPerUnit, setQtyPerUnit] = useState('');
   const [allSupplierNames, setAllSupplierNames] = useState('');
+  const [warning, setWarning] = useState(null);
+  const [warningOn, setWarningOn] = useState(false);
 
-  const { table, getData, closeModal, data } = props;
+  const { table, getData, closeModal, data, openSnackBar } = props;
   
     function getSupplierNames() {
       const supplierNames = [];
@@ -40,10 +42,27 @@ function CatalogAddForm (props) {
       data.forEach(element => {
         if (element.product_name === productName) return duplicate = true;
       })
-      if (duplicate) alert ('Product is already in the catalog');
-      if (!allSupplierNames.includes(supplierName)) alert('Invalid supplier name');
-      
- 
+      if (duplicate) {
+        setWarning(<Alert severity="warning" onClose={() => {setWarningOn(false)}}>Product is already in the catalog</Alert>);
+        setWarningOn(true);
+      }
+      if (productName === '') {
+        setWarning(<Alert severity="warning" onClose={() => {setWarningOn(false)}}>Product name is required</Alert>);
+        setWarningOn(true);
+      }
+      if (supplierName === '') {
+        setWarning(<Alert severity="warning" onClose={() => {setWarningOn(false)}}>Supplier name is required</Alert>);
+        setWarningOn(true);
+      }
+      if (unitPrice === '') {
+        setWarning(<Alert severity="warning" onClose={() => {setWarningOn(false)}}>Unit price is required</Alert>);
+        setWarningOn(true);
+      }
+      if (qtyPerUnit === '') {
+        setWarning(<Alert severity="warning" onClose={() => {setWarningOn(false)}}>Quantity per unit is required</Alert>);
+        setWarningOn(true);
+      }
+    
       //create request body
       else {
       const body = {
@@ -64,15 +83,24 @@ function CatalogAddForm (props) {
         .then(resp => resp.json())
         .then((data) => {
           getData();
+          closeModal();
+          openSnackBar();
         })
         .catch(err => console.log('CatalogAddForm fetch /api/catalog: ERROR: ', err));
       }
     }
 
+    let renderWarning;
+    if (warningOn) {
+      renderWarning = warning;
+    }
+    else renderWarning = null;
+
       return (
         <div>
         <Typography variant="h4">Add Products</Typography>
-        <form onSubmit={(event) => {handleSubmit(event); closeModal(event);}}>
+        {renderWarning}
+        <form onSubmit={(event) => {handleSubmit(event)}}>
         <TextField
             label="Product Name"
             variant="standard"

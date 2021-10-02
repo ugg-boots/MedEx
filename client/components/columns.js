@@ -93,7 +93,31 @@ const columnDefinitions = {
         flex: 1,
         valueFormatter: (params) => { return formatDate(params.value);},
       },
+    ],
+    home: [
+      {
+        field: 'product_name',
+        headerName: 'Product Name',
+        flex: 1
+      },
+      {
+        field: 'total',
+        headerName: 'Quantity Needed',
+        flex: 1,
+      },
+      {
+        field: 'cost',
+        headerName: 'Cost',
+        flex: 1,
+        valueFormatter: (params) => { return formatCurrency(params.value);},
+      },
+      {
+        field: 'supplier',
+        headerName: 'Supplier',
+        flex: 1,
+      },
     ]
+
 }
 
 const formatDate = (date) => {

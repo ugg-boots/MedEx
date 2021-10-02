@@ -3,6 +3,7 @@ import { Box, CssBaseline, Toolbar } from '@mui/material';
 import TableContainer from './TableContainer.jsx';
 import Banner from './Banner.jsx';
 import NavSideBar from './NavSideBar.jsx';
+import HomeContainer from "./HomeContainer.jsx";
 
 function MainContainer() {
     const [table, setTable] = useState('catalog');
@@ -42,6 +43,7 @@ function MainContainer() {
 
     let mainContent;
     if (display === 'table') mainContent = <TableContainer table={table}/>
+    if (display === 'home') mainContent = <HomeContainer/>
   
     return (
     <Box sx={{ display: 'flex' }}>
