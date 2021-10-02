@@ -49,4 +49,18 @@ catalogController.deleteProduct = async (req, res, next) => {
   next();
 };
 
+catalogController.lowStock = async (req, res, next) => {
+  try {
+    console.log('requesting low stock items')
+    const lowStock = await pool.query(
+      `SELECT max_stock, product_name, inventory.quantity AS quantity FROM catalog INNER JOIN inventory ON catalog.product_id = inventory.product_id`
+    );
+    res.locals.lowStock = lowStock;
+  } catch(err) {
+    console.log(err);
+    next(err);
+  }
+  next();
+};
+
 module.exports = catalogController;
