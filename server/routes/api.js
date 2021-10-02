@@ -14,6 +14,9 @@ router.post('/home',
     (req, res) => res.status(200).json(res.locals.procedureDetails)
 );
 
+router.get('/home', homeController.viewInventoryPercentages, (req, res) => res.status(200).json(res.locals.stockPercent) 
+);
+
 // routes for INVENTORY TABLE
 router.get("/inventory", 
     inventoryController.getAllInventory, 

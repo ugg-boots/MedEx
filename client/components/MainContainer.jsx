@@ -3,6 +3,7 @@ import { Box, CssBaseline, Toolbar } from '@mui/material';
 import TableContainer from './TableContainer.jsx';
 import Banner from './Banner.jsx';
 import NavSideBar from './NavSideBar.jsx';
+import D3_App from '../react-d3/src/D3_App.js';
 
 function MainContainer() {
     const [table, setTable] = useState('catalog');
@@ -41,9 +42,12 @@ function MainContainer() {
     }
 
     let mainContent;
-    if (display === 'table') mainContent = <TableContainer table={table}/>
-    // if (display === 'home') mainContent = <D3_App data={this.data}/>
-     
+    if (display === 'table') {
+      mainContent = <TableContainer table={table}/>  
+    }
+    if (display === 'home') {
+      mainContent =  <D3_App/> 
+    }
     return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />

@@ -17,4 +17,22 @@ homeController.viewProcedureDetails = async (req, res, next) => {
   next();
 };
 
+homeController.viewInventoryPercentages = async (req, res, next) => {
+  try {
+    const stockPercent = [];
+    const catalog = await pool.query('SELECT product_id, catalog.product_name, catalog.qty_per_unit, quantity, expiration_date FROM inventory INNER JOIN catalog ON inventory.product_id = catalog.product_id');
+    
+    inventory.rows.map(row => {
+      stockPercent.push(row.qty/row.qty_per_unit);
+    })
+    res.locals.inventory = stockPercent;
+    console.log(inventory.rows);
+    console.log(res.locals.inventory);
+
+  } catch (err) {
+    next(err);
+  }
+  next();
+};
+
 module.exports = homeController;
