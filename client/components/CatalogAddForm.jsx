@@ -83,7 +83,7 @@ function CatalogAddForm (props) {
         .then(resp => resp.json())
         .then((data) => {
           getData();
-          closeModal();
+          closeModal(event);
           openSnackBar();
         })
         .catch(err => console.log('CatalogAddForm fetch /api/catalog: ERROR: ', err));
