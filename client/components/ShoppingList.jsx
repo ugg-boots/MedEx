@@ -48,7 +48,9 @@ function HomeContainer(props) {
     procedureData.forEach((element, index) => {
       if (element.procedure_name === procedure) {
       const total = Math.ceil(numProcedures * element.qty_per_procedure/element.qty_per_unit);
-      const inInventory = inventoryList[element.product_name];
+      let inInventory;
+      if (!inventoryList.hasOwnProperty(element.product_name)) inInventory = 0;
+      else inInventory = inventoryList[element.product_name];
       let needed = total - inInventory;
       if (needed < 0) needed = 0;
       const cost = needed * element.unit_price;
@@ -65,7 +67,6 @@ function HomeContainer(props) {
       setRows(rows);
       }
     });
-    console.log(rows);
   }
 
   useEffect(() => {
@@ -89,7 +90,7 @@ function HomeContainer(props) {
 
   return (
     <div>
-        <Typography variant='h5'>Select a procedure</Typography>
+        <Typography variant='h5' sx={{mt: 2}}>Select a procedure</Typography>
         <Box sx={{ minWidth: 120 }}>
           <form onSubmit={(event) => {console.log('submitted'); handleSubmit(event)}}>
             <InputLabel>Procedure</InputLabel>
@@ -97,6 +98,7 @@ function HomeContainer(props) {
               value={procedure}
               label="Procedure"
               onChange={handleChange}
+              sx={{mb: 1, mt: 1}}
             >
               {menuItems}
             </Select>
@@ -105,11 +107,12 @@ function HomeContainer(props) {
             label="Number of Procedures"
             variant="standard"
             value={numProcedures}
+            sx={{mb: 1, mt: 1}}
             onChange={(event) => {
               setNumProcedures(event.target.value);
             }} />
           <br/>
-          <Button variant="contained" color="primary" type="submit">Submit</Button>
+          <Button variant="contained" color="primary" type="submit" sx={{mb: 1, mt: 1}}>Submit</Button>
           </form>
         </Box>
         <div style={{ height: 400, width: '100%' }}>

@@ -6,7 +6,7 @@ import NavSideBar from './NavSideBar.jsx';
 import ShoppingList from "./ShoppingList.jsx";
 
 function MainContainer() {
-    const [table, setTable] = useState('catalog');
+    const [table, setTable] = useState('inventory');
     const [display, setDisplay] = useState('table');
 
     const buttonClick = (event, key) => {
@@ -37,7 +37,7 @@ function MainContainer() {
           newDisplay = 'table';
           break;
         case 'Shopping List':
-          newTable = null;
+          newTable = '';
           newDisplay = 'shop';
       }
 
