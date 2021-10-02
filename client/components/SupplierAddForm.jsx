@@ -62,7 +62,7 @@ function SupplierAddForm (props) {
         .then(resp => resp.json())
         .then((data) => {
           getData();
-          closeModal();
+          closeModal(event);
           openSnackBar();
         })
         .catch(err => console.log('SupplierAddForm fetch /api/supplier: ERROR: ', err));

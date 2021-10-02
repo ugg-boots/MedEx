@@ -70,7 +70,7 @@ function InventoryAddForm (props) {
         .then(resp => resp.json())
         .then((data) => {
           getData();
-          closeModal();
+          closeModal(event);
           openSnackBar();
         })
         .catch(err => console.log('addInventoryForm fetch /api/inventory: ERROR: ', err));
