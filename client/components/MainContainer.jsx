@@ -3,9 +3,6 @@ import { Box, CssBaseline, Toolbar } from '@mui/material';
 import TableContainer from './TableContainer.jsx';
 import Banner from './Banner.jsx';
 import NavSideBar from './NavSideBar.jsx';
-
-// import D3_App from '../react-d3/src/D3_App.js';
-
 import ShoppingList from "./ShoppingList.jsx";
 import HomeContainer from './HomeContainer.jsx';
 
@@ -50,13 +47,6 @@ function MainContainer() {
     }
 
     let mainContent;
-
-//     if (display === 'table') {
-//       mainContent = <TableContainer table={table}/>  
-//     }
-//     if (display === 'home') {
-//       mainContent =  <D3_App/> 
-//     }
 
     if (display === 'table') mainContent = <TableContainer table={table}/>
     if (display === 'shop') mainContent = <ShoppingList/>
