@@ -9,7 +9,7 @@ const catalogController = require("../controllers/catalogController");
 const supplierController = require("../controllers/supplierController");
 
 // routes for HOME display
-router.post('/home',
+router.get('/home',
     homeController.viewProcedureDetails,
     (req, res) => res.status(200).json(res.locals.procedureDetails)
 );
