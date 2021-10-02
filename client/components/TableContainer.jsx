@@ -98,7 +98,7 @@ function TableContainer(props) {
     addButton = <AddModal getData={getData} table={table} data={data} openSnackBar={openSnackBar}/>;
     deleteButton = null;
   }
-  else {
+  else if (table === 'procedures') {
     addButton = null;
     deleteButton = null;
   }

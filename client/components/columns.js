@@ -102,12 +102,22 @@ const columnDefinitions = {
       },
       {
         field: 'total',
-        headerName: 'Quantity Needed',
+        headerName: 'Needed',
+        flex: 1,
+      },
+      {
+        field: 'inInventory',
+        headerName: 'In Stock',
+        flex: 1,
+      },
+      {
+        field: 'needed',
+        headerName: 'To Be Purchased',
         flex: 1,
       },
       {
         field: 'cost',
-        headerName: 'Cost',
+        headerName: 'Total Cost',
         flex: 1,
         valueFormatter: (params) => { return formatCurrency(params.value);},
       },
