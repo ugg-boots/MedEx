@@ -3,10 +3,14 @@ import { Box, CssBaseline, Toolbar } from '@mui/material';
 import TableContainer from './TableContainer.jsx';
 import Banner from './Banner.jsx';
 import NavSideBar from './NavSideBar.jsx';
-import D3_App from '../react-d3/src/D3_App.js';
+
+// import D3_App from '../react-d3/src/D3_App.js';
+
+import ShoppingList from "./ShoppingList.jsx";
+import HomeContainer from './HomeContainer.jsx';
 
 function MainContainer() {
-    const [table, setTable] = useState('catalog');
+    const [table, setTable] = useState('inventory');
     const [display, setDisplay] = useState('table');
 
     const buttonClick = (event, key) => {
@@ -35,6 +39,10 @@ function MainContainer() {
         case 'Suppliers':
           newTable = 'suppliers';
           newDisplay = 'table';
+          break;
+        case 'Shopping List':
+          newTable = '';
+          newDisplay = 'shop';
       }
 
       setDisplay(newDisplay);
@@ -42,12 +50,18 @@ function MainContainer() {
     }
 
     let mainContent;
-    if (display === 'table') {
-      mainContent = <TableContainer table={table}/>  
-    }
-    if (display === 'home') {
-      mainContent =  <D3_App/> 
-    }
+
+//     if (display === 'table') {
+//       mainContent = <TableContainer table={table}/>  
+//     }
+//     if (display === 'home') {
+//       mainContent =  <D3_App/> 
+//     }
+
+    if (display === 'table') mainContent = <TableContainer table={table}/>
+    if (display === 'shop') mainContent = <ShoppingList/>
+    if (display === 'home') mainContent = <HomeContainer/>
+
     return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />

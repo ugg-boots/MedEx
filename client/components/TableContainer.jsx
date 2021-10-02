@@ -4,6 +4,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import columnDefinitions from './columns.js';
 import AddModal from './AddModal.jsx';
 import InventoryDeleteDialog from './InventoryDeleteDialog.jsx';
+import SimpleSnackBar from './SimpleSnackBar.jsx';
 
 function TableContainer(props) {
   const { table } = props;
@@ -12,6 +13,7 @@ function TableContainer(props) {
 
   const [data, setData] = useState([]);
   const [selectionModel, setSelectionModel] = useState([]);
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
 
   const getData = () => {
     fetch('/api/' + table)
@@ -21,6 +23,17 @@ function TableContainer(props) {
         setData(tableElements);
         })
       .catch(err => console.log('Table.componentDidMount: get tableElement: ERROR: ', err));
+  }
+
+  const handleSnackBarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackBarOpen(false);
+  };
+
+  const openSnackBar = () => {
+    setSnackBarOpen(true);
   }
 
   const deleteData = (table) => {
@@ -74,20 +87,30 @@ function TableContainer(props) {
   let addButton;
   let deleteButton;
   if (table === 'inventory') {
-    addButton = <AddModal getData={getData} table={table} data={data}/>;
-    deleteButton = <InventoryDeleteDialog table={table} deleteData={deleteData}/>
+    addButton = <AddModal getData={getData} table={table} data={data} openSnackBar={openSnackBar}/>;
+    deleteButton = <InventoryDeleteDialog table={table} deleteData={deleteData} />
   }
   else if (table === 'catalog') {
-    addButton = <AddModal getData={getData} table={table} data={data}/>;
+    addButton = <AddModal getData={getData} table={table} data={data} openSnackBar={openSnackBar}/>;
     deleteButton = null;
   }
   else if (table === 'suppliers') {
-    addButton = <AddModal getData={getData} table={table} data={data}/>;
+    addButton = <AddModal getData={getData} table={table} data={data} openSnackBar={openSnackBar}/>;
     deleteButton = null;
   }
-  else {
+  else if (table === 'procedures') {
     addButton = null;
     deleteButton = null;
+  }
+
+  let snackBar;
+  if (snackBarOpen) {
+    let alertText;
+    if (table === 'catalog') alertText = 'Added new product';
+    if (table === 'inventory') alertText = 'Added new item';
+    if (table === 'suppliers') alertText = 'Added new supplier';
+    
+    snackBar = <SimpleSnackBar open={snackBarOpen} handleClose={handleSnackBarClose} alertText={alertText}/>
   }
 
   return (
@@ -104,6 +127,7 @@ function TableContainer(props) {
           }}
           selectionModel={selectionModel}
         />
+        {snackBar}
       </div>
     </div>
   )

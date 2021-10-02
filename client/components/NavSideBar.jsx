@@ -17,7 +17,7 @@ function NavSideBar(props) {
         <Toolbar />
             <Box sx={{ overflow: 'auto', p: 2 }}>
                 <List>
-                    {['Home', 'Current Inventory', 'Procedures', 'Catalog', 'Suppliers'].map((text) => (
+                    {['Home', 'Shopping List', 'Current Inventory', 'Procedures', 'Catalog', 'Suppliers'].map((text) => (
                     <ListItem button key={text} onClick={(event) => {props.buttonClick(event, text)}}>
                         <ListItemText primary={text} />
                     </ListItem>
