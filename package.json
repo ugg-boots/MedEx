@@ -6,7 +6,8 @@
   "scripts": {
     "build": "NODE_ENV=production webpack",
     "dev": "webpack serve --open & nodemon server/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev2": "concurrently \"webpack serve --open\" \"nodemon server/server.js\""
   },
   "repository": {
     "type": "git",
