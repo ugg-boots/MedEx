@@ -14,7 +14,7 @@ function MainContainer() {
       let newTable;
       let newDisplay;
 
-      switch (key) {
+        switch (key) {
         case 'Home':
           newTable = '';
           newDisplay = 'home';
@@ -42,7 +42,8 @@ function MainContainer() {
 
     let mainContent;
     if (display === 'table') mainContent = <TableContainer table={table}/>
-  
+    // if (display === 'home') mainContent = <D3_App data={this.data}/>
+     
     return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
