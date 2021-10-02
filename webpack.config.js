@@ -4,7 +4,7 @@ const HTMLWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: './client/index.js',
-  mode: process.env.NODE_ENV,
+  mode: "development",
   output: {
     filename: "bundle.js",
     path: path.resolve("dist"),
@@ -14,7 +14,7 @@ module.exports = {
     host: 'localhost',
     port: 8080,
     proxy: {
-      '/api': {
+      '/': {
       target: 'http://localhost:3000/',
       changeOrigin: true
       }

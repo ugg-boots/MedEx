@@ -1,0 +1,30 @@
+.modalContent {
+    background-color: white;
+    width: 400px;
+}
+
+.modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+  .modalBody {
+    padding: 10px;
+    margin: 20px;
+  }
+
+  .modalButton {
+    display: inline;
+  }
+
+  .homeContainer {
+    display: flex;
+  }
