@@ -4,6 +4,7 @@ import TableContainer from './TableContainer.jsx';
 import Banner from './Banner.jsx';
 import NavSideBar from './NavSideBar.jsx';
 import ShoppingList from "./ShoppingList.jsx";
+import HomeContainer from './HomeContainer.jsx';
 
 function MainContainer() {
     const [table, setTable] = useState('inventory');
@@ -48,6 +49,7 @@ function MainContainer() {
     let mainContent;
     if (display === 'table') mainContent = <TableContainer table={table}/>
     if (display === 'shop') mainContent = <ShoppingList/>
+    if (display === 'home') mainContent = <HomeContainer/>
   
     return (
     <Box sx={{ display: 'flex' }}>

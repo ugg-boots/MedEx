@@ -126,6 +126,24 @@ const columnDefinitions = {
         headerName: 'Supplier',
         flex: 1,
       },
+    ],
+    expiration: [
+        {
+          field: 'product_name',
+          headerName: 'Product Name',
+          flex: 1
+        },
+        {
+          field: 'quantity',
+          headerName: 'Quantity',
+          flex: 1,
+        },
+        {
+          field: 'expiration_date',
+          headerName: 'Expiration Date',
+          flex: 1,
+          valueFormatter: (params) => { return formatDate(params.value);},
+        },
     ]
 
 }
