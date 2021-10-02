@@ -8,6 +8,11 @@ const proceduresController = require("../controllers/proceduresController")
 const catalogController = require("../controllers/catalogController");
 const supplierController = require("../controllers/supplierController");
 
+function testFunction (req, res, next) {
+    console.log(res.locals.procedureDetails);
+    next();
+}
+
 // routes for HOME display
 router.get('/home',
     homeController.viewProcedureDetails,

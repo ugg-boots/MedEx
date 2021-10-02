@@ -1,51 +1,74 @@
 import React, {useState, useEffect} from 'react';
 import { Typography } from '@material-ui/core';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, InputLabel, MenuItem, FormControl, Select, TextField, Button } from '@mui/material';
+import { Box, InputLabel, MenuItem, Select, TextField, Button } from '@mui/material';
+import columnDefinitions from './columns.js';
 
 function HomeContainer(props) {
   const [procedure, setProcedure] = useState('');
-  const [allProcedureNames, setAllProcedureNames] = useState([]);
   const [numProcedures, setNumProcedures] = useState([]);
   const [procedureData, setProcedureData] = useState([]);
+  const [rows, setRows] = useState([]);
 
   const handleChange = (event) => {
     setProcedure(event.target.value);
   };
   
-  function getProcedureNames() {
-    const procedureNames = [];
-    fetch('/api/procedures')
+  const getProcedureData = () => {
+    fetch('/api/home')
     .then(res => res.json())
     .then((tableElements) => {
       if (!Array.isArray(tableElements)) tableElements = [];
-      tableElements.forEach(element => {
-        if (!procedureNames.includes(element.procedure_name)) procedureNames.push(element.procedure_name);
-      })
-      setAllProcedureNames(procedureNames);
+      setProcedureData(tableElements);
       })
     .catch(err => console.log('InventoryAddForm.componentDidMount: getProductNames: ERROR: ', err));
-    console.log(procedureNames);
   }
 
-  function handleSubmit(event) {
-
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+    const rows = [];
+    procedureData.forEach((element, index) => {
+      if (element.procedure_name === procedure) {
+      const total = Math.ceil(numProcedures * element.qty_per_procedure/element.qty_per_unit);
+      const cost = total * element.unit_price;
+      const newObj = {
+        product_name: element.product_name,
+        total: total,
+        cost: cost,
+        supplier: element.supplier_name,
+        id: index
+      };
+      rows.push(newObj);
+      setRows(rows);
+      }
+    });
+    console.log(rows);
   }
 
   useEffect(() => {
-    getProcedureNames();
-  }, [procedure])
+    getProcedureData();
+  }, [])
 
+  const procedureNames = [];
+  procedureData.forEach(element => {
+    if (!procedureNames.includes(element.procedure_name)) procedureNames.push(element.procedure_name);
+  })
   const menuItems=[];
-  allProcedureNames.forEach(element => {
+  procedureNames.forEach(element => {
       menuItems.push(<MenuItem value={element}>{element}</MenuItem>)
   })
+
+  let datagrid;
+  if (rows.length) {
+    datagrid = <DataGrid rows={rows} columns={columnDefinitions.home}/>
+  }
 
   return (
     <div>
         <Typography variant='h5'>Select a procedure</Typography>
         <Box sx={{ minWidth: 120 }}>
-          <FormControl onSubmit={(event) => handleSubmit(event)}>
+          <form onSubmit={(event) => {console.log('submitted'); handleSubmit(event)}}>
             <InputLabel>Procedure</InputLabel>
             <Select
               value={procedure}
@@ -55,7 +78,6 @@ function HomeContainer(props) {
               {menuItems}
             </Select>
             <br/>
-            <Typography variant='h5'>Number of procedures:</Typography>
             <TextField
             label="Number of Procedures"
             variant="standard"
@@ -65,9 +87,11 @@ function HomeContainer(props) {
             }} />
           <br/>
           <Button variant="contained" color="primary" type="submit">Submit</Button>
-          </FormControl>
+          </form>
         </Box>
-
+        <div style={{ height: 400, width: '100%' }}>
+        {datagrid}
+        </div>
     </div>
   );
 }
