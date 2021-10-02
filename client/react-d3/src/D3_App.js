@@ -7,8 +7,8 @@ class D3_App extends Component {
     super(props)
     this.state = {
       data: [30, 300, 51, 25, 5, 3],//this.props.data
-      width: 500,
-      height: 700,
+      width: 300,
+      height: 500,
       id: "home"
     }
   }
