@@ -7,8 +7,8 @@ import ShoppingList from "./ShoppingList.jsx";
 import HomeContainer from './HomeContainer.jsx';
 
 function MainContainer() {
-    const [table, setTable] = useState('inventory');
-    const [display, setDisplay] = useState('table');
+    const [table, setTable] = useState('');
+    const [display, setDisplay] = useState('home');
 
     const buttonClick = (event, key) => {
       console.log('button clicked!')

@@ -144,8 +144,30 @@ const columnDefinitions = {
           flex: 1,
           valueFormatter: (params) => { return formatDate(params.value);},
         },
+    ],
+    lowStock: [
+      {
+        field: 'product_name',
+        headerName: 'Product Name',
+        flex: 1
+      },
+      {
+        field: 'quantity',
+        headerName: 'In Stock',
+        flex: 1,
+      },
+      {
+        field: 'max_stock',
+        headerName: 'Target',
+        flex: 1,
+      },
+      {
+        field: 'percent',
+        headerName: '% Target',
+        flex: 1,
+        valueFormatter: (params) => { return formatPercent(params.value);},
+      },
     ]
-
 }
 
 const formatDate = (date) => {
@@ -160,6 +182,10 @@ const formatCurrency = (value) => {
   });
   
   return formatter.format(value);
+}
+
+const formatPercent = (value) => {
+  return parseFloat(value * 100).toFixed(2)+"%"
 }
 
 export default columnDefinitions;
