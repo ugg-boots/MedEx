@@ -4,7 +4,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Box, InputLabel, MenuItem, Select, TextField, Button } from '@mui/material';
 import columnDefinitions from './columns.js';
 
-function HomeContainer(props) {
+function ShoppingList() {
   const [procedure, setProcedure] = useState('');
   const [numProcedures, setNumProcedures] = useState([]);
   const [procedureData, setProcedureData] = useState([]);
@@ -16,7 +16,7 @@ function HomeContainer(props) {
   };
   
   const getProcedureData = () => {
-    fetch('/api/home')
+    fetch('/api/shop')
     .then(res => res.json())
     .then((tableElements) => {
       if (!Array.isArray(tableElements)) tableElements = [];
@@ -122,4 +122,4 @@ function HomeContainer(props) {
   );
 }
 
-export default HomeContainer;
+export default ShoppingList;
