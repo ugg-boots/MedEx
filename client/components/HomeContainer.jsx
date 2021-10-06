@@ -6,11 +6,15 @@ import ExpirationView from './ExpirationView.jsx';
 function HomeContainer () {
     return (
         <div className='homeContainer'>
-            <div>
+                <div className='expyView'>
                 <ExpirationView />
+                </div>
+                <div className='lowStockView'>
                 <LowStockView />
-            </div>
-            <ChartView/>
+                </div>
+                <div className='chartView'>
+                <ChartView/>
+                </div>
         </div>
     )
 }

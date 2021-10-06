@@ -7,8 +7,8 @@ import ShoppingList from "./ShoppingList.jsx";
 import HomeContainer from './HomeContainer.jsx';
 
 function MainContainer() {
-    const [table, setTable] = useState('inventory');
-    const [display, setDisplay] = useState('table');
+    const [table, setTable] = useState('');
+    const [display, setDisplay] = useState('home');
 
     const buttonClick = (event, key) => {
       console.log('button clicked!')
@@ -16,7 +16,7 @@ function MainContainer() {
       let newTable;
       let newDisplay;
 
-      switch (key) {
+        switch (key) {
         case 'Home':
           newTable = '';
           newDisplay = 'home';
@@ -47,10 +47,11 @@ function MainContainer() {
     }
 
     let mainContent;
+
     if (display === 'table') mainContent = <TableContainer table={table}/>
     if (display === 'shop') mainContent = <ShoppingList/>
     if (display === 'home') mainContent = <HomeContainer/>
-  
+
     return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />

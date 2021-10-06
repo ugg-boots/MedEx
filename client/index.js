@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import App from "./App.jsx";
 import "./styles.scss";
+import D3_App from './react-d3/src/D3_App.js';
 
 const appRouting = (
   <Router>
