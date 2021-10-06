@@ -14,9 +14,10 @@ function InventoryAddForm (props) {
 
   const {table, getData, closeModal, openSnackBar } = props;
   
-    function getProductNames() {
+    async function getProductNames() {
       const productNames = [];
-      fetch('/api/catalog')
+      
+      await fetch('/api/catalog')
       .then(res => res.json())
       .then((tableElements) => {
         if (!Array.isArray(tableElements)) tableElements = [];
@@ -26,6 +27,9 @@ function InventoryAddForm (props) {
         setAllProductNames(productNames);
         })
       .catch(err => console.log('InventoryAddForm.componentDidMount: getProductNames: ERROR: ', err));
+
+    
+    
     }
 
     useEffect(() => {

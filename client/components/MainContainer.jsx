@@ -9,7 +9,22 @@ import HomeContainer from './HomeContainer.jsx';
 function MainContainer() {
     const [table, setTable] = useState('');
     const [display, setDisplay] = useState('home');
+    
+    
+    //add functionality
 
+
+
+    //delete functionality    
+    const handleDeleteEntry = async (entryId) => {
+      try {
+        await axios.delete(`/api/entry/${entryId}`);
+        const newEntries = entries.filter((entry) => entry.entryId !== entryId);
+        setEntries(newEntries);
+      } catch (e) {
+        console.log('An error occurred when deleting ', entryId);
+      }
+    };
     const buttonClick = (event, key) => {
       console.log('button clicked!')
       console.log(key)
