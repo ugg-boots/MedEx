@@ -20,27 +20,14 @@ CREATE TABLE catalog (
 );
 
 
-INSERT INTO catalog (
-    product_name, product_desc, supplier_id, unit_price, qty_per_unit
-)
-VALUES (
-    'SMALL- Nitrile Examination Gloves', 'Medical Grade, Chemo-rated, Powder Free(Blue)', '3', '19.99', '100'
-);
+INSERT INTO catalog (product_name, product_desc, supplier_id, unit_price, qty_per_unit, max_stock)
+VALUES ('Nitrile Examination Gloves', 'Medical Grade, Chemo-rated, Powder Free(Blue)', '3', '19.99', '100', '100');
 
-INSERT INTO catalog (
-    product_name, product_desc, supplier_id, unit_price, qty_per_unit
-)
-VALUES (
-    'LARGE- Vinyl Examination Gloves', 'Latex Free, Rubber Free, Powder Free(Blue)', '3', '16.99', '100'
-);
+INSERT INTO catalog (product_name, product_desc, supplier_id, unit_price, qty_per_unit, max_stock)
+VALUES ('Vinyl Examination Gloves', 'Latex Free, Rubber Free, Powder Free(Blue)', '3', '16.99', '100', '100');
 
-INSERT INTO catalog (
-    product_name, product_desc, supplier_id, unit_price, qty_per_unit
-)
-VALUES (
-    'Hygenix Disposable Face Masks', '3-Layer, PFE 99% Filter Quality Tested', '2', '13.99', '50'
-);
-
+INSERT INTO catalog (product_name, product_desc, supplier_id, unit_price, qty_per_unit, max_stock)
+VALUES ('Hygenix Disposable Face Masks', '3-Layer, PFE 99% Filter Quality Tested', '2', '13.99', '50', '50');
 
 CREATE TABLE inventory (
     item_id             SERIAL PRIMARY KEY,
@@ -50,12 +37,18 @@ CREATE TABLE inventory (
     CONSTRAINT inventory_pk PRIMARY KEY (item_id)
 )
 
+
+
 CREATE TABLE procedures (
 	procedure_id        SERIAL NOT NULL,
 	procedure_name      VARCHAR(255) NOT NULL,
 	procedure_desc      VARCHAR(255) NOT NULL,
 	CONSTRAINT procedures_pk PRIMARY KEY (procedure_id)
 );
+
+INSERT INTO 
+
+
 
 CREATE TABLE junction (
 	junction_id         SERIAL NOT NULL,
