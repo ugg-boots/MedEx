@@ -10,7 +10,7 @@ const ExpirationView = () => {
     const [data, setData] = useState([]);
     
     const getData = () => {
-        fetch('/api/inventory')
+        fetch('/api/expiration')
         .then(res => res.json())
         .then((tableElements) => {
           if (!Array.isArray(tableElements)) tableElements = [];

@@ -16,7 +16,7 @@ const ShoppingList = (props) => {
   };
   
   const getProcedureData = () => {
-    fetch('/api/home')
+    fetch('/api/shop')
     .then(res => res.json())
     .then((tableElements) => {
       if (!Array.isArray(tableElements)) tableElements = [];
