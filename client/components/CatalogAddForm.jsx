@@ -10,6 +10,7 @@ function CatalogAddForm (props) {
   const [supplierName, setSupplierName] = useState('');
   const [unitPrice, setUnitPrice] = useState('');
   const [qtyPerUnit, setQtyPerUnit] = useState('');
+  const [maxStock, setMaxStock] = useState('');
   const [allSupplierNames, setAllSupplierNames] = useState('');
   const [warning, setWarning] = useState(null);
   const [warningOn, setWarningOn] = useState(false);
@@ -70,7 +71,8 @@ function CatalogAddForm (props) {
         product_desc: productDesc, 
         supplier_name: supplierName,
         unit_price: unitPrice,
-        qty_per_unit: qtyPerUnit
+        qty_per_unit: qtyPerUnit,
+        max_stock: maxStock
       };
 
       fetch('/api/catalog', {
@@ -148,6 +150,14 @@ function CatalogAddForm (props) {
             onChange={(event) => {
               setQtyPerUnit(event.target.value);
             }} />
+          <br/>
+          <TextField
+            label="Target Stock Level"
+            variant="standard"
+            value={maxStock}
+            onChange={(event) => {
+              setMaxStock(event.target.value);
+            }}/>
           <br/>
           <Button variant="contained" color="primary" type="submit">Submit</Button>
         </form>
