@@ -4,7 +4,9 @@ import dayjs from 'dayjs';
 import columnDefinitions from './columns.js';
 import { DataGrid } from '@mui/x-data-grid';
 
-function ExpirationView () {
+
+//declared a functional component that will make a fetch request to api/inventory endpoint
+const ExpirationView = () => {
     const [data, setData] = useState([]);
     
     const getData = () => {
