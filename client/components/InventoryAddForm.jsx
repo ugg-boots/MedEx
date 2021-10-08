@@ -27,9 +27,6 @@ function InventoryAddForm (props) {
         setAllProductNames(productNames);
         })
       .catch(err => console.log('InventoryAddForm.componentDidMount: getProductNames: ERROR: ', err));
-
-    
-    
     }
 
     useEffect(() => {

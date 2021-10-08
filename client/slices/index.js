@@ -12,13 +12,12 @@
  import { combineReducers } from 'redux';
 
  // import all reducers here
- import inventoryReducer from './inventoryReducer';
- import catalogReducer from './catalogReducer';
+ import inventorySlicer from './inventorySlicer';
  
  // combine reducers
  const reducers = combineReducers({
    // if we had other reducers, they would go here
-   inventory: inventoryReducer,
+   inventory: inventorySlicer.reducer,
    catalog: catalogReducer,
  });
  
