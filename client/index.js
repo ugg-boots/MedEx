@@ -1,17 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
 
 import App from "./App.jsx";
 import "./styles.scss";
-import D3_App from './react-d3/src/D3_App.js';
+import store from "./store";
 
 const appRouting = (
-  <Router>
-    <Switch>
-      <Route exact path="/" component={App} />
-    </Switch>
-  </Router>
+  <Provider store={store}>
+    <App/>
+  </Provider>
 );
 
 ReactDOM.render(appRouting, document.getElementById("root"));
