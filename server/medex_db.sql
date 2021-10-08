@@ -21,13 +21,10 @@ CREATE TABLE catalog (
 
 
 INSERT INTO catalog (product_name, product_desc, supplier_id, unit_price, qty_per_unit, max_stock)
-VALUES ('Nitrile Examination Gloves', 'Medical Grade, Chemo-rated, Powder Free(Blue)', '3', '19.99', '100', '100');
-
-INSERT INTO catalog (product_name, product_desc, supplier_id, unit_price, qty_per_unit, max_stock)
-VALUES ('Vinyl Examination Gloves', 'Latex Free, Rubber Free, Powder Free(Blue)', '3', '16.99', '100', '100');
-
-INSERT INTO catalog (product_name, product_desc, supplier_id, unit_price, qty_per_unit, max_stock)
-VALUES ('Hygenix Disposable Face Masks', '3-Layer, PFE 99% Filter Quality Tested', '2', '13.99', '50', '50');
+VALUES 
+('Nitrile Examination Gloves', 'Medical Grade, Chemo-rated, Powder Free(Blue)', '3', '19.99', '100', '100'),
+('Vinyl Examination Gloves', 'Latex Free, Rubber Free, Powder Free(Blue)', '3', '16.99', '100', '100'),
+('Hygenix Disposable Face Masks', '3-Layer, PFE 99% Filter Quality Tested', '2', '13.99', '50', '50');
 
 CREATE TABLE inventory (
     item_id             SERIAL PRIMARY KEY,
@@ -46,7 +43,15 @@ CREATE TABLE procedures (
 	CONSTRAINT procedures_pk PRIMARY KEY (procedure_id)
 );
 
-INSERT INTO 
+INSERT INTO procedures (procedure_name, procedure_desc)
+VALUES 
+('Extraction', 'Uncomplicated tooth extraction'), 
+('Flouride', 'Application of flouride varnish'),
+('Cleaning', 'Basic teeth cleaning'),
+('Root Canal Therapy', 'Remove inflamed or infected tissue at the root'),
+('Dental Implants', 'Placement of permanent artificial teeth'),
+('Braces', 'Correct bite and align teeth with braces'),
+('Dental Crowns', 'Teeth restoration and protection');
 
 
 

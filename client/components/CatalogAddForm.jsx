@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, Button } from '@material-ui/core';
 import { Autocomplete, TextField, Alert } from '@mui/material'
+import { addItem } from '../slices/catalogSlices'
+import { useDispatch } from 'react-redux'
 
 
 function CatalogAddForm (props) {
-    
+  
+  const dispatch = useDispatch();
+
   const [productName, setProductName] = useState('');
   const [productDesc, setProductDesc] = useState('');
   const [supplierName, setSupplierName] = useState('');
@@ -40,9 +44,9 @@ function CatalogAddForm (props) {
 
       //validate data
       let duplicate = false;
-      data.forEach(element => {
-        if (element.product_name === productName) return duplicate = true;
-      })
+      // data.forEach(element => {
+      //   if (element.product_name === productName) return duplicate = true;
+      // })
       if (duplicate) {
         setWarning(<Alert severity="warning" onClose={() => {setWarningOn(false)}}>Product is already in the catalog</Alert>);
         setWarningOn(true);
@@ -74,6 +78,8 @@ function CatalogAddForm (props) {
         qty_per_unit: qtyPerUnit,
         max_stock: maxStock
       };
+
+      dispatch(addItem(body));
 
       fetch('/api/catalog', {
         method: 'POST',

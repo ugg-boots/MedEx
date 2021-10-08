@@ -1,10 +1,11 @@
 import { combineReducers } from "redux";
 
 // import all reducers here:
-import catalogReducer from './catalogReducer';
+import catalogReducer from './catalogSlices';
 
 const reducers = combineReducers({
   catalog: catalogReducer
+
 });
 
 export default reducers
