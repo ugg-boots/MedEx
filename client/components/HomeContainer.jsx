@@ -10,9 +10,9 @@ const HomeContainer = (props)=> {
         <div className='homeContainer'>
             <Link to="/">
                 <ExpirationView />
-                </div>
                 <div className='lowStockView'>
                 <LowStockView />
+                </div>
             </Link>
             <ChartView/>
         </div>
