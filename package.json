@@ -40,6 +40,10 @@
     "react-redux": "^7.2.5",
     "react-router-dom": "^5.3.0",
     "redux": "^4.1.1",
+<<<<<<< HEAD
+=======
+    "redux-devtools-extension": "^2.13.9",
+>>>>>>> dev
     "sass": "^1.42.1"
   },
   "devDependencies": {

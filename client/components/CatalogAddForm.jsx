@@ -79,6 +79,7 @@ function CatalogAddForm (props) {
         max_stock: maxStock
       };
 
+      // dispatch the add item action to add item to the catalog store:
       dispatch(addItem(body));
 
       fetch('/api/catalog', {

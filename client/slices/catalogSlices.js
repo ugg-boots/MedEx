@@ -8,7 +8,6 @@ const catalogSlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, action) => {
-      console.log(action.payload)
       return ([...state, action.payload])
     },
     deleteItem: (state, action) => {
