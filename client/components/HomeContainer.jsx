@@ -6,16 +6,16 @@ import {Link} from 'react-router-dom'
 
 //declared a functional component that will lift the state of ExpirationView
 const HomeContainer = (props)=> {
-    return (
-        <div className='homeContainer'>
-            <Link to="/">
-                <ExpirationView />
-                </div>
-                <div className='lowStockView'>
+  return (
+    <div className='homeContainer'>
+      <Link to="/">
+        <ExpirationView />
+      </Link>
+        <div className='lowStockView'>
                 <LowStockView />
-            </Link>
             <ChartView/>
         </div>
+    </div>
     )
 }
 

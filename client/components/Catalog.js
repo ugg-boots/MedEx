@@ -7,12 +7,12 @@ import InventoryDeleteDialog from './InventoryDeleteDialog.jsx';
 import SimpleSnackBar from './SimpleSnackBar.jsx';
 
 
-const Catalog = () => {
+// const Catalog = () => {
 
 
-  return (
+//   return (
     
-  );
-};
+//   );
+// };
 
-export default Catalog;
+// export default Catalog;
