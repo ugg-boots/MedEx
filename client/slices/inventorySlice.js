@@ -19,6 +19,22 @@ export const fetchProductName = createAsyncThunk(
   }
 } 
 );
+export const fetchProductId = createAsyncThunk(
+  'inventory/fetchProductId',
+  async (id, thunkAPI) => {
+    try{
+      const fetchedData =  await fetch(`/api/inventory/query?product_id=${id}`).then((res) => res.json());
+      console.log("fetchProductId data ", fetchedData);
+      if(!Array.isArray(fetchedData)) fetchedData = [];
+        return fetchedData;
+      }
+   catch(err) {
+     console.log('InventorySlicer fetchProductId: ERROR: ', err);
+     if(!err.response) throw err;
+     return thunkAPI.rejectWithValue(err.response.data);
+  }
+} 
+);
 
 //posting data to database
 export const postInventory = createAsyncThunk(
