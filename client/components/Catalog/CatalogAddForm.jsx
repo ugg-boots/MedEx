@@ -1,48 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, Button } from '@material-ui/core';
 import { Autocomplete, TextField, Alert } from '@mui/material'
+import { fetchSuppliers, postCatalog } from '../../slices/catalogSlices'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 function CatalogAddForm (props) {
-    
+  
+  const dispatch = useDispatch();
+
   const [productName, setProductName] = useState('');
   const [productDesc, setProductDesc] = useState('');
   const [supplierName, setSupplierName] = useState('');
   const [unitPrice, setUnitPrice] = useState('');
   const [qtyPerUnit, setQtyPerUnit] = useState('');
   const [maxStock, setMaxStock] = useState('');
-  const [allSupplierNames, setAllSupplierNames] = useState('');
   const [warning, setWarning] = useState(null);
   const [warningOn, setWarningOn] = useState(false);
 
   const { table, getData, closeModal, data, openSnackBar } = props;
   
-    function getSupplierNames() {
-      const supplierNames = [];
-      fetch('/api/suppliers')
-      .then(res => res.json())
-      .then((tableElements) => {
-        if (!Array.isArray(tableElements)) tableElements = [];
-        tableElements.forEach(element => {
-          supplierNames.push(element.supplier_name);
-        })
-        setAllSupplierNames(supplierNames);
-        })
-      .catch(err => console.log('InventoryAddForm.componentDidMount: getSupplierNames: ERROR: ', err));
-    }
 
+    // on loading modal/dialog form, we need to load suppliers to add to drop down list
     useEffect(() => {
-      getSupplierNames();
-    }, [table])
+      dispatch(fetchSuppliers());
+    }, []);
+
+    const allSupplierNames = useSelector(state => state.catalog.allSuppliers)
 
     function handleSubmit(event) {
       event.preventDefault();
 
       //validate data
       let duplicate = false;
-      data.forEach(element => {
-        if (element.product_name === productName) return duplicate = true;
-      })
+      // data.forEach(element => {
+      //   if (element.product_name === productName) return duplicate = true;
+      // })
       if (duplicate) {
         setWarning(<Alert severity="warning" onClose={() => {setWarningOn(false)}}>Product is already in the catalog</Alert>);
         setWarningOn(true);
@@ -75,20 +68,9 @@ function CatalogAddForm (props) {
         max_stock: maxStock
       };
 
-      fetch('/api/catalog', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'Application/JSON'
-        },
-        body: JSON.stringify(body)
-      })
-        .then(resp => resp.json())
-        .then((data) => {
-          getData();
-          closeModal(event);
-          openSnackBar();
-        })
-        .catch(err => console.log('CatalogAddForm fetch /api/catalog: ERROR: ', err));
+      // dispatch the add item action to add item to the catalog store:
+      dispatch(postCatalog(body));
+
       }
     }
 
