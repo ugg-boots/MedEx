@@ -6,7 +6,7 @@ import NavSideBar from './NavSideBar.jsx';
 import ShoppingList from './ShoppingList.jsx';
 import HomeContainer from './HomeContainer.jsx';
 import CatalogAddForm from './CatalogAddForm.jsx';
-import InventoryAddForm from './InventoryAddForm.jsx';
+import Inventory from './Inventory.jsx';
 import SupplierAddForm from './SupplierAddForm.jsx';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -26,7 +26,7 @@ function MainContainer() {
 						<Route exact path="/" exact component={HomeContainer} />
 						<Route exact path="/shopping" exact component={ShoppingList} />
 						<Route exact path="/catalog" exact component={CatalogAddForm} />
-						<Route exact path="/inventory" exact component={InventoryAddForm} />
+						<Route exact path="/inventory" exact component={Inventory} />
 						<Route exact path="/procedures" exact component={TableContainer} />
 						<Route exact path="/suppliers" exact component={SupplierAddForm} />
 					</Switch>

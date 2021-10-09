@@ -1,54 +1,95 @@
-import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Typography, Button } from '@material-ui/core';
+import { Autocomplete, TextField, Alert } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
+import { letterSpacing } from '@mui/system';
+import {fetchProductName, postInventory}  from '../slices/inventorySlice';
 
-const Inventory = ({table, getData, closeModal, openSnackBar }) => {
-  const [productName, setProductName] = useState('');
+export default function Inventory () {
+  
+  const [productName, setProductName] = useState('');    
   const [quantity, setQuantity] = useState('');
-  const [expyDate, setExpyDate] = useState('');
-  const [allProductNames, setAllProductNames] = useState('');
+  const [expDate, setExpDate] = useState('');
   const [warning, setWarning] = useState(null);
   const [warningOn, setWarningOn] = useState(false);
 
-  
-  const addItem = async () => {
-    await axios.post('/api/inventory') 
-      .then((data) => {
-        getData();
-        openSnackBar();
-    })
-    .catch(err => console.log('addInventoryForm fetch /api/inventory: ERROR: ', err));
-  };
 
-  const deleteItem = async () => {
-    await axios.delete('')
-  }
-
-
-  const getProductNames = async ()  => {
-    const productNames = [];
-    await axios.get('/api/catalog')
-    .then((tableElements) => {
-      if (!Array.isArray(tableElements)) tableElements = [];
-      tableElements.forEach(element => {
-        productNames.push(element.product_name);
-      })
-      setAllProductNames(productNames);
-      })
-    .catch(err => console.log('InventoryAddForm.componentDidMount: getProductNames: ERROR: ', err));
-  }
-
+  const dispatch = useDispatch();
+  const {allProductNames } = useSelector((state) => state.inventory);
+ 
+  //getting all the available product names
   useEffect(() => {
-    getProductNames();
-  }, [table])
+    dispatch(fetchProductName());
+    });
+  
 
-  return (
-    <div style={{ display: "inline" }}>
-      <Button variant="text" onClick={addItem}>
-        Add Item
-      </Button>
-      <Button variant="text">Delete Item</Button>
-    </div>
-  );
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    //validate data
+    if (productName === '' || quantity === '' ||  expDate === '') {
+      const text = (productName === '') ? 'Product Name' : (quantity === '') ? 'Quantity' : 'Expiration Date'; 
+      setWarning(<Alert severity="warning" onClose={() => {setWarningOn(false)}}> {text} is required</Alert>);
+      setWarningOn(true);
+    }
+    //create request body
+    else {
+      const body = {
+        product_name: productName,
+        quantity: quantity, 
+        expiration_date: expDate
+      };
+      console.log(body);
+      dispatch(postInventory(body));
+    }
+  }
+
+    let renderWarning;
+    if (warningOn) {
+      renderWarning = warning;
+    }
+    else renderWarning = null;
+
+    return (
+      <div>
+        <Typography variant="h4">Add Inventory</Typography>
+        {renderWarning}
+        <form onSubmit={(event) => {handleSubmit(event)}}>
+          <Autocomplete
+            options={allProductNames}
+            sx={{ width: 270 }}
+            value={productName}
+            onChange={(event, newProductName) => {
+              setProductName(newProductName);
+            }}
+            name='productName'
+            renderInput={params => (
+              <TextField 
+                {...params} 
+                label="Product Name" 
+                variant="standard" />
+            )}
+          />
+          <br/>
+          <TextField
+            label="Quantity"
+            variant="standard"
+            value={quantity}
+            onChange={(event) => {
+              setQuantity(event.target.value);
+          }} />
+          <br/>
+          <input
+            style={{marginTop: '20px', marginBottom: '20px'}}
+            type='date'
+            value={expDate}
+            onChange={(event) => {
+            setExpDate(event.target.value);
+          }} />
+          <br/>
+          <Button variant="contained" color="primary" type="submit">Submit</Button>
+        </form>
+      </div>
+      );
 }
-
-export default Inventory;
