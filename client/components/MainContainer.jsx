@@ -7,7 +7,7 @@ import ShoppingList from './ShoppingList.jsx';
 import HomeContainer from './HomeContainer.jsx';
 import Catalog from '../components/Catalog/Catalog.js'
 import CatalogAddForm from '../components/Catalog/CatalogAddForm.jsx';
-import InventoryAddForm from './InventoryAddForm.jsx';
+import InventoryAddForm from './Inventory/InventoryAddForm.jsx';
 import SupplierAddForm from './SupplierAddForm.jsx';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 

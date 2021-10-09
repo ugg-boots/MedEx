@@ -5,7 +5,6 @@ import { fetchProducts } from '../../slices/catalogSlices'
 import { useDispatch, useSelector } from 'react-redux'
 import columnDefinitions from '../columns.js';
 import AddModal from '../AddModal.jsx';
-import InventoryDeleteDialog from '../InventoryDeleteDialog.jsx';
 import SimpleSnackBar from '../SimpleSnackBar.jsx';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
