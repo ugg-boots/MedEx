@@ -1,14 +1,10 @@
-import { createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+// import { composeWithDevTools } from 'redux-devtools-extension';
 import { configureStore } from '@reduxjs/toolkit';
+import supplierSlice from './slices/supplierSlice';
 
-// we are adding composeWithDevTools here to get easy access to the Redux dev tools
-// export const store = createStore(reducers, composeWithDevTools());
-// console.log('default store', store.getState());
-
-
+//configuring/adding the slice file to the store
 export default configureStore({
-  reducer: {
-
-  }
-})
+	reducer: {
+		supplier: supplierSlice,
+	},
+});

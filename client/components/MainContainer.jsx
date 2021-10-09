@@ -17,11 +17,9 @@ function MainContainer() {
 			<Box sx={{ display: 'flex' }}>
 				<CssBaseline />
 				<Banner />
-
 				<NavSideBar />
 				<Box component="main" sx={{ flexGrow: 1, p: 2 }}>
 					<Toolbar />
-
 					<Switch>
 						<Route exact path="/" exact component={HomeContainer} />
 						<Route exact path="/shopping" exact component={ShoppingList} />

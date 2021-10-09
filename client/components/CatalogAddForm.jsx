@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, Button } from '@material-ui/core';
 import { Autocomplete, TextField, Alert } from '@mui/material'
-
+import {useSelector, useDispatch} from 'react-redux'
 
 function CatalogAddForm (props) {
+    const dispatch = useDispatch();
+
     
   const [productName, setProductName] = useState('');
   const [productDesc, setProductDesc] = useState('');
@@ -14,6 +16,7 @@ function CatalogAddForm (props) {
   const [allSupplierNames, setAllSupplierNames] = useState('');
   const [warning, setWarning] = useState(null);
   const [warningOn, setWarningOn] = useState(false);
+  
 
   const { table, getData, closeModal, data, openSnackBar } = props;
   
