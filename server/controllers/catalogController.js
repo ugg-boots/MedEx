@@ -18,11 +18,12 @@ catalogController.getAllProducts = async (req, res, next) => {
 
 catalogController.addNewProduct = async (req, res, next) => {
   try {
-    const { product_name, product_desc, supplier_name, unit_price, qty_per_unit } = req.body;
+    const { product_name, product_desc, supplier_name, unit_price, qty_per_unit, max_stock } = req.body;
     const newProduct = await pool.query(
-      `INSERT INTO catalog (product_name, product_desc, supplier_id, unit_price, qty_per_unit) 
-      VALUES ($1, $2, (SELECT supplier_id FROM suppliers WHERE supplier_name = $3), $4, $5)`, 
-      [product_name, product_desc, supplier_name, unit_price, qty_per_unit]
+      `INSERT INTO catalog (product_name, product_desc, supplier_id, unit_price, qty_per_unit, max_stock) 
+      VALUES ($1, $2, (SELECT supplier_id FROM suppliers WHERE supplier_name = $3), $4, $5, $6)
+      RETURNING *`, 
+      [product_name, product_desc, supplier_name, unit_price, qty_per_unit, max_stock]
     );
     res.locals.newProduct = newProduct;
   } catch(err) {

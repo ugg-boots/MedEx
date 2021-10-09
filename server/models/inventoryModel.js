@@ -1,10 +1,10 @@
 const { Pool } = require("pg");
 
-const PG_URI =
-  "postgres://sowqmvmc:C8VcOF5uXm7v7Utsy-wL7WEor3YPR-Tq@fanny.db.elephantsql.com/sowqmvmc"
+// const PG_URI =
+//   "postgres://sowqmvmc:C8VcOF5uXm7v7Utsy-wL7WEor3YPR-Tq@fanny.db.elephantsql.com/sowqmvmc"
 
 // new database to be used once ready:
-// postgres://sssalwhd:qu-2RjmASG1jsAJZIuwVDbJnd8M1Sh7V@fanny.db.elephantsql.com/sssalwhd
+const PG_URI = "postgres://sssalwhd:qu-2RjmASG1jsAJZIuwVDbJnd8M1Sh7V@fanny.db.elephantsql.com/sssalwhd"
 
 
 // create a new pool here using the connection string above

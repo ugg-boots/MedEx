@@ -5,7 +5,8 @@ import Banner from './Banner.jsx';
 import NavSideBar from './NavSideBar.jsx';
 import ShoppingList from './ShoppingList.jsx';
 import HomeContainer from './HomeContainer.jsx';
-import CatalogAddForm from './CatalogAddForm.jsx';
+import Catalog from '../components/Catalog/Catalog.js'
+import CatalogAddForm from '../components/Catalog/CatalogAddForm.jsx';
 import InventoryAddForm from './InventoryAddForm.jsx';
 import SupplierAddForm from './SupplierAddForm.jsx';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
