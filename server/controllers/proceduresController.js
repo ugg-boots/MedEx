@@ -5,7 +5,7 @@ const proceduresController = {};
 proceduresController.getAllProcedures = async (req, res, next) => {
     
   const allProceduresQuery = 
-    `SELECT procedures.procedure_name, procedures.procedure_desc, catalog.product_name, junction.qty_per_procedure FROM procedures 
+    `SELECT procedures.procedure_name, procedures.procedure_id, procedures.procedure_desc, catalog.product_name, junction.qty_per_procedure FROM procedures 
     INNER JOIN junction ON procedures.procedure_id = junction.procedure_id
     INNER JOIN catalog ON catalog.product_id = junction.product_id`; 
 

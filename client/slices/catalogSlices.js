@@ -1,4 +1,3 @@
-import * as types from '../actions/actionTypes'
 import { createSlice, createAsyncThunk, rejectWithValue } from '@reduxjs/toolkit';
 
 // fetch suppliers to fill drop down selector in add form

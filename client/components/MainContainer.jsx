@@ -9,6 +9,7 @@ import Catalog from '../components/Catalog/Catalog.js'
 import CatalogAddForm from '../components/Catalog/CatalogAddForm.jsx';
 import InventoryAddForm from './InventoryAddForm.jsx';
 import SupplierAddForm from './SupplierAddForm.jsx';
+import ProceduresView from './ProceduresView.jsx';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 //functional component will take care of all the routing to all components
@@ -28,7 +29,7 @@ function MainContainer() {
 						<Route exact path="/shopping" exact component={ShoppingList} />
 						<Route exact path="/catalog" exact component={CatalogAddForm} />
 						<Route exact path="/inventory" exact component={InventoryAddForm} />
-						<Route exact path="/procedures" exact component={TableContainer} />
+						<Route exact path="/procedures" exact component={ProceduresView} />
 						<Route exact path="/suppliers" exact component={SupplierAddForm} />
 					</Switch>
 				</Box>
