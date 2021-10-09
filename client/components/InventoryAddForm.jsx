@@ -20,8 +20,8 @@ export default function Inventory () {
   //getting all the available product names
   useEffect(() => {
     dispatch(fetchProductName());
-    });
-  
+  }, []);
+  console.log("all product names: ",allProductNames)
 
 
   function handleSubmit(event) {

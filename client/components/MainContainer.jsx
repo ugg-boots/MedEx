@@ -8,7 +8,7 @@ import HomeContainer from './HomeContainer.jsx';
 import CatalogAddForm from './CatalogAddForm.jsx';
 import InventoryAddForm from './InventoryAddForm.jsx';
 import SupplierAddForm from './SupplierAddForm.jsx';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 
 //functional component will take care of all the routing to all components
 function MainContainer() {

@@ -8,14 +8,10 @@ export const fetchProductName = createAsyncThunk(
   'inventory/fetchProductName',
   async (_, thunkAPI) => {
     try{
-      await fetch('/api/catalog')
-      .then(res =>  {res.json()})
-      .then((catalogItems) => {
-        if (!Array.isArray(catalogItems)) catalogItems = [];
-        console.log(catalogItems)
-       return catalogItems;
-      })
-    }
+      const fetchedData =  await fetch('/api/catalog').then((res) => res.json());
+        if(!Array.isArray(fetchedData)) fetchedData = [];
+        return fetchedData;
+      }
    catch(err) {
      console.log('InventorySlicer fetchProductName: ERROR: ', err);
      if(!err.response) throw err;
@@ -28,8 +24,9 @@ export const fetchProductName = createAsyncThunk(
 export const postInventory = createAsyncThunk(
   'inventory/postInventory', 
   async(body,thunkAPI) => {
+    console.log("body received", body)
     try{
-      await fetch('/api/inventory', {
+      const postedBody = await fetch('/api/inventory', {
         method: 'POST',
         headers: {
           'Content-Type': 'Application/JSON'
@@ -56,11 +53,10 @@ const inventorySlice = createSlice({
   },
   extraReducers: {
       [fetchProductName.fulfilled] : (state,action) => {
-          console.log("fetchProductName returned ",action.payload);
-          state.allProductNames = [...action.payload];
-      },
-      [postInventory.fulfilled] : (state,action) => {
-        state.body = {...action.payload};
+          // console.log("fetchProductName returned ",action.payload);
+          action.payload.forEach((el) => {
+            state.allProductNames.push(el.product_name);
+          });
       }
     },
   }
