@@ -85,4 +85,35 @@ proceduresController.addProcedure = async (req, res, next) => {
   next();
 }
 
+proceduresController.deleteProcedure = async (req, res, next) => {
+  
+  const id = req.body[0];
+  const param = [id];
+  const deleteProcedureQuery = 'DELETE FROM procedures WHERE procedure_id = $1';
+  
+  try { 
+    const deletedProcedure = await pool.query(deleteProcedureQuery, param);
+    res.locals.deletedProcedure = deletedProcedure;
+  } 
+  catch(err) {
+    next({
+      log: 'proceduresController.deleteInventory: ERROR:' + err.message,
+      message: { err: 'proceduresController.deleteInventory: ERROR: Check server logs for details' },
+    });
+  }
+
+  const deleteJunctionsQuery = 'DELETE FROM junction WHERE procedure_id = $1';
+  
+  try { 
+    const deletedJunctions = await pool.query(deleteJunctionsQuery, param);
+    res.locals.deletedJunctions = deletedJunctions;
+  } 
+  catch(err) {
+    next({
+      log: 'proceduresController.deleteInventory: ERROR:' + err.message,
+      message: { err: 'proceduresController.deleteInventory: ERROR: Check server logs for details' },
+    });
+  }
+};
+
 module.exports = proceduresController;
