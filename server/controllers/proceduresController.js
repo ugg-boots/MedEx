@@ -1,4 +1,5 @@
 const pool = require("../models/inventoryModel")
+const format = require('pg-format');
 
 const proceduresController = {};
 
@@ -22,5 +23,47 @@ proceduresController.getAllProcedures = async (req, res, next) => {
     });
   }
 };
+
+proceduresController.addProcedure = async (req, res, next) => {
+  const { procedure_name, procedure_desc, materials } = req.body;
+  const procedureParams = [procedure_name, procedure_desc];
+  
+  const addProcedureQuery = `INSERT INTO procedures (procedure_name, procedure_desc) 
+  VALUES ($1, $2)
+  RETURNING procedure_id`;
+
+  try {
+    const newProcedure = await pool.query(addProcedureQuery, procedureParams);
+    res.locals.procedureID = newProcedure.rows[0].procedure_id;
+  }
+
+  catch(err) {
+    next({
+      log: 'proceduresController.addProcedure: ERROR:' + err.message,
+      message: { err: 'proceduresController.addProcedure: ERROR: Check server logs for details' },
+    });
+  }
+
+  const junctionParams = [];
+  materials.forEach(product => {
+    if (product.quantity) junctionParams.push([res.locals.procedureID, product.productID, product.quantity]);
+  })
+  
+  const addJunctionQuery = format('INSERT INTO junction (procedure_id, product_id, qty_per_procedure) VALUES %L RETURNING *', junctionParams);
+
+  try {
+    const newJunction = await pool.query(addJunctionQuery);
+    res.locals.newJunctions = newJunction.rows;
+  }
+
+  catch(err) {
+    next({
+      log: 'proceduresController.addProcedure: ERROR:' + err.message,
+      message: { err: 'proceduresController.addProcedure: ERROR: Check server logs for details' },
+    });
+  }
+
+  next();
+}
 
 module.exports = proceduresController;

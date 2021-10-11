@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
 import { Typography } from '@material-ui/core'
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchProcedureData } from '../slices/procedureSlice.js';
+import { fetchProcedureData } from '../../slices/procedureSlice.js';
 import ProcedureTable from './ProcedureTable.jsx';
+import ProcedureAddForm from './ProcedureAddForm.jsx';
 
 function ProceduresView() {
   
@@ -12,8 +13,6 @@ function ProceduresView() {
   useEffect(() => {
     dispatch(fetchProcedureData('procedures'));
   }, []);
-
-  console.log(data);
 
   const materialCount = {};
   const procedureArray = [];
@@ -49,6 +48,7 @@ function ProceduresView() {
   return (
     <div>
         <Typography variant='h5'>Procedures</Typography>
+        <ProcedureAddForm />
         <div style={{ height: 400, width: '100%' }}>
         <ProcedureTable rows={rows}/>
       </div>

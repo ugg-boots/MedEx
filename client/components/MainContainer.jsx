@@ -9,7 +9,8 @@ import Catalog from '../components/Catalog/Catalog.js'
 import CatalogAddForm from '../components/Catalog/CatalogAddForm.jsx';
 import InventoryAddForm from './InventoryAddForm.jsx';
 import SupplierAddForm from './SupplierAddForm.jsx';
-import ProceduresView from './ProceduresView.jsx';
+import ProceduresView from './Procedures/ProceduresView.jsx';
+import ProcedureAddForm from './Procedures/ProcedureAddForm.jsx';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 //functional component will take care of all the routing to all components

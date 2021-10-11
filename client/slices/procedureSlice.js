@@ -5,7 +5,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 // The slice object is passed to createReducer, so reducers may safely 'mutate' the state they are given
 
 const initialState = {
-    procedureData: [],
+  procedureData: [],
+  productInfo: []
 }
 
 export const fetchProcedureData = createAsyncThunk(
@@ -24,15 +25,42 @@ export const fetchProcedureData = createAsyncThunk(
 } 
 );
 
+export const fetchProductData = createAsyncThunk(
+  'procedures/fetchProducts',
+  async (_, thunkAPI) => {
+    try{
+      let fetchedData =  await fetch('/api/catalog').then((res) => res.json());
+        if(!Array.isArray(fetchedData)) fetchedData = [];
+        return fetchedData;
+      }
+   catch(err) {
+     console.log('ProcedureSlice fetchProducts: ERROR: ', err);
+     if(!err.response) throw err;
+     return thunkAPI.rejectWithValue(err.response.data);
+  }
+} 
+);
+
 export const procedureSlice = createSlice({
   name: 'procedures',
   initialState,
   reducers: { 
+    handleProductSelectionChange: (state, action) => {
+      console.log(action.payload);
+    }
   }, 
 
   extraReducers:  {
     [fetchProcedureData.fulfilled] : (state,action) => {
       state.procedureData = action.payload;
+    },
+    [fetchProductData.fulfilled] : (state,action) => {
+      action.payload.forEach(product => {
+        const newObj = {};
+        newObj[product.product_name] = false;
+        newObj.quantity = 0;
+        state.productInfo.push(newObj);
+      })
     }
   },
 })
