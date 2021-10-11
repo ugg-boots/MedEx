@@ -6,7 +6,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const initialState = {
   procedureData: [],
-  productInfo: []
+  productData: [],
+
 }
 
 export const fetchProcedureData = createAsyncThunk(
@@ -41,12 +42,34 @@ export const fetchProductData = createAsyncThunk(
 } 
 );
 
+export const postProcedure = createAsyncThunk(
+  'catalog/postProcedure', 
+  async(body,thunkAPI) => {
+    try {
+      const postedBody = await fetch('/api/procedures', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'Application/JSON'
+        },
+        body: JSON.stringify(body)
+      })
+        .then(resp => resp.json());
+      return postedBody;
+    }
+    catch(err) {
+      console.log('ProcedureSlice postProcedure ERROR: ', err);
+      if(!err.response) throw err;
+      return thunkAPI.rejectWithValue(err.response.data)
+    }
+  }
+)
+
 export const procedureSlice = createSlice({
   name: 'procedures',
   initialState,
   reducers: { 
-    handleProductSelectionChange: (state, action) => {
-      console.log(action.payload);
+    handleProductQuantityChange: (state, action) => {
+      state.productData[action.payload.index].quantity = action.payload.value;
     }
   }, 
 
@@ -55,14 +78,25 @@ export const procedureSlice = createSlice({
       state.procedureData = action.payload;
     },
     [fetchProductData.fulfilled] : (state,action) => {
+      const productArray = [];
+      console.log(action.payload);
       action.payload.forEach(product => {
         const newObj = {};
-        newObj[product.product_name] = false;
-        newObj.quantity = 0;
-        state.productInfo.push(newObj);
+        newObj.productName = product.product_name;
+        newObj.productID = product.product_id;
+        newObj.quantity = '';
+        productArray.push(newObj);
+      });
+      state.productData = productArray;
+    },
+    [postProcedure.fulfilled]: (state, action) => {
+      action.payload.forEach(row => {
+        state.procedureData.push(row)
       })
-    }
-  },
+    },
+  }
 })
+
+export const { handleProductQuantityChange } = procedureSlice.actions;
 
 export default procedureSlice.reducer;

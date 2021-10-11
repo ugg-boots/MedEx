@@ -31,7 +31,7 @@ function ProceduresView() {
       if (procedure.procedure_id === product.procedure_id) {
         const newObj = {
           product_name: product.product_name,
-          qty_per_procedure: procedure.qty_per_procedure
+          qty_per_procedure: product.qty_per_procedure
         }
         materialsArray.push(newObj);
       }

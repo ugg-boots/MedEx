@@ -48,7 +48,7 @@ router.get('/procedures',
 
 router.post('/procedures', 
     proceduresController.addProcedure,
-    (req, res) => res.status(200).json(res.locals.newJunctions)
+    (req, res) => res.status(200).json(res.locals.newProcedure)
 );
 
 // routes for CATALOG TABLE
