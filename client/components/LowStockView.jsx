@@ -11,7 +11,6 @@ function LowStockView () {
         .then(res => res.json())
         .then((tableElements) => {
           if (!Array.isArray(tableElements)) tableElements = [];
-          console.log(tableElements);
           setData(tableElements);
           })
         .catch(err => console.log('Table.componentDidMount: get tableElement: ERROR: ', err));

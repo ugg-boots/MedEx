@@ -1,6 +1,5 @@
 import React from 'react';
 import LowStockView from './LowStockView.jsx';
-import ChartView from './ChartView.jsx';
 import ExpirationView from './ExpirationView.jsx';
 import { Link } from 'react-router-dom';
 
@@ -13,7 +12,6 @@ const HomeContainer = (props)=> {
       </Link>
         <div className='lowStockView'>
                 <LowStockView />
-            <ChartView/>
         </div>
     </div>
     )
