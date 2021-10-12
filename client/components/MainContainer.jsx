@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, CssBaseline, Toolbar } from '@mui/material';
 import Banner from './Banner.jsx';
 import NavSideBar from './NavSideBar.jsx';
 import ShoppingList from './ShoppingList.jsx';
 import HomeContainer from './HomeContainer.jsx';
 import Catalog from '../components/Catalog/Catalog.js'
-import CatalogAddForm from '../components/Catalog/CatalogAddForm.jsx';
 import InventoryAddForm from './InventoryAddForm.jsx';
 import SupplierAddForm from './SupplierAddForm.jsx';
 import ProceduresView from './Procedures/ProceduresView.jsx';
@@ -19,11 +18,14 @@ function MainContainer() {
 
 	const dispatch = useDispatch();
 
+	// on component did mount, fetch all app data
 	useEffect(() => {
 		dispatch(fetchProcedureData());
 		dispatch(fetchProductData());
-	  }, []);
-
+		dispatch(fetchSuppliers());
+    	dispatch(fetchProducts());
+	}, []);
+  
 	return (
 		<Router>
 			<Box sx={{ display: 'flex' }}>
@@ -37,7 +39,7 @@ function MainContainer() {
 					<Switch>
 						<Route exact path="/" exact component={HomeContainer} />
 						<Route exact path="/shopping" exact component={ShoppingList} />
-						<Route exact path="/catalog" exact component={CatalogAddForm} />
+						<Route exact path="/catalog" exact component={Catalog} />
 						<Route exact path="/inventory" exact component={InventoryAddForm} />
 						<Route exact path="/procedures" exact component={ProceduresView} />
 						<Route exact path="/suppliers" exact component={SupplierAddForm} />
