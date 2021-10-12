@@ -43,7 +43,6 @@ export const fetchInventory = createAsyncThunk(
 export const postInventory = createAsyncThunk(
   'inventory/postInventory', 
   async(body,thunkAPI) => {
-    console.log("body received", body)
     try{
       const postedBody = await fetch('/api/inventory', {
         method: 'POST',
@@ -52,7 +51,9 @@ export const postInventory = createAsyncThunk(
         },
         body: JSON.stringify(body)
       })
-        .then(resp => resp.json())
+        .then(resp => resp.json());
+        console.log(postedBody)
+        return postedBody;
     }
     catch(err) {
       console.log('InventorySlicer postInventory: ERROR: ', err);
@@ -61,14 +62,6 @@ export const postInventory = createAsyncThunk(
     }
   }
 );
-// const getDate = () => {
-//   let today = new Date();
-//   const dd = String(today.getDate()).padStart(2, '0');
-//   const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-//   const yyyy = today.getFullYear();
-//   today = yyyy + '-' + mm + '-' + dd;
-//   return today;
-// };
 
 
 const inventorySlice = createSlice({

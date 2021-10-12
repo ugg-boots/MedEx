@@ -30,10 +30,10 @@ export default function InventoryAddForm() {
   const [open, setOpen] = useState(false);
 
 
-  console.log("all product names: ", allProductNames);
-  console.log("all inventory: ", allInventory);
-  console.log("grouped Inventory: ", groupedInventory);
-  console.log("displayed Inventory: ", displayedInventory);
+  // console.log("all product names: ", allProductNames);
+  // console.log("all inventory: ", allInventory);
+  // console.log("grouped Inventory: ", groupedInventory);
+  // console.log("displayed Inventory: ", displayedInventory);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -73,8 +73,6 @@ export default function InventoryAddForm() {
         quantity: quantity,
         expiration_date: expDate,
       };
-      console.log(body);
-
       //dispatch the postInventory actionb to add inventory item to the inventory
       dispatch(postInventory(body));
 
