@@ -45,7 +45,8 @@ inventoryController.addNewInventory = async (req, res, next) => {
   const { product_name, quantity, expiration_date } = req.body;
   const params = [quantity, expiration_date, product_name];
   const addInventoryQuery = `INSERT INTO inventory (quantity, expiration_date, product_id) 
-    VALUES($1, $2, (SELECT product_id FROM catalog WHERE product_name = $3))`;
+    VALUES($1, $2, (SELECT product_id FROM catalog WHERE product_name = $3))
+    RETURNING *`;
   
   try {
     const newInventory = await pool.query(addInventoryQuery, params);

@@ -1,3 +1,4 @@
+import { ConstructionOutlined, NetworkCheckSharp } from '@mui/icons-material';
 import { createSlice, createAsyncThunk, rejectWithValue, current } from '@reduxjs/toolkit';
 import { fetchProducts } from './catalogSlices';
 // Create slice accepts an initial state, an object full of reducer functions, and a slice "name". It automatically
@@ -52,8 +53,7 @@ export const postInventory = createAsyncThunk(
         body: JSON.stringify(body)
       })
         .then(resp => resp.json());
-        console.log(postedBody)
-        return postedBody;
+        return postedBody.rows[0];
     }
     catch(err) {
       console.log('InventorySlicer postInventory: ERROR: ', err);
@@ -62,7 +62,6 @@ export const postInventory = createAsyncThunk(
     }
   }
 );
-
 
 const inventorySlice = createSlice({
   name: 'inventory',
@@ -83,7 +82,7 @@ const inventorySlice = createSlice({
           });
       },
       [fetchInventory.fulfilled] : (state,action) => {
-        // console.log("fetchInventory returned ",action.payload);
+        console.log("fetchInventory returned ",action.payload);
         action.payload.forEach((el) => {
           if(state.groupedInventory.hasOwnProperty(el.product_id)) {
             state.groupedInventory[el.product_id].push(el);
@@ -109,10 +108,35 @@ const inventorySlice = createSlice({
           })
           state.displayedInventory.push(newInvent);
         };
-    }
     },
+    [postInventory.fulfilled] : (state,action) => {
+      console.log("postInventory fulfilled returned ",action.payload);
+      const item = action.payload;
+      let isItInDisplayed = false;
+      state.allInventory.push(item);
+      state.displayedInventory.forEach((el) => {
+        //el.product_id is string while item's is a number
+        if(+el.product_id === item.product_id) {
+          el.quantity += item.quantity;
+          el.metadata.push(item);
+          isItInDisplayed = true;
+        }
+      });
+      if(!isItInDisplayed) { 
+        if(!state.groupedInventory[item.product_id]) {
+          state.groupedInventory[item.product_id]=[item];
+        }
+        const newInvent = {};
+        newInvent.product_id = item.product_id;
+        newInvent.quantity = item.quantity;
+        newInvent.product_name = item.product_name;
+        newInvent.metadata = [item];
+        state.displayedInventory.push(newInvent);
+      }
+      
+      }
   }
-);
+});
 
 export const {getDataDisplayed} = inventorySlice.actions; 
 export default inventorySlice.reducer; 

@@ -13,6 +13,7 @@ import { fetchProducts, fetchSuppliers, postCatalog } from '../slices/catalogSli
 import { useDispatch } from 'react-redux'
 
 
+
 //functional component will take care of all the routing to all components
 
 function MainContainer() {
@@ -23,7 +24,7 @@ function MainContainer() {
   useEffect(() => {
     dispatch(fetchSuppliers());
     dispatch(fetchProducts());
-  }, []);
+ }, []);
 
 
 	return (
