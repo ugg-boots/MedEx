@@ -1,9 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import { fetchProducts, fetchSuppliers, postCatalog } from '../../slices/catalogSlices'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react';
 import CatalogAddForm from './CatalogAddForm.jsx';
 import CatalogTable from './CatalogTable.js';
-import { Typography } from '@material-ui/core';
 
 export default function Catalog() {
   
@@ -17,24 +14,4 @@ export default function Catalog() {
       </div>
     </div>
   );
-}
-
-//   return (
-//     <div>
-//         <Typography variant='h5'>{name}</Typography>
-//         {addButton}
-//         {deleteButton}
-//         <div style={{ height: 400, width: '100%' }}>
-//         <DataGrid
-//           rows={rows}
-//           columns={columns}
-//           onSelectionModelChange={(newSelectionModel) => {
-//             setSelectionModel(newSelectionModel);
-//           }}
-//           selectionModel={selectionModel}
-//         />
-//         {snackBar}
-//       </div>
-//     </div>
-//   )
-// };
+};

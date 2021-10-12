@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Typography, Button } from '@material-ui/core';
-import { Autocomplete, TextField, Alert } from '@mui/material'
-import { fetchProducts, fetchSuppliers, postCatalog } from '../../slices/catalogSlices'
+import React, { useState } from 'react';
+import { Button } from '@material-ui/core';
+import { Autocomplete, TextField, Alert, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+
+import { postCatalog } from '../../slices/catalogSlices'
 
 
 function CatalogAddForm (props) {
@@ -82,6 +78,13 @@ function CatalogAddForm (props) {
 
     // dispatch the add post to Catalog action to add item to the catalog store:
     dispatch(postCatalog(body));
+
+    setProductName('');
+    setProductDesc('');
+    setSupplierName('');
+    setUnitPrice('');
+    setQtyPerUnit('');
+    setMaxStock('');
     
     // close modal on submit button click:
     setOpen(false);
