@@ -13,7 +13,6 @@ const HomeContainer = (props)=> {
       </Link>
         <div className='lowStockView'>
                 <LowStockView />
-            <ChartView/>
         </div>
     </div>
     )

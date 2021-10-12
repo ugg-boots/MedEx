@@ -7,12 +7,16 @@ import ShoppingList from './ShoppingList.jsx';
 import HomeContainer from './HomeContainer.jsx';
 import Catalog from '../components/Catalog/Catalog.js'
 import CatalogAddForm from '../components/Catalog/CatalogAddForm.jsx';
-import InventoryAddForm from './Inventory/InventoryAddForm.jsx';
 import SupplierAddForm from './SupplierAddForm.jsx';
+import Inventory from './Inventory/Inventory.jsx';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+
 //functional component will take care of all the routing to all components
+
 function MainContainer() {
+
+ 
 	return (
 		<Router>
 			<Box sx={{ display: 'flex' }}>
@@ -27,7 +31,7 @@ function MainContainer() {
 						<Route exact path="/" exact component={HomeContainer} />
 						<Route exact path="/shopping" exact component={ShoppingList} />
 						<Route exact path="/catalog" exact component={CatalogAddForm} />
-						<Route exact path="/inventory" exact component={InventoryAddForm} />
+						<Route exact path="/inventory" exact component={Inventory} />
 						<Route exact path="/procedures" exact component={TableContainer} />
 						<Route exact path="/suppliers" exact component={SupplierAddForm} />
 					</Switch>
