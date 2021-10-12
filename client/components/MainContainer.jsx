@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Box, CssBaseline, Toolbar } from '@mui/material';
-import TableContainer from './TableContainer.jsx';
 import Banner from './Banner.jsx';
 import NavSideBar from './NavSideBar.jsx';
 import ShoppingList from './ShoppingList.jsx';
@@ -10,11 +9,21 @@ import CatalogAddForm from '../components/Catalog/CatalogAddForm.jsx';
 import InventoryAddForm from './InventoryAddForm.jsx';
 import SupplierAddForm from './SupplierAddForm.jsx';
 import ProceduresView from './Procedures/ProceduresView.jsx';
-import ProcedureAddForm from './Procedures/ProcedureAddForm.jsx';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { fetchProducts, fetchSuppliers, postCatalog } from '../slices/catalogSlices.js'
+import { fetchProcedureData } from '../slices/procedureSlice.js';
+import { useDispatch, useSelector } from 'react-redux'
 
 //functional component will take care of all the routing to all components
 function MainContainer() {
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(fetchProcedureData());
+		dispatch(fetchProductData());
+	  }, []);
+
 	return (
 		<Router>
 			<Box sx={{ display: 'flex' }}>
