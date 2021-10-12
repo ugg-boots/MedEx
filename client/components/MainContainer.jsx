@@ -7,11 +7,11 @@ import HomeContainer from './HomeContainer.jsx';
 import Catalog from '../components/Catalog/Catalog.js'
 import InventoryAddForm from './InventoryAddForm.jsx';
 import SupplierAddForm from './SupplierAddForm.jsx';
-import ProceduresView from './Procedures/ProceduresView.jsx';
+import Procedures from './Procedures/Procedures.jsx';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { fetchProducts, fetchSuppliers, postCatalog } from '../slices/catalogSlices.js'
-import { fetchProcedureData } from '../slices/procedureSlice.js';
-import { useDispatch, useSelector } from 'react-redux'
+import { fetchProcedureData, fetchProductData } from '../slices/procedureSlice.js';
+import { useDispatch } from 'react-redux'
 
 //functional component will take care of all the routing to all components
 function MainContainer() {
@@ -41,7 +41,7 @@ function MainContainer() {
 						<Route exact path="/shopping" exact component={ShoppingList} />
 						<Route exact path="/catalog" exact component={Catalog} />
 						<Route exact path="/inventory" exact component={InventoryAddForm} />
-						<Route exact path="/procedures" exact component={ProceduresView} />
+						<Route exact path="/procedures" exact component={Procedures} />
 						<Route exact path="/suppliers" exact component={SupplierAddForm} />
 					</Switch>
 				</Box>

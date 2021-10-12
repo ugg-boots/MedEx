@@ -1,16 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
+import { alpha } from '@mui/material/styles';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination,
+TableRow, TableSortLabel, Toolbar, Paper, Checkbox, IconButton, Tooltip, FormControlLabel,
+Switch, Collapse, Typography } from '@mui/material';
+import { DeleteIcon, FilterListIcon } from '@mui/icons-material';
+import { visuallyHidden } from '@mui/utils';
+import { useSelector } from 'react-redux'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
@@ -85,9 +81,43 @@ Row.propTypes = {
   }).isRequired,
 };
 
-export default function ProcedureTable(props) {
+export default function ProcedureTable() {
   
-  const {rows} = props;
+  const procedureData = useSelector(state => state.procedures.procedureData)
+
+  // build rows for table display
+  // aggregate materials for each procedure
+  const materialCount = {};
+  const procedureArray = [];
+  procedureData.forEach(element => {
+    if (materialCount.hasOwnProperty(element.procedure_id)) materialCount[element.procedure_id]++;
+    else {
+      materialCount[element.procedure_id] = 1;
+      procedureArray.push(element);
+    }
+  })
+
+  // create rows
+  const rows = [];
+  procedureArray.forEach(procedure => {
+    const materialsArray = [];
+    procedureData.forEach(product => {
+      if (procedure.procedure_id === product.procedure_id) {
+        const newObj = {
+          product_name: product.product_name,
+          qty_per_procedure: product.qty_per_procedure
+        }
+        materialsArray.push(newObj);
+      }
+    });  
+    
+    rows.push({
+      procedureName: procedure.procedure_name,
+      procedureDesc: procedure.procedure_desc, 
+      materials: materialCount[procedure.procedure_id],
+      items: materialsArray 
+    })
+  })
 
   return (
     <TableContainer component={Paper}>

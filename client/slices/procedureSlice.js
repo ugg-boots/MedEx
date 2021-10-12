@@ -70,6 +70,11 @@ export const procedureSlice = createSlice({
   reducers: { 
     handleProductQuantityChange: (state, action) => {
       state.productData[action.payload.index].quantity = action.payload.value;
+    },
+    resetProductData: (state) => {
+      state.productData.forEach(product => {
+        product.quantity = '';
+      });
     }
   }, 
 
@@ -79,7 +84,6 @@ export const procedureSlice = createSlice({
     },
     [fetchProductData.fulfilled] : (state,action) => {
       const productArray = [];
-      console.log(action.payload);
       action.payload.forEach(product => {
         const newObj = {};
         newObj.productName = product.product_name;
@@ -97,6 +101,6 @@ export const procedureSlice = createSlice({
   }
 })
 
-export const { handleProductQuantityChange } = procedureSlice.actions;
+export const { handleProductQuantityChange, resetProductData } = procedureSlice.actions;
 
 export default procedureSlice.reducer;

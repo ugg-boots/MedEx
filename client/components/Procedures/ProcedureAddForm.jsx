@@ -1,37 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { Typography, Button } from '@material-ui/core';
-import { TextField, Alert, InputLabel, Modal, Box} from '@mui/material';
-import { fetchProductData, postProcedure } from '../../slices/procedureSlice';
-import { handleProductQuantityChange } from '../../slices/procedureSlice';
+import React, { useState } from 'react';
+import { Button } from '@material-ui/core';
+import { TextField, Alert, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 700,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+import { postProcedure } from '../../slices/procedureSlice';
+import { handleProductQuantityChange, resetProductData } from '../../slices/procedureSlice';
 
 function ProcedureAddForm () {
+  
   const dispatch = useDispatch();
+  
+  // useSelector to pull out productData from dispatch(fetchProductData), need to populate form fields in render below:
   const productData = useSelector((state) => state.procedures.productData);
+  // useSelector to pull out all procedure data, needed to check for duplicates already in db
   const procedureData = useSelector((state) => state.procedures.procedureData);
 
+   // useState for basic form data:
   const [procedureName, setProcedureName] = useState('');
   const [procedureDesc, setProcedureDesc] = useState('');
+  
+  // useState for warnings in case of incorrect/duplicate data:
   const [warning, setWarning] = useState(null);
   const [warningOn, setWarningOn] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  
+  // useState for modal open/close
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    //validate data
+     //validate information being typed into the form to make sure everything is proper to submit to database
     let duplicate = false;
     procedureData.forEach(element => {
       if (element.procedure_name === procedureName) return duplicate = true;
@@ -60,38 +64,41 @@ function ProcedureAddForm () {
     }
 
     else {
-      //create request body
+      // create request body to send to database
       const body = {
         procedure_name: procedureName,
         procedure_desc: procedureDesc, 
         materials: productData
       };
 
+      // dispatch the add post to Procedures action to add item to the procedures store:
       dispatch(postProcedure(body));
-      setModalOpen(false);
+      
+      //reset form fields after submission
+      setProcedureName('');
+      setProcedureDesc('');
+      dispatch(resetProductData());
+
+      // close modal
+      setOpen(false);
     }
   }
 
-  useEffect(() => {
-    dispatch(fetchProductData());
-  }, []);
-
-  let productFields = [];
+  let productFields;
   if (productData.length) {
-    productData.forEach((product, index) => {
-      const input =
-        <div>
-         <InputLabel>{product.productName}</InputLabel>
+    productFields = productData.map((product, index) => (
+          <div>
           <TextField
             value={product.quantity}
             label={product.productName}
             onChange={(event) => {dispatch(handleProductQuantityChange({value: event.target.value, index: index}))}}
           />
-        </div>
-      productFields.push(input);
-    })
+          </div>
+        )
+    )
   }
 
+  // warning render if item in form is incorrect:
   let renderWarning;
   if (warningOn) {
     renderWarning = warning;
@@ -100,12 +107,14 @@ function ProcedureAddForm () {
 
   return (
     <div>
-      <Button onClick={() => {setModalOpen(true)}} variant="outlined" color="secondary" size="small">Add Procedure</Button>
-      <Modal open={modalOpen} onClose={() => {setModalOpen(false)}}>
-        <Box sx={style}>
-          <Typography variant="h4">Add Procedure</Typography>
-          {renderWarning}
-          <form onSubmit={(event) => {handleSubmit(event)}}>
+      <Button variant="outlined" onClick={handleClickOpen}>Define New Procedure</Button>
+      <Dialog open={open} onClose={handleClose}>
+      {renderWarning}
+      <DialogTitle>New Procedure to Add</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          Enter new procedure information.
+        </DialogContentText>
           <TextField
             label="Procedure Name"
             variant="standard"
@@ -122,13 +131,18 @@ function ProcedureAddForm () {
               setProcedureDesc(event.target.value);
             }} />
           <br/>
+          <DialogContentText>
+          Enter quantity needed of each product.
+          </DialogContentText>
           {productFields}
-          <Button variant="contained" color="primary" type="submit">Submit</Button>
-          </form>
-          <br/>
-          <Button variant="outlined" color="secondary" onClick={() => {setModalOpen(false)}}>Exit</Button>
-        </Box>
-      </Modal>
+          </DialogContent>
+      
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleSubmit}>Submit</Button>
+      </DialogActions>
+    
+    </Dialog>
     </div>
       );
 }
