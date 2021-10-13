@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Typography, Button } from '@material-ui/core';
 import { TextField, Alert, InputLabel, Modal, Box } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux'; //redux
+import { useDispatch } from 'react-redux'; //redux
 import { postSupplier } from '../../slices/supplierSlice'; //redux
 
+//the style label is styling the form
 const style = {
 	position: 'absolute',
 	top: '50%',
@@ -46,7 +47,7 @@ function SupplierAddForm() {
 			};
 			//once the Submit button is clicked the reducer will dispatch.
 			dispatch(postSupplier(body));
-			//resetting state after submition!
+			//resetting state after submission!
 			setSupplierName('');
 			setKeyContact('');
 			setSupplierPhoneNumber('');

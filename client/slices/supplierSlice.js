@@ -35,6 +35,8 @@ export const fetchSuppliers = createAsyncThunk(
     };
   }
 );
+
+//declared the state it will take all suppliers
 const initialState = {
 	allSuppliers: []
 };
@@ -45,15 +47,12 @@ const initialState = {
 export const addSupplier = createSlice({
 	name: 'supplier',
 	initialState, //updating the state with new data
-	reducers: {},
+	reducers: {},//not using reducers
 	extraReducers: {
 		[postSupplier.fulfilled]: (state, action) => {
-			// Extract the keys of the state for each key and  push the new value based on the key
-			// Object.keys(state).forEach((key) => state[key].push(action.payload[key]));
 			state.allSuppliers.push(action.payload)
 		},
 		[fetchSuppliers.fulfilled]: (state, action) => {
-			// Object.keys(state).forEach((key) => state[key].push(action.payload[key]));
 			action.payload.forEach(el => state.allSuppliers.push(el))
 		}
 	},

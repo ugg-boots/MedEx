@@ -11,6 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useSelector } from 'react-redux';
 
+//MaterialUi component is rendering the table!
 function Row(props) {
 	const { row } = props;
 	const [open, setOpen] = useState(false);
@@ -19,7 +20,7 @@ function Row(props) {
 		<React.Fragment>
 			<TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
 				<TableCell component="th" scope="row">
-					{row.supplier_name}
+					{row.supplier_id}
 				</TableCell>
 				<TableCell align="justify">{row.supplier_name}</TableCell>
 				<TableCell align="justify">{row.key_contact}</TableCell>
@@ -40,17 +41,17 @@ Row.propTypes = {
 };
 
 export default function SupplierTable() {
-	const rows = [];
+	const rows = []; //rows is passed down with keys and values
 
-	//pulling the state
+	//pulling the state from redux store
 	const supplies = useSelector((state) => state.supplier.allSuppliers);
-	console.log('supplies', supplies);
 
-	//iterating through supplies state and storing the values toe each corresponding key
+	//iterating through supplies state and storing the values to each corresponding key
 	for (let i = 0; i < supplies.length; i++) {
-		// destructuring
-		let { supplier_name, key_contact, supplier_phone_number, supplier_address } = supplies[i];
-		rows.push({ supplier_name, key_contact, supplier_phone_number, supplier_address });
+		// destructured the keys and assign its corresponding values
+		let { supplier_name, key_contact, supplier_phone_number, supplier_address, supplier_id } = supplies[i];
+		//pushed the key with its corresponding value
+		rows.push({ supplier_name, key_contact, supplier_phone_number, supplier_address, supplier_id });
 	}
 	console.log('rows', rows);
 
@@ -59,13 +60,14 @@ export default function SupplierTable() {
 			<Table aria-label="collapsible table">
 				<TableHead>
 					<TableRow>
-						<TableCell align="right">Name</TableCell>
-						<TableCell align="right">Key Contact</TableCell>
-						<TableCell align="right">Phone Number</TableCell>
-						<TableCell align="right">Address</TableCell>
+						<TableCell align="left">ID</TableCell>
+						<TableCell align="left">Name</TableCell>
+						<TableCell align="left">Key Contact</TableCell>
+						<TableCell align="left">Phone Number</TableCell>
+						<TableCell align="left">Address</TableCell>
 					</TableRow>
 				</TableHead>
-				<TableBody>{rows && rows.map((row) => <Row key={row.supplier_name} row={row} />)}</TableBody>
+				<TableBody>{rows && rows.map((row) => <Row key={row.supplier_id} row={row} />)}</TableBody>
 			</Table>
 		</TableContainer>
 	);
