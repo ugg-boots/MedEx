@@ -21,24 +21,24 @@ inventoryController.getAllInventory = async (req, res, next) => {
   }
 };
 
-inventoryController.getOneInventory = async (req, res, next) => {
+// inventoryController.getOneInventory = async (req, res, next) => {
   
-  const inventoryQuery = `SELECT item_id, inventory.product_id, catalog.product_name, quantity, expiration_date FROM inventory
-  INNER JOIN catalog ON inventory.product_id = catalog.product_id WHERE inventory.product_id = ${req.query.product_id}`;
+//   const inventoryQuery = `SELECT item_id, inventory.product_id, catalog.product_name, quantity, expiration_date FROM inventory
+//   INNER JOIN catalog ON inventory.product_id = catalog.product_id WHERE inventory.product_id = ${req.query.product_id}`;
   
-  try {
-    const inventory = await pool.query(inventoryQuery);
-    res.locals.product = inventory;
-    next();
-  } 
+//   try {
+//     const inventory = await pool.query(inventoryQuery);
+//     res.locals.product = inventory;
+//     next();
+//   } 
   
-  catch (err) {
-    next({
-      log: 'inventoryController.getAllInventory: ERROR:' + err.message,
-      message: { err: 'inventoryController.getAllInventory: ERROR: Check server logs for details' },
-    });
-  }
-};
+//   catch (err) {
+//     next({
+//       log: 'inventoryController.getAllInventory: ERROR:' + err.message,
+//       message: { err: 'inventoryController.getAllInventory: ERROR: Check server logs for details' },
+//     });
+//   }
+// };
 
 inventoryController.addNewInventory = async (req, res, next) => {
   
@@ -65,10 +65,9 @@ inventoryController.addNewInventory = async (req, res, next) => {
 
 
 inventoryController.deleteInventory = async (req, res, next) => {
-  
-  const id = req.body[0];
-  const param = [id];
-  const deleteInventoryQuery = 'DELETE FROM inventory WHERE item_id = $1';
+  const {item_id} = req.params; 
+  param = [item_id]
+  const deleteInventoryQuery = `DELETE FROM inventory WHERE item_id = $1`;
   
   try { 
     const deletedInventory = await pool.query(deleteInventoryQuery, param);

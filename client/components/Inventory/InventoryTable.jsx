@@ -14,16 +14,25 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import {InventoryDeleteDialog} from './InventoryDeleteDialog.jsx'
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../slices/catalogSlices.js";
-import {fetchInventory} from '../../slices/inventorySlice.js';
+import {fetchInventory, deleteInventory} from '../../slices/inventorySlice.js';
 
 
 
 export const InventoryTable = () => {
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   
   //getting all the available product names
   useEffect(() => {
@@ -61,6 +70,7 @@ export const InventoryTable = () => {
 }
 
 function Row(props) {
+  const dispatch = useDispatch();
   const {row} = props; 
   const {product_name, quantity, product_id, metadata} = row;
   const [open, setOpen] = React.useState(false);
@@ -97,6 +107,7 @@ function Row(props) {
                     <TableCell>Product Name</TableCell>
                     <TableCell>Quantity</TableCell>
                     <TableCell align="right">Expiration Date</TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -109,7 +120,16 @@ function Row(props) {
                         {el.product_name}
                       </TableCell>
                       <TableCell>{el.quantity}</TableCell>
-                      <TableCell align="right">{el.expiration_date}</TableCell>
+                      <TableCell align="right">{el.expiration_date}  
+                  </TableCell>
+                  <TableCell>
+                  <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    onClick={() =>{}}>
+                    <DeleteIcon />
+                  </IconButton>
+                  </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -120,7 +140,9 @@ function Row(props) {
       </TableRow>
     </React.Fragment>
   );
-}
+};
+
+
 
 
  

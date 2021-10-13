@@ -23,7 +23,8 @@ function MainContainer() {
   // on component did mount, fetch all product data & suppliers
   useEffect(() => {
     dispatch(fetchSuppliers());
-    dispatch(fetchProducts());
+    dispatch(fetchProducts());   
+
  }, []);
 
 

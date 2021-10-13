@@ -63,6 +63,26 @@ export const postInventory = createAsyncThunk(
   }
 );
 
+export const deleteInventory = createAsyncThunk(
+  'inventory/deleteInventory',
+  async(item_id, thunkApi) => {
+    try {
+      const deleted = await fetch(`/api/inventory/${item_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'Application/JSON'
+        },
+      })
+      .then(resp => resp.json())
+    }
+    catch(err) {
+      console.log('InventorySlicer deleteInventory: ERROR: ', err);
+      if(!err.response) throw err;
+      return thunkApi.rejectWithValue(err.response.data)
+    }
+  }
+)
+
 const inventorySlice = createSlice({
   name: 'inventory',
   initialState: { 
@@ -134,7 +154,10 @@ const inventorySlice = createSlice({
         state.displayedInventory.push(newInvent);
       }
       
-      }
+    }, 
+    [deleteInventory.fulfilled] : (state,action) => {
+
+    }
   }
 });
 

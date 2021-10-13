@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';
 
-function InventoryDeleteDialog(props) {
+export default function InventoryDeleteDialog(props) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -14,13 +14,11 @@ function InventoryDeleteDialog(props) {
 
   return (
     <div style={{display: "inline"}}>
-      <Button variant="outlined" size="small" color="secondary" onClick={handleClickOpen}>
-        Delete Item
-      </Button>
       <Dialog
         open={open}
         onClose={handleClose}
       >
+      <DialogTitle>Item to Delete</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Delete the selected rows?
@@ -36,5 +34,3 @@ function InventoryDeleteDialog(props) {
     </div>
   );
 }
-
-export default InventoryDeleteDialog;
