@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -15,31 +14,23 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {InventoryDeleteDialog} from './InventoryDeleteDialog.jsx'
+import InventoryDeleteDialog from './InventoryDeleteDialog.jsx'
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../slices/catalogSlices.js";
-import {fetchInventory, deleteInventory} from '../../slices/inventorySlice.js';
+import {fetchInventory, deleteInventory, setModalClose, setModalOpen} from '../../slices/inventorySlice.js';
+
 
 
 
 export const InventoryTable = () => {
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
   
   //getting all the available product names
   useEffect(() => {
     dispatch(fetchInventory());
   }, []);
 
-  const {allProductNames, groupedInventory, allInventory, displayedInventory } = useSelector((state) => state.inventory);
+  const {allProductNames, groupedInventory, allInventory, displayedInventory} = useSelector((state) => state.inventory);
 
 
   // console.log("all product names: ",allProductNames);
@@ -63,11 +54,12 @@ export const InventoryTable = () => {
             <Row key={item.product_id} row={item} />
           ))}
         </TableBody>
+        <InventoryDeleteDialog/>
       </Table>
     </TableContainer>
   );
 
-}
+};
 
 function Row(props) {
   const dispatch = useDispatch();
@@ -126,7 +118,7 @@ function Row(props) {
                   <IconButton
                     edge="end"
                     aria-label="delete"
-                    onClick={() =>{}}>
+                    onClick={() =>{dispatch(setModalOpen(el))}}>
                     <DeleteIcon />
                   </IconButton>
                   </TableCell>
@@ -141,8 +133,3 @@ function Row(props) {
     </React.Fragment>
   );
 };
-
-
-
-
- 

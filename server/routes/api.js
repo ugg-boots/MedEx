@@ -40,6 +40,12 @@ router.delete('/inventory/:item_id',
     (req, res) => res.status(200).json(res.locals.deletedInventory)
 );
 
+router.patch('/inventory', 
+    inventoryController.updateInventory, 
+    (req, res) => res.status(200).json(res.locals.updatedInventory)
+);
+
+
 // routes for PROCEDURES TABLE
 router.get('/procedures', 
     proceduresController.getAllProcedures, 

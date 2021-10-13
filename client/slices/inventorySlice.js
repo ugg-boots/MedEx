@@ -10,7 +10,7 @@ export const fetchProductId = createAsyncThunk(
   async (id, thunkAPI) => {
     try{
       const fetchedData =  await fetch(`/api/inventory/query?product_id=${id}`).then((res) => res.json());
-      console.log("fetchProductId data ", fetchedData);
+      // console.log("fetchProductId data ", fetchedData);
       if(!Array.isArray(fetchedData)) fetchedData = [];
         return fetchedData;
       }
@@ -26,7 +26,7 @@ export const fetchInventory = createAsyncThunk(
   async (_, thunkAPI) => {
     try{
       const fetchedData =  await fetch(`/api/inventory`).then((res) => res.json());
-      console.log("fetchInventory data ", fetchedData);
+      // console.log("fetchInventory data ", fetchedData);
       if(!Array.isArray(fetchedData)) fetchedData = [];
         return fetchedData;
       }
@@ -67,6 +67,7 @@ export const deleteInventory = createAsyncThunk(
   'inventory/deleteInventory',
   async(item_id, thunkApi) => {
     try {
+      // console.log("in delete inventory ", item_id)
       const deleted = await fetch(`/api/inventory/${item_id}`, {
         method: 'DELETE',
         headers: {
@@ -81,6 +82,26 @@ export const deleteInventory = createAsyncThunk(
       return thunkApi.rejectWithValue(err.response.data)
     }
   }
+);
+export const updateInventory = createAsyncThunk(
+  'inventory/updateInventory',
+  async(body, thunkApi) => {
+    try {
+      const updated = await fetch(`/api/inventory`, {
+        method: 'PATCH',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'Application/JSON'
+        }
+      })
+      .then(resp => resp.json())
+    }
+    catch(err) {
+      console.log('InventorySlicer updateInventory: ERROR: ', err);
+      if(!err.response) throw err;
+      return thunkApi.rejectWithValue(err.response.data)
+    }
+  }
 )
 
 const inventorySlice = createSlice({
@@ -90,9 +111,20 @@ const inventorySlice = createSlice({
     groupedInventory : {},
     allInventory: [],
     displayedInventory: [],
-    body : {}
+    isDeleteModalOpen: false,
+    itemDeleted: {}
   },
   reducers: { 
+    setModalOpen: (state, action) => {
+      state.itemDeleted = action.payload;
+      state.isDeleteModalOpen = true;
+    },
+    setModalClose: (state,action) =>{
+      state.isDeleteModalOpen = false; 
+    },
+    getDeleteModal: (state,action) => {
+      return state.isDeleteModalOpen;
+    }
   },
   extraReducers: {
       [fetchProducts.fulfilled] : (state,action) => {
@@ -102,7 +134,7 @@ const inventorySlice = createSlice({
           });
       },
       [fetchInventory.fulfilled] : (state,action) => {
-        console.log("fetchInventory returned ",action.payload);
+        // console.log("fetchInventory returned ",action.payload);
         action.payload.forEach((el) => {
           if(state.groupedInventory.hasOwnProperty(el.product_id)) {
             state.groupedInventory[el.product_id].push(el);
@@ -115,7 +147,7 @@ const inventorySlice = createSlice({
         });
 
         for (const id in state.groupedInventory) {
-          console.log("in data displayed")
+          // console.log("in data displayed")
           const newInvent = {};
           newInvent.product_id = id;
           newInvent.quantity = 0;
@@ -130,7 +162,7 @@ const inventorySlice = createSlice({
         };
     },
     [postInventory.fulfilled] : (state,action) => {
-      console.log("postInventory fulfilled returned ",action.payload);
+      // console.log("postInventory fulfilled returned ",action.payload);
       const item = action.payload;
       let isItInDisplayed = false;
       state.allInventory.push(item);
@@ -161,5 +193,5 @@ const inventorySlice = createSlice({
   }
 });
 
-export const {getDataDisplayed} = inventorySlice.actions; 
+export const {setModalClose,setModalOpen, getDeleteModal} = inventorySlice.actions; 
 export default inventorySlice.reducer; 

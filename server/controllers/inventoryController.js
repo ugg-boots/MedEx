@@ -82,4 +82,24 @@ inventoryController.deleteInventory = async (req, res, next) => {
   }
 };
 
+
+inventoryController.updateInventory = async (req, res, next) => {
+  const {item_id, quantity} = req.body; 
+  param = [item_id, quantity]
+  const updateInventoryQuery = `UPDATE inventory SET quantity = $2 WHERE item_id = $1
+  RETURNING *`;
+  
+  try { 
+    const updatedInventory = await pool.query(updateInventoryQuery, param);
+    res.locals.updatedInventory = updatedInventory;
+    next();
+  } 
+  catch(err) {
+    next({
+      log: 'inventoryController.updateInventory: ERROR:' + err.message,
+      message: { err: 'inventoryController.updateInventory: ERROR: Check server logs for details' },
+    });
+  }
+};
+
 module.exports = inventoryController;
