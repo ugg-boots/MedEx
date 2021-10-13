@@ -1,19 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect } from 'react';
 import { Box, CssBaseline, Toolbar } from '@mui/material';
 import Banner from './Banner.jsx';
 import NavSideBar from './NavSideBar.jsx';
 import ShoppingList from './ShoppingList.jsx';
 import HomeContainer from './HomeContainer.jsx';
 import Catalog from '../components/Catalog/Catalog.js'
-import InventoryAddForm from './InventoryAddForm.jsx';
 import SupplierAddForm from './SupplierAddForm.jsx';
 import Procedures from './Procedures/Procedures.jsx';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { fetchProducts, fetchSuppliers, postCatalog } from '../slices/catalogSlices.js'
 import { fetchProcedureData, fetchProductData } from '../slices/procedureSlice.js';
 import { useDispatch } from 'react-redux'
+import Inventory from './Inventory/Inventory.jsx';
+
+
 
 //functional component will take care of all the routing to all components
+
 function MainContainer() {
 
 	const dispatch = useDispatch();
@@ -40,7 +43,7 @@ function MainContainer() {
 						<Route exact path="/" exact component={HomeContainer} />
 						<Route exact path="/shopping" exact component={ShoppingList} />
 						<Route exact path="/catalog" exact component={Catalog} />
-						<Route exact path="/inventory" exact component={InventoryAddForm} />
+						<Route exact path="/inventory" exact component={Inventory} />
 						<Route exact path="/procedures" exact component={Procedures} />
 						<Route exact path="/suppliers" exact component={SupplierAddForm} />
 					</Switch>

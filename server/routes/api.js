@@ -30,6 +30,11 @@ router.get('/inventory',
     (req, res) => res.status(200).json(res.locals.inventory)
 );
 
+router.get('/inventory/query', 
+    inventoryController.getOneInventory, 
+    (req, res) => res.status(200).json(res.locals.product)
+);
+
 router.post('/inventory', 
     inventoryController.addNewInventory, 
     (req, res) => res.status(200).json(res.locals.newInventory)

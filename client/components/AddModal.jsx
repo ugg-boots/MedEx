@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import InventoryAddForm from "./InventoryAddForm.jsx";
+import InventoryAddForm from "./Inventory/InventoryAddForm.jsx";
 import CatalogAddForm from './Catalog/CatalogAddForm.jsx';
 import SupplierAddForm from './SupplierAddForm.jsx';
 import { Button } from '@material-ui/core';
