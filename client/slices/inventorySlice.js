@@ -10,7 +10,7 @@ export const fetchProductId = createAsyncThunk(
   async (id, thunkAPI) => {
     try{
       const fetchedData =  await fetch(`/api/inventory/query?product_id=${id}`).then((res) => res.json());
-      console.log("fetchProductId data ", fetchedData);
+      // console.log("fetchProductId data ", fetchedData);
       if(!Array.isArray(fetchedData)) fetchedData = [];
         return fetchedData;
       }
@@ -26,7 +26,7 @@ export const fetchInventory = createAsyncThunk(
   async (_, thunkAPI) => {
     try{
       const fetchedData =  await fetch(`/api/inventory`).then((res) => res.json());
-      console.log("fetchInventory data ", fetchedData);
+      // console.log("fetchInventory data ", fetchedData);
       if(!Array.isArray(fetchedData)) fetchedData = [];
         return fetchedData;
       }
@@ -82,7 +82,7 @@ const inventorySlice = createSlice({
           });
       },
       [fetchInventory.fulfilled] : (state,action) => {
-        console.log("fetchInventory returned ",action.payload);
+        // console.log("fetchInventory returned ",action.payload);
         action.payload.forEach((el) => {
           if(state.groupedInventory.hasOwnProperty(el.product_id)) {
             state.groupedInventory[el.product_id].push(el);
@@ -95,7 +95,7 @@ const inventorySlice = createSlice({
         });
 
         for (const id in state.groupedInventory) {
-          console.log("in data displayed")
+          // console.log("in data displayed")
           const newInvent = {};
           newInvent.product_id = id;
           newInvent.quantity = 0;
@@ -110,7 +110,7 @@ const inventorySlice = createSlice({
         };
     },
     [postInventory.fulfilled] : (state,action) => {
-      console.log("postInventory fulfilled returned ",action.payload);
+      // console.log("postInventory fulfilled returned ",action.payload);
       const item = action.payload;
       let isItInDisplayed = false;
       state.allInventory.push(item);
