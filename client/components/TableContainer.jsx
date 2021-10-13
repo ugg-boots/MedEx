@@ -5,15 +5,12 @@ import columnDefinitions from './columns.js';
 import AddModal from './AddModal.jsx';
 import InventoryDeleteDialog from './InventoryDeleteDialog.jsx';
 import SimpleSnackBar from './SimpleSnackBar.jsx';
-import { useHistory } from 'react-router-dom';
+
 
 //created a functional component that will useHistory hook to find the pathname and redirect the user to the page. 
 //eliminates the use of conditional rendering 
 function TableContainer(props) {
-	let history = useHistory();
-
-	//assigning the pathname to table without the forward slash
-	const table = history.location.pathname.slice(1);
+	const {table} = props 
 
 	const name = table[0].toUpperCase() + table.slice(1);
 	const columns = columnDefinitions[table];

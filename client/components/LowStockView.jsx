@@ -6,20 +6,20 @@ import { DataGrid } from '@mui/x-data-grid';
 function LowStockView () {
     const [data, setData] = useState([]);
     
-    const getData = () => {
-        fetch('/api/lowstock')
-        .then(res => res.json())
-        .then((tableElements) => {
-          if (!Array.isArray(tableElements)) tableElements = [];
-          console.log(tableElements);
-          setData(tableElements);
-          })
-        .catch(err => console.log('Table.componentDidMount: get tableElement: ERROR: ', err));
-      }
+    // const getData = () => {
+    //     fetch('/api/lowstock')
+    //     .then(res => res.json())
+    //     .then((tableElements) => {
+    //       if (!Array.isArray(tableElements)) tableElements = [];
+    //       console.log(tableElements);
+    //       setData(tableElements);
+    //       })
+    //     .catch(err => console.log('Table.componentDidMount: get tableElement: ERROR: ', err));
+    //   }
     
-      useEffect(() => {
-        getData();
-      }, [])
+      // useEffect(() => {
+      //   getData();
+      // }, [])
 
       const rows = [];
       const cutoff = 0.25;
