@@ -7,6 +7,7 @@ const inventoryController = require('../controllers/inventoryController');
 const proceduresController = require('../controllers/proceduresController')
 const catalogController = require('../controllers/catalogController');
 const supplierController = require('../controllers/supplierController');
+const authController = require('../controllers/authController');
 
 // routes for HOME display
 router.get('/shop',
@@ -82,5 +83,18 @@ router.post('/suppliers',
     supplierController.addNewSupplier, 
     (req, res) => res.status(200).json(res.locals.newSupplier)
 );
+
+//routes for AUTH
+router.post('/login', 
+    authController.login,
+    (req, res) => {res.status(200).json(res.locals.verifiedUser)
+});
+  
+router.post('/register', 
+    authController.register,
+    (req, res) => {res.status(200).json(res.locals.registerMessage)
+});
+  
+router.get('/user', (req, res) => {});
 
 module.exports = router;

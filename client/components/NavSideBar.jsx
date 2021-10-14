@@ -36,6 +36,12 @@ function NavSideBar(props) {
 					<ListItem>
 						<Link to="/suppliers">Suppliers</Link>
 					</ListItem>
+					<ListItem>
+						<Link to="/login">Log In</Link>
+					</ListItem>
+					<ListItem>
+						<Link to="/register">Register</Link>
+					</ListItem>
 				</List>
 			</Box>
 		</Drawer>
