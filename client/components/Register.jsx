@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Grid, Box, Typography, Container } from '@mui/material';
+import { Alert, Avatar, Button, CssBaseline, TextField, Grid, Box, Typography, Container } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Redirect, Link } from 'react-router-dom';
@@ -18,7 +18,7 @@ function Register() {
     event.preventDefault();
 
     if (firstName === '' || lastName === '' || email === '' || password === '') {
-      setWarningMessage(<Alert severity="warning" onClose={() => {handleWarningClose(event)}}>All fields are required</Alert>);
+      setWarningMessage(<Alert severity="warning" onClose={() => {handleWarningClose()}}>All fields are required</Alert>);
     }
 
     else {

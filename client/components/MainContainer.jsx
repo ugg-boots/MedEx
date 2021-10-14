@@ -8,9 +8,7 @@ import Catalog from '../components/Catalog/Catalog.js'
 import SupplierAddForm from './SupplierAddForm.jsx';
 import Procedures from './Procedures/Procedures.jsx';
 import Inventory from './Inventory/Inventory.jsx';
-import LogIn from './LogIn.jsx';
-import Register from './Register.jsx';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, IndexRoute } from 'react-router-dom';
 import { fetchProducts, fetchSuppliers, postCatalog } from '../slices/catalogSlices.js'
 import { fetchProcedureData, fetchProductData } from '../slices/procedureSlice.js';
 import { useDispatch } from 'react-redux'
@@ -40,14 +38,12 @@ function MainContainer() {
 					<Toolbar />
 
 					<Switch>
-						<Route exact path="/" exact component={HomeContainer} />
-						<Route exact path="/shopping" exact component={ShoppingList} />
-						<Route exact path="/catalog" exact component={Catalog} />
-						<Route exact path="/inventory" exact component={Inventory} />
-						<Route exact path="/procedures" exact component={Procedures} />
-						<Route exact path="/suppliers" exact component={SupplierAddForm} />
-						<Route exact path="/login" exact component={LogIn} />
-						<Route exact path="/register" exact component={Register} />
+						<Route exact path="/main" exact component={HomeContainer} />
+						<Route path="/shopping" component={ShoppingList} />
+						<Route path="/catalog" component={Catalog} />
+						<Route path="/inventory" component={Inventory} />
+						<Route path="/procedures" component={Procedures} />
+						<Route path="/suppliers" component={SupplierAddForm} />
 					</Switch>
 				</Box>
 			</Box>

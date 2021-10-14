@@ -32,18 +32,18 @@ authController.register = (req, res, next) => {
 }
 
 authController.login = (req, res, next) => {
-    passport.authenticate("local", (err, user, info) => {
-        if (err) throw err;
-        if (!user) res.locals.verifiedUser = null;
-        else {
-            req.login(user, err => {
-                if (err) throw err;
-                res.locals.verifiedUser = req.user;
-                console.log(req.user);
-            })
-        }
-    })
-    next();
-}
+    console.log('made it to the controller');
+        passport.authenticate("local", (err, user, info) => {
+          if (err) throw err;
+          if (!user) res.json('Invalid login');
+          else {
+            req.logIn(user, (err) => {
+              if (err) throw err;
+              res.json(user);
+              console.log(req.user);
+            });
+          }
+        })(req, res, next);
+};
 
 module.exports = authController;

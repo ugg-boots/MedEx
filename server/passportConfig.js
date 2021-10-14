@@ -1,37 +1,41 @@
 const pool = require("./models/inventoryModel");
 const bcrypt = require('bcryptjs');
-const Strategy = require('passport-local');
+const LocalStrategy = require('passport-local');
 const passport = require("passport");
 
 module.exports = function() {
 
-    passport.use(
-        new Strategy((username, password, done) => {
-            const param = [username];
-            const userQuery = 'SELECT * FROM users WHERE username = $1';
-            pool.query(userQuery, param, (err, rows) => {
-                console.log(rows);
-                if (err) throw err;
-                if (!rows.length) return done(null, false);
-                bcrypt.compare(password, rows[0].password, (err, result) => {
-                    if (err) throw err;
-                    if (result === true) {
-                        return done(null, rows[0]);
-                    } else {
-                        return done(null, false)
-                    }
-                })
-            })
+    passport.use(new LocalStrategy((username, password, done) => { 
+      pool.query('SELECT * FROM users WHERE username=$1', [username], (err, result) => {
+          if(err) {
+            return done(err)
+          }
+          if(result.rows.length > 0) {
+            const first = result.rows[0]
+            bcrypt.compare(password, first.password, function(err, res) {
+              if(res) {
+                done(null, { id: first.user_id, username: first.username })
+               } else {
+                done(null, false)
+               }
+             })
+           } else {
+             done(null, false)
+           }
         })
-    )
+      }))
 
-    passport.serializeUser((user, done) => {
-        done(null, user.user_id)
-    })
-
-    passport.deserializeUser((id, done) => {
-        pool.query("SELECT * FROM users WHERE id = $1 ",[id], (err, rows) => {
-            done(err, rows[0]);
-        });
-    })
+      
 }
+
+passport.serializeUser((user, done) => {
+  done(null, user)
+})
+
+passport.deserializeUser((user, done) => {
+  console.log(user.id);
+  pool.query("SELECT * FROM users WHERE user_id = $1 ",[parseInt(user.id, 10)], (err, results) => {
+    if(err) return done(err);  
+    done(null, results.rows[0]);
+  });
+})

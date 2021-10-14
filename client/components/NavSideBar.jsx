@@ -1,9 +1,9 @@
 import React from 'react';
-import { Box, Drawer, Toolbar, List, ListItem, ListItemText } from '@mui/material';
+import { Box, Drawer, Toolbar, List, ListItem } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 //this component
-function NavSideBar(props) {
+function NavSideBar() {
 	const drawerWidth = 175;
 
 	return (
@@ -19,7 +19,7 @@ function NavSideBar(props) {
 			<Box sx={{ display: 'flex', flexDirection: 'column', p: 2 }}>
 				<List>
 					<ListItem>
-						<Link to="/">Home</Link>
+						<Link to="/main">Home</Link>
 					</ListItem>
 					<ListItem>
 						<Link to="/shopping">Shopping List</Link>
@@ -35,12 +35,6 @@ function NavSideBar(props) {
 					</ListItem>
 					<ListItem>
 						<Link to="/suppliers">Suppliers</Link>
-					</ListItem>
-					<ListItem>
-						<Link to="/login">Log In</Link>
-					</ListItem>
-					<ListItem>
-						<Link to="/register">Register</Link>
 					</ListItem>
 				</List>
 			</Box>
