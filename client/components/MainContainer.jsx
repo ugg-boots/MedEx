@@ -43,7 +43,7 @@ function MainContainer() {
 						<Route exact path="/catalog" exact component={Catalog} />
 						<Route exact path="/inventory" exact component={Inventory} />
 						<Route exact path="/procedures" exact component={Procedures} />
-						<Route exact path="/suppliers" exact component={SupplierAddForm} />
+						<Route exact path="/suppliers" exact component={SupplierView} />
 					</Switch>
 				</Box>
 			</Box>
