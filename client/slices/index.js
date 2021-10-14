@@ -2,11 +2,13 @@ import { combineReducers } from "redux";
 // import all reducers here:
 import supplierReducer from './supplierSlice'
 import catalogReducer from './catalogSlices';
+import procedureReducer from './procedureSlice';
+import inventoryReducer from './inventorySlice';
 
-export const reducers = combineReducers({
+const reducers = combineReducers({
   catalog: catalogReducer,
-  supplier: supplierReducer
-
+  procedures: procedureReducer,
+  inventory: inventoryReducer
 });
 
 export default reducers

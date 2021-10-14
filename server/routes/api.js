@@ -30,6 +30,11 @@ router.get('/inventory',
     (req, res) => res.status(200).json(res.locals.inventory)
 );
 
+router.get('/inventory/query', 
+    inventoryController.getOneInventory, 
+    (req, res) => res.status(200).json(res.locals.product)
+);
+
 router.post('/inventory', 
     inventoryController.addNewInventory, 
     (req, res) => res.status(200).json(res.locals.newInventory)
@@ -44,6 +49,16 @@ router.delete('/inventory',
 router.get('/procedures', 
     proceduresController.getAllProcedures, 
     (req, res) => res.status(200).json(res.locals.procedures)
+);
+
+router.post('/procedures', 
+    proceduresController.addProcedure,
+    (req, res) => res.status(200).json(res.locals.newJunctions)
+);
+
+router.delete('/procedures',
+    proceduresController.deleteProcedure,
+    (req, res) => res.status(200).json(res.locals.deletedJunctions)
 );
 
 // routes for CATALOG TABLE

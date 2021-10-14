@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 import { DataGrid } from '@mui/x-data-grid';
 import columnDefinitions from './columns.js';
 import AddModal from './AddModal.jsx';
-import InventoryDeleteDialog from './InventoryDeleteDialog.jsx';
+import InventoryDeleteDialog from './Inventory/InventoryDeleteDialog.jsx';
 import SimpleSnackBar from './SimpleSnackBar.jsx';
 
 
