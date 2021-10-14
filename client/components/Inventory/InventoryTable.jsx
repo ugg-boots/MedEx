@@ -33,10 +33,10 @@ export const InventoryTable = () => {
   const {allProductNames, groupedInventory, allInventory, displayedInventory} = useSelector((state) => state.inventory);
 
 
-  // console.log("all product names: ",allProductNames);
-  // console.log("all inventory: ",allInventory)
-  // console.log("grouped Inventory: ", groupedInventory);
-  // console.log("displayed Inventory: ", displayedInventory);
+  console.log("all product names: ",allProductNames);
+  console.log("all inventory: ",allInventory)
+  console.log("grouped Inventory: ", groupedInventory);
+  console.log("displayed Inventory: ", displayedInventory);
   
   return (
     <TableContainer component={Paper}>
