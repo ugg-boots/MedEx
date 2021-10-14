@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Typography, Button } from "@material-ui/core";
+import React, { useState } from "react";
+import { Button } from "@material-ui/core";
 import { Autocomplete, TextField, Alert } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchInventory, postInventory } from "../../slices/inventorySlice";
-import { fetchProducts } from "../../slices/catalogSlices";
+import { postInventory } from "../../slices/inventorySlice";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -21,10 +20,7 @@ export default function InventoryAddForm() {
   const dispatch = useDispatch();
 
   const {
-    allProductNames,
-    groupedInventory,
-    allInventory,
-    displayedInventory,
+    allProductNames
   } = useSelector((state) => state.inventory);
 
   // useState for modal open/close

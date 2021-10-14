@@ -1,16 +1,18 @@
 import React, {useEffect } from 'react';
 import { Box, CssBaseline, Toolbar } from '@mui/material';
-import TableContainer from './TableContainer.jsx';
 import Banner from './Banner.jsx';
 import NavSideBar from './NavSideBar.jsx';
 import ShoppingList from './ShoppingList.jsx';
 import HomeContainer from './HomeContainer.jsx';
 import Catalog from '../components/Catalog/Catalog.js'
 import SupplierAddForm from './SupplierAddForm.jsx';
-import Inventory from './Inventory/Inventory.jsx';
+import Procedures from './Procedures/Procedures.jsx';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { fetchProducts, fetchSuppliers, postCatalog } from '../slices/catalogSlices.js'
+import { fetchProcedureData, fetchProductData } from '../slices/procedureSlice.js';
+import { fetchInventory } from '../slices/inventorySlice.js';
 import { useDispatch } from 'react-redux'
+import Inventory from './Inventory/Inventory.jsx';
 
 
 
@@ -20,14 +22,15 @@ function MainContainer() {
 
 	const dispatch = useDispatch();
 
-  // on component did mount, fetch all product data & suppliers
-  useEffect(() => {
-    dispatch(fetchSuppliers());
-    dispatch(fetchProducts());   
-
- }, []);
-
-
+	// on component did mount, fetch all app data
+	useEffect(() => {
+		dispatch(fetchProcedureData());
+		dispatch(fetchProductData());
+		dispatch(fetchSuppliers());
+    dispatch(fetchProducts());
+		dispatch(fetchInventory());
+	}, []);
+  
 	return (
 		<Router>
 			<Box sx={{ display: 'flex' }}>
@@ -43,7 +46,7 @@ function MainContainer() {
 						<Route exact path="/shopping" exact component={ShoppingList} />
 						<Route exact path="/catalog" exact component={Catalog} />
 						<Route exact path="/inventory" exact component={Inventory} />
-						<Route exact path="/procedures" exact component={TableContainer} />
+						<Route exact path="/procedures" exact component={Procedures} />
 						<Route exact path="/suppliers" exact component={SupplierAddForm} />
 					</Switch>
 				</Box>

@@ -25,8 +25,8 @@ export const fetchInventory = createAsyncThunk(
   'inventory/fetchInventory',
   async (_, thunkAPI) => {
     try{
-      const fetchedData =  await fetch(`/api/inventory`).then((res) => res.json());
-      // console.log("fetchInventory data ", fetchedData);
+      let fetchedData =  await fetch(`/api/inventory`).then((res) => res.json());
+      console.log("fetchInventory data ", fetchedData);
       if(!Array.isArray(fetchedData)) fetchedData = [];
         return fetchedData;
       }
@@ -134,7 +134,7 @@ const inventorySlice = createSlice({
           });
       },
       [fetchInventory.fulfilled] : (state,action) => {
-        // console.log("fetchInventory returned ",action.payload);
+        console.log("fetchInventory returned ",action.payload);
         action.payload.forEach((el) => {
           if(state.groupedInventory.hasOwnProperty(el.product_id)) {
             state.groupedInventory[el.product_id].push(el);

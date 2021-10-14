@@ -52,6 +52,16 @@ router.get('/procedures',
     (req, res) => res.status(200).json(res.locals.procedures)
 );
 
+router.post('/procedures', 
+    proceduresController.addProcedure,
+    (req, res) => res.status(200).json(res.locals.newJunctions)
+);
+
+router.delete('/procedures',
+    proceduresController.deleteProcedure,
+    (req, res) => res.status(200).json(res.locals.deletedJunctions)
+);
+
 // routes for CATALOG TABLE
 router.get('/catalog', 
     catalogController.getAllProducts, 

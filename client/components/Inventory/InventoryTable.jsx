@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -25,10 +25,6 @@ import {fetchInventory, deleteInventory, setModalClose, setModalOpen} from '../.
 export const InventoryTable = () => {
   const dispatch = useDispatch();
   
-  //getting all the available product names
-  useEffect(() => {
-    dispatch(fetchInventory());
-  }, []);
 
   const {allProductNames, groupedInventory, allInventory, displayedInventory} = useSelector((state) => state.inventory);
 
@@ -50,8 +46,8 @@ export const InventoryTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {displayedInventory.map((item) => (
-            <Row key={item.product_id} row={item} />
+          {displayedInventory.map((item) => ( 
+              <Row key={item.product_id} row={item} />
           ))}
         </TableBody>
         <InventoryDeleteDialog/>
