@@ -8,8 +8,9 @@ import Catalog from '../components/Catalog/Catalog.js'
 import SupplierAddForm from './SupplierAddForm.jsx';
 import Procedures from './Procedures/Procedures.jsx';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { fetchProducts, fetchSuppliers, postCatalog } from '../slices/catalogSlices.js'
+import { fetchProducts, fetchSuppliers } from '../slices/catalogSlices.js'
 import { fetchProcedureData, fetchProductData } from '../slices/procedureSlice.js';
+import { fetchInventory } from '../slices/inventorySlice.js';
 import { useDispatch } from 'react-redux'
 import Inventory from './Inventory/Inventory.jsx';
 
@@ -26,7 +27,8 @@ function MainContainer() {
 		dispatch(fetchProcedureData());
 		dispatch(fetchProductData());
 		dispatch(fetchSuppliers());
-    	dispatch(fetchProducts());
+    dispatch(fetchProducts());
+		dispatch(fetchInventory())
 	}, []);
   
 	return (

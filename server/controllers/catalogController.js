@@ -5,7 +5,7 @@ const catalogController = {};
 // add middleware
 catalogController.getAllProducts = async (req, res, next) => {
     const allProductsQuery = 
-        `SELECT product_id, product_name, product_desc, suppliers.supplier_name, unit_price, qty_per_unit FROM catalog
+        `SELECT product_id, product_name, product_desc, suppliers.supplier_name, unit_price, qty_per_unit, max_stock FROM catalog
         INNER JOIN suppliers ON catalog.supplier_id = suppliers.supplier_id`; 
     try {
         const products = await pool.query(allProductsQuery);

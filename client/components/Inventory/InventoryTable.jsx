@@ -24,9 +24,6 @@ export const InventoryTable = () => {
 
   
   //getting all the available product names
-  useEffect(() => {
-    dispatch(fetchInventory());
-  }, []);
 
   const {allProductNames, groupedInventory, allInventory, displayedInventory } = useSelector((state) => state.inventory);
 
