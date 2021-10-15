@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk, rejectWithValue } from '@reduxjs/toolkit';
 
 // fetch suppliers to fill drop down selector in add form
-export const fetchSuppliers = createAsyncThunk(
+export const fetchSupplierName = createAsyncThunk(
   'catalog/fetchSuppliers',
   async (_, thunkAPI) => {
     try {
       let fetchedData =  await fetch('/api/suppliers').then((res) => res.json());
-      // console.log('this is the fetched data from fetchSuppliers: ', fetchedData)
+      // console.log('this is the fetched data from fetchSupplierNAme: ', fetchedData)
         if(!Array.isArray(fetchedData)) fetchedData = [];
         return fetchedData;
       }
@@ -79,7 +79,11 @@ const catalogSlice = createSlice({
     },
   },
   extraReducers: {
+<<<<<<< HEAD
     [fetchSuppliers.fulfilled]: (state, action) => { 
+=======
+    [fetchSupplierName.fulfilled]: (state, action) => {
+>>>>>>> dev
       action.payload.forEach(el => {
         state.allSuppliers.push(el.supplier_name)
       })

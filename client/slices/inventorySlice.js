@@ -26,7 +26,11 @@ export const fetchInventory = createAsyncThunk(
   async (_, thunkAPI) => {
     try{
       let fetchedData =  await fetch(`/api/inventory`).then((res) => res.json());
+<<<<<<< HEAD
       // console.log("fetchInventory data ", fetchedData);
+=======
+      console.log("fetchInventory data ", fetchedData);
+>>>>>>> dev
       if(!Array.isArray(fetchedData)) fetchedData = [];
         return fetchedData;
       }
@@ -63,6 +67,47 @@ export const postInventory = createAsyncThunk(
   }
 );
 
+export const deleteInventory = createAsyncThunk(
+  'inventory/deleteInventory',
+  async(item_id, thunkApi) => {
+    try {
+      // console.log("in delete inventory ", item_id)
+      const deleted = await fetch(`/api/inventory/${item_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'Application/JSON'
+        },
+      })
+      .then(resp => resp.json())
+    }
+    catch(err) {
+      console.log('InventorySlicer deleteInventory: ERROR: ', err);
+      if(!err.response) throw err;
+      return thunkApi.rejectWithValue(err.response.data)
+    }
+  }
+);
+export const updateInventory = createAsyncThunk(
+  'inventory/updateInventory',
+  async(body, thunkApi) => {
+    try {
+      const updated = await fetch(`/api/inventory`, {
+        method: 'PATCH',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'Application/JSON'
+        }
+      })
+      .then(resp => resp.json())
+    }
+    catch(err) {
+      console.log('InventorySlicer updateInventory: ERROR: ', err);
+      if(!err.response) throw err;
+      return thunkApi.rejectWithValue(err.response.data)
+    }
+  }
+)
+
 const inventorySlice = createSlice({
   name: 'inventory',
   initialState: { 
@@ -70,9 +115,20 @@ const inventorySlice = createSlice({
     groupedInventory : {},
     allInventory: [],
     displayedInventory: [],
-    body : {}
+    isDeleteModalOpen: false,
+    itemDeleted: {}
   },
   reducers: { 
+    setModalOpen: (state, action) => {
+      state.itemDeleted = action.payload;
+      state.isDeleteModalOpen = true;
+    },
+    setModalClose: (state,action) =>{
+      state.isDeleteModalOpen = false; 
+    },
+    getDeleteModal: (state,action) => {
+      return state.isDeleteModalOpen;
+    }
   },
   extraReducers: {
       [fetchProducts.fulfilled] : (state,action) => {
@@ -82,7 +138,7 @@ const inventorySlice = createSlice({
           });
       },
       [fetchInventory.fulfilled] : (state,action) => {
-        // console.log("fetchInventory returned ",action.payload);
+        console.log("fetchInventory returned ",action.payload);
         action.payload.forEach((el) => {
           if(state.groupedInventory.hasOwnProperty(el.product_id)) {
             state.groupedInventory[el.product_id].push(el);
@@ -134,9 +190,12 @@ const inventorySlice = createSlice({
         state.displayedInventory.push(newInvent);
       }
       
-      }
+    }, 
+    [deleteInventory.fulfilled] : (state,action) => {
+
+    }
   }
 });
 
-export const {getDataDisplayed} = inventorySlice.actions; 
+export const {setModalClose,setModalOpen, getDeleteModal} = inventorySlice.actions; 
 export default inventorySlice.reducer; 
