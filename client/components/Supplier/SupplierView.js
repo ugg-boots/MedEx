@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
-import SupplierAddForm from './SupplierAddForm.jsx';
+import SupplierAddForm from './SupplierAddForm.js';
 import SupplierTable from './SupplierTable.js';
 
 //This component will lift the state for SupplyTable and SupplyAddForm

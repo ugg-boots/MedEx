@@ -52,7 +52,7 @@ function SupplierAddForm() {
 			setKeyContact('');
 			setSupplierPhoneNumber('');
 			setSupplierAddress('');
-			setModalOpen(false);//close modal when submit button clicked
+			setModalOpen(false); //close modal when submit button clicked
 		}
 	}
 
@@ -63,7 +63,7 @@ function SupplierAddForm() {
 
 	return (
 		<div>
-			<Button onClick={handleModalOpen} variant="outlined" color="secondary" size="small">
+			<Button onClick={handleModalOpen} variant="outlined" color="secondary" size="small" style={{ fontSize: 12 }}>
 				Add Supplier
 			</Button>
 			<Modal open={modalOpen} onClose={handleModalClose}>

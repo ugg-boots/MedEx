@@ -5,14 +5,18 @@ import { Link } from 'react-router-dom';
 //this component
 function NavSideBar(props) {
 	const drawerWidth = 175;
-
+		const color = {
+			background: 'linear-gradient(to right, #0f2027, #203a43, #2c5364)',
+			
+		};
 	return (
 		<Drawer
+		style={{color}}
 			variant="permanent"
 			sx={{
 				width: drawerWidth,
 				flexShrink: 0,
-				[`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+				[`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box', color },
 			}}
 		>
 			<Toolbar />
@@ -43,10 +47,3 @@ function NavSideBar(props) {
 }
 
 export default NavSideBar;
-// {
-// 	['Home', 'Shopping List', 'Current Inventory', 'Procedures', 'Catalog', 'Suppliers'].map((text) => (
-// 		<ListItem button key={text}>
-// 			<ListItemText primary={text} />
-// 		</ListItem>
-// 	));
-// }

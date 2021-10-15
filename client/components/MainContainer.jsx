@@ -5,7 +5,7 @@ import NavSideBar from './NavSideBar.jsx';
 import ShoppingList from './ShoppingList.jsx';
 import HomeContainer from './HomeContainer.jsx';
 import Catalog from '../components/Catalog/Catalog.js'
-import SupplierAddForm from './SupplierAddForm.jsx';
+import SupplierView from '../components/Supplier/SupplierView.js';
 import Procedures from './Procedures/Procedures.jsx';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { fetchProducts, fetchSuppliers, postCatalog } from '../slices/catalogSlices.js'
@@ -26,7 +26,7 @@ function MainContainer() {
 		dispatch(fetchProcedureData());
 		dispatch(fetchProductData());
 		dispatch(fetchSuppliers());
-    	dispatch(fetchProducts());
+    dispatch(fetchProducts());
 	}, []);
   
 	return (

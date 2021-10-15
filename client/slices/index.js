@@ -8,7 +8,8 @@ import inventoryReducer from './inventorySlice';
 const reducers = combineReducers({
   catalog: catalogReducer,
   procedures: procedureReducer,
-  inventory: inventoryReducer
+  inventory: inventoryReducer,
+  supplier:supplierReducer
 });
 
 export default reducers

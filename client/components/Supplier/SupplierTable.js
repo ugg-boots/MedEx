@@ -12,7 +12,7 @@ import Paper from '@mui/material/Paper';
 import { useSelector } from 'react-redux';
 
 //MaterialUi component is rendering the table!
-function Row(props) {
+const Row = (props) => {
 	const { row } = props;
 	const [open, setOpen] = useState(false);
 
@@ -29,7 +29,7 @@ function Row(props) {
 			</TableRow>
 		</React.Fragment>
 	);
-}
+};
 
 Row.propTypes = {
 	row: PropTypes.shape({
@@ -40,12 +40,13 @@ Row.propTypes = {
 	}).isRequired,
 };
 
-export default function SupplierTable() {
+ const SupplierTable = () => {
 	const rows = []; //rows is passed down with keys and values
 
 	//pulling the state from redux store
 	const supplies = useSelector((state) => state.supplier.allSuppliers);
-
+	console.log(supplies)
+	
 	//iterating through supplies state and storing the values to each corresponding key
 	for (let i = 0; i < supplies.length; i++) {
 		// destructured the keys and assign its corresponding values
@@ -71,4 +72,6 @@ export default function SupplierTable() {
 			</Table>
 		</TableContainer>
 	);
-}
+};
+
+export default SupplierTable;
