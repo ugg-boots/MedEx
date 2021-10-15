@@ -32,7 +32,6 @@ authController.register = (req, res, next) => {
 }
 
 authController.login = (req, res, next) => {
-    console.log('made it to the controller');
         passport.authenticate("local", (err, user, info) => {
           if (err) throw err;
           if (!user) res.json('Invalid login');
@@ -40,7 +39,6 @@ authController.login = (req, res, next) => {
             req.logIn(user, (err) => {
               if (err) throw err;
               res.json(user);
-              console.log(req.user);
             });
           }
         })(req, res, next);
