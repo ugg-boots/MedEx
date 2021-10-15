@@ -21,6 +21,7 @@ const ExpirationView = () => {
     
       useEffect(() => {
         getData();
+        return undefined;
       }, [])
 
       const rows = [];

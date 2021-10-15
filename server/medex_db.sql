@@ -29,7 +29,7 @@ VALUES
 CREATE TABLE inventory (
     item_id             SERIAL PRIMARY KEY,
     product_id          SMALLINT,
-    quantity            SMALLINT,
+    quantity            SMALLINT NOT NULL,
     expiration_date     VARCHAR(255),
     CONSTRAINT inventory_pk PRIMARY KEY (item_id)
 )
