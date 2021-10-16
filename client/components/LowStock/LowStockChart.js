@@ -1,38 +1,22 @@
 import { Bar } from "react-chartjs-2";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useSelector } from "react-redux";
-
+import { createSelector } from "reselect";
 
 export const LowStockBarChart = () => {
   
-  const chartContainer = useRef(null);
-  const [chartInstance, setChartInstance] = useState(null);
+  // const labels = useSelector(state => state.catalog.allCatalogItems);
+  
+
+  // const selectLabels = createSelector((state) => state.catalog.allCatalogItems, (catalogItems) => catalogItems.map(items => items.product_name));
+  // const labels = useSelector(selectLabels)
+
   const [chartData, setChartData] = useState({});
-
-  const catalog = useSelector(state => state.catalog.allCatalogItems);
+  const products = useSelector(state => state.catalog.allCatalogItems)
+  const labels = useMemo(() => products.map(item => item.product_name), [products])
   const inventory = useSelector(state => state.inventory.displayedInventory)
-  const labels = catalog.map(item => item.product_name);
-  console.log('this is the labels outisde useEffect: ', labels)
-
-  const chartConfig = {
-    type: "bar",
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Current Inventory',
-          data: [1, 2, 3, 4],
-          backgroundColor: '#37b4d4',
-        },
-        {
-          label: 'Target Max Stock',
-          data: [5, 8, 10, 13],
-          backgroundColor: '#d1349d',
-        },
-      ]
-    },
-
-  }
+  // const labels = catalog.map(item => item.product_name); //useMemo / useSelector
+  console.log('this is the labels from useMemo ', labels)
 
 
   useEffect(() => {
@@ -69,7 +53,7 @@ export const LowStockBarChart = () => {
         }
       }
     })
-  }, [])
+  }, [labels])
 
 
   return (

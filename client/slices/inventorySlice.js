@@ -26,11 +26,7 @@ export const fetchInventory = createAsyncThunk(
   async (_, thunkAPI) => {
     try{
       let fetchedData =  await fetch(`/api/inventory`).then((res) => res.json());
-<<<<<<< HEAD
-      // console.log("fetchInventory data ", fetchedData);
-=======
       console.log("fetchInventory data ", fetchedData);
->>>>>>> dev
       if(!Array.isArray(fetchedData)) fetchedData = [];
         return fetchedData;
       }

@@ -25,14 +25,8 @@ import {fetchInventory, deleteInventory, setModalClose, setModalOpen} from '../.
 export const InventoryTable = () => {
   const dispatch = useDispatch();
   
-<<<<<<< HEAD
-  //getting all the available product names
-=======
->>>>>>> dev
-
   const {allProductNames, groupedInventory, allInventory, displayedInventory} = useSelector((state) => state.inventory);
-
-
+  
   console.log("all product names: ",allProductNames);
   console.log("all inventory: ",allInventory)
   console.log("grouped Inventory: ", groupedInventory);

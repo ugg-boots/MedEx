@@ -79,11 +79,7 @@ const catalogSlice = createSlice({
     },
   },
   extraReducers: {
-<<<<<<< HEAD
-    [fetchSuppliers.fulfilled]: (state, action) => { 
-=======
     [fetchSupplierName.fulfilled]: (state, action) => {
->>>>>>> dev
       action.payload.forEach(el => {
         state.allSuppliers.push(el.supplier_name)
       })
