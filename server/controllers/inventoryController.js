@@ -1,3 +1,4 @@
+const { ConstructionOutlined } = require("@mui/icons-material");
 const pool = require("../models/inventoryModel")
 
 const inventoryController = {};
@@ -48,7 +49,7 @@ inventoryController.addNewInventory = async (req, res, next) => {
   const params = [quantity, expiration_date, product_name, user_id];
   const addInventoryQuery = `INSERT INTO inventory (quantity, expiration_date, product_id, user_id) 
     VALUES($1, $2, (SELECT product_id FROM catalog WHERE product_name = $3 AND user_id = $4), $4)
-    RETURNING *`;
+    RETURNING quantity, $3 as product_name,product_id, product_id, expiration_date, item_id`;
   
   try {
     const newInventory = await pool.query(addInventoryQuery, params);
@@ -69,7 +70,8 @@ inventoryController.addNewInventory = async (req, res, next) => {
 inventoryController.deleteInventory = async (req, res, next) => {
   const {item_id} = req.params; 
   param = [item_id]
-  const deleteInventoryQuery = `DELETE FROM inventory WHERE item_id = $1`;
+  const deleteInventoryQuery = `DELETE FROM inventory WHERE item_id = $1
+    RETURNING inventory.product_id, item_id`;
   
   try { 
     const deletedInventory = await pool.query(deleteInventoryQuery, param);

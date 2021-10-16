@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk,rejectWithValue } from '@reduxjs/toolkit';
 import { fetchProducts } from './catalogSlices';
 // Create slice accepts an initial state, an object full of reducer functions, and a slice "name". It automatically
 // generates action creators and action types that correspond to the reducers and state. 
@@ -73,7 +73,8 @@ export const deleteInventory = createAsyncThunk(
           'Content-Type': 'Application/JSON'
         },
       })
-      .then(resp => resp.json())
+      .then(resp => resp.json());
+      return deleted;
     }
     catch(err) {
       console.log('InventorySlicer deleteInventory: ERROR: ', err);
@@ -93,7 +94,8 @@ export const updateInventory = createAsyncThunk(
           'Content-Type': 'Application/JSON'
         }
       })
-      .then(resp => resp.json())
+      .then(resp => resp.json());
+      return updated;
     }
     catch(err) {
       console.log('InventorySlicer updateInventory: ERROR: ', err);
@@ -133,7 +135,7 @@ const inventorySlice = createSlice({
           });
       },
       [fetchInventory.fulfilled] : (state,action) => {
-        console.log("fetchInventory returned ",action.payload);
+        // console.log("fetchInventory returned ",action.payload);
         action.payload.forEach((el) => {
           if(state.groupedInventory.hasOwnProperty(el.product_id)) {
             state.groupedInventory[el.product_id].push(el);
@@ -187,7 +189,42 @@ const inventorySlice = createSlice({
       
     }, 
     [deleteInventory.fulfilled] : (state,action) => {
-
+      const productId = action.payload.rows[0].product_id;
+      const itemId = action.payload.rows[0].item_id;
+      const newDisplay = []
+      state.displayedInventory.forEach((el) => {
+        if(+el.product_id !== productId) {
+          newDisplay.push(el);
+        }
+        else {
+          const metadata = [];
+          let quantity = 0;
+          el.metadata.forEach((item) => {
+            if(+item.item_id !== itemId ){
+              quantity += item.quantity; 
+              metadata.push(item);
+            }
+          });
+          el.metadata = [...metadata];
+          el.quantity = quantity
+          newDisplay.push(el)
+        }
+      });
+      state.displayedInventory = [...newDisplay];
+    },
+    [updateInventory.fulfilled] : (state,action) => {
+      const {product_id, quantity, item_id} = action.payload.rows[0];
+      state.displayedInventory.forEach((el,ind) => {
+        if(+el.product_id === product_id) {
+          el.quantity = 0;
+          el.metadata.forEach((item) => {
+            if(+item.item_id === item_id) {
+              item.quantity = quantity;
+            }
+            el.quantity += item.quantity
+          });
+        }
+      })
     }
   }
 });

@@ -7,14 +7,7 @@ import { makeStyles } from '@mui/styles';
 import '../styles.scss';
 import { useSelector } from 'react-redux';
 
-// const useStyles = makeStyles({
-// 	underline: {
-// 		borderBottom: '0px solid red !important',
-// 		'&:hover': {
-// 			borderBottom: '0px solid rgba(0,0,0,0)',
-// 		},
-// 	},
-// });
+
 //declared a functional component that will make a fetch request to api/inventory endpoint
 const ExpirationView = () => {
   // const classes = useStyles();
