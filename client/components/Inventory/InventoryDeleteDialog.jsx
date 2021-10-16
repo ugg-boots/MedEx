@@ -17,13 +17,13 @@ import {
   updateInventory
 } from "../../slices/inventorySlice.js";
 import { Autocomplete, TextField, Alert } from "@mui/material";
+import { ContentCutOutlined } from "@mui/icons-material";
 
 export default function InventoryDeleteDialog() {
   const [quantity, setQuantity] = useState();
   const [productName, setProductName] = useState()
   const [warning, setWarning] = useState(null);
   const [warningOn, setWarningOn] = useState(false);
-  const [value, setValue] = useState();
 
   const dispatch = useDispatch();
 
@@ -34,13 +34,12 @@ export default function InventoryDeleteDialog() {
 
   //handling the input number to be less or equal to the quanity
   function handler(e) {
-      if (Number(e.target.value) > max) {
-        setValue(max);
-      }else{
-        setValue(e.target.value);
-      }
-      setQuantity(value);
-    }
+    setQuantity(e.target.value);
+  };
+
+  function clearInput() {
+    setQuantity('');
+  }
   function handleSubmit(event) {
     event.preventDefault();
     //validate data
@@ -65,8 +64,9 @@ export default function InventoryDeleteDialog() {
         quantity: max - Number(quantity),
       };
       //dispatch the update/delete action to add inventory item
+
       //check if the entire inventory needs to be deleted
-      if(quantity === max) { 
+      if(+quantity === max) { 
         dispatch(deleteInventory(body.item_id))
       }
       //update the item info to lower the quantity 
@@ -101,8 +101,14 @@ export default function InventoryDeleteDialog() {
         <br />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleSubmit}> Delete </Button>
-        <Button onClick={() => dispatch(setModalClose())} autoFocus>
+        <Button onClick={(event) => {
+          handleSubmit(event);
+          clearInput();
+        }}> Delete </Button>
+        <Button onClick={() => {
+          dispatch(setModalClose());
+          clearInput();
+        }} autoFocus>
           Exit
         </Button>
       </DialogActions>

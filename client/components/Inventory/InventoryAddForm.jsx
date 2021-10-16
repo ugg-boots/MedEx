@@ -39,6 +39,12 @@ export default function InventoryAddForm() {
   const handleClose = () => {
     setOpen(false);
   };
+  const clearInput = () => {
+    setProductName("");
+    setExpDate("");
+    setQuantity("")
+
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -128,8 +134,14 @@ export default function InventoryAddForm() {
         <br />
         </DialogContent>
         <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-         <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={() =>{
+          handleClose();
+          clearInput();
+          }}>Cancel</Button>
+         <Button onClick={(event) => {
+           handleSubmit(event)
+           clearInput();
+           }}>Submit</Button>
           </DialogActions>
           </Dialog>
      
