@@ -5,6 +5,7 @@ import columnDefinitions from './columns.js';
 import { DataGrid } from '@mui/x-data-grid';
 import { makeStyles } from '@mui/styles';
 import '../styles.scss';
+import { useSelector } from 'react-redux';
 
 // const useStyles = makeStyles({
 // 	underline: {
@@ -18,9 +19,10 @@ import '../styles.scss';
 const ExpirationView = () => {
   // const classes = useStyles();
     const [data, setData] = useState([]);
+    const userId = useSelector((state) => state.auth.userId)
     
     const getData = () => {
-        fetch('/api/expiration')
+        fetch(`/api/expiration/${userId}`)
         .then(res => res.json())
         .then((tableElements) => {
           if (!Array.isArray(tableElements)) tableElements = [];

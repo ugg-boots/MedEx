@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk, rejectWithValue } from '@reduxjs/toolkit';
 
 // fetch suppliers to fill drop down selector in add form
-export const fetchSupplierName = createAsyncThunk(
+export const fetchSupplierName =  createAsyncThunk(
   'catalog/fetchSuppliers',
-  async (_, thunkAPI) => {
+  async (userId, thunkAPI) => {
     try {
-      let fetchedData =  await fetch('/api/suppliers').then((res) => res.json());
+      let fetchedData =  await fetch(`/api/suppliers/${userId}`).then((res) => res.json());
       // console.log('this is the fetched data from fetchSupplierNAme: ', fetchedData)
         if(!Array.isArray(fetchedData)) fetchedData = [];
         return fetchedData;
@@ -16,14 +16,14 @@ export const fetchSupplierName = createAsyncThunk(
      return thunkAPI.rejectWithValue(err.response.data);
     };
   }
-);
+  );
 
 // fetch all products in database
 export const fetchProducts = createAsyncThunk(
   'catalog/fetchProducts',
-  async (_, thunkAPI) => {
+  async (userId, thunkAPI) => {
     try {
-      let fetchedData =  await fetch('/api/catalog').then((res) => res.json());
+      let fetchedData =  await fetch(`/api/catalog/${userId}`).then((res) => res.json());
       // console.log('this is the fetched data from fetchProducts: ', fetchedData)
         if(!Array.isArray(fetchedData)) fetchedData = [];
         return fetchedData;
@@ -34,7 +34,7 @@ export const fetchProducts = createAsyncThunk(
      return thunkAPI.rejectWithValue(err.response.data);
     };
   }
-);
+  );
 
 //posting data to database
 export const postCatalog = createAsyncThunk(

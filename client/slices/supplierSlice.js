@@ -21,9 +21,9 @@ export const postSupplier = createAsyncThunk('supplier/postSupplier', async (bod
 //created a fetch request to retrieve all supplies
 export const fetchSuppliers = createAsyncThunk(
   'supplier/fetchSuppliers',
-  async (_, thunkAPI) => {
+  async (userId, thunkAPI) => {
     try {
-      let fetchedData =  await fetch('/api/suppliers').then((res) => res.json());
+      let fetchedData =  await fetch(`/api/suppliers/${userId}`).then((res) => res.json());
       console.log('this is the fetched data from fetchSuppliers: ', fetchedData)
         if(!Array.isArray(fetchedData)) fetchedData = [];
         return fetchedData;

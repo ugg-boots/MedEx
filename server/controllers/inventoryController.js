@@ -3,12 +3,14 @@ const pool = require("../models/inventoryModel")
 const inventoryController = {};
 
 inventoryController.getAllInventory = async (req, res, next) => {
-  
+
+  const user_id = req.params.userId;
   const inventoryQuery = `SELECT item_id, inventory.product_id, catalog.product_name, quantity, expiration_date FROM inventory 
-    INNER JOIN catalog ON inventory.product_id = catalog.product_id`;
+    INNER JOIN catalog ON inventory.product_id = catalog.product_id
+    WHERE inventory.user_id = $1`;
   
   try {
-    const inventory = await pool.query(inventoryQuery);
+    const inventory = await pool.query(inventoryQuery, [user_id]);
     res.locals.inventory = inventory.rows;
     next();
   } 
@@ -42,10 +44,10 @@ inventoryController.getAllInventory = async (req, res, next) => {
 
 inventoryController.addNewInventory = async (req, res, next) => {
   
-  const { product_name, quantity, expiration_date } = req.body;
-  const params = [quantity, expiration_date, product_name];
-  const addInventoryQuery = `INSERT INTO inventory (quantity, expiration_date, product_id) 
-    VALUES($1, $2, (SELECT product_id FROM catalog WHERE product_name = $3))
+  const { product_name, quantity, expiration_date, user_id } = req.body;
+  const params = [quantity, expiration_date, product_name, user_id];
+  const addInventoryQuery = `INSERT INTO inventory (quantity, expiration_date, product_id, user_id) 
+    VALUES($1, $2, (SELECT product_id FROM catalog WHERE product_name = $3 AND user_id = $4), $4)
     RETURNING *`;
   
   try {

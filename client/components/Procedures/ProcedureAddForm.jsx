@@ -13,6 +13,7 @@ function ProcedureAddForm () {
   const productData = useSelector((state) => state.procedures.productData);
   // useSelector to pull out all procedure data, needed to check for duplicates already in db
   const procedureData = useSelector((state) => state.procedures.procedureData);
+  const userId = useSelector((state) => state.auth.userId)
 
    // useState for basic form data:
   const [procedureName, setProcedureName] = useState('');
@@ -68,7 +69,8 @@ function ProcedureAddForm () {
       const body = {
         procedure_name: procedureName,
         procedure_desc: procedureDesc, 
-        materials: productData
+        materials: productData,
+        user_id: userId
       };
 
       // dispatch the add post to Procedures action to add item to the procedures store:
