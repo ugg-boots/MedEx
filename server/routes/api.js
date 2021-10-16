@@ -30,20 +30,21 @@ router.get('/inventory',
     (req, res) => res.status(200).json(res.locals.inventory)
 );
 
-router.get('/inventory/query', 
-    inventoryController.getOneInventory, 
-    (req, res) => res.status(200).json(res.locals.product)
-);
-
 router.post('/inventory', 
     inventoryController.addNewInventory, 
     (req, res) => res.status(200).json(res.locals.newInventory)
 );
 
-router.delete('/inventory', 
+router.delete('/inventory/:item_id', 
     inventoryController.deleteInventory, 
     (req, res) => res.status(200).json(res.locals.deletedInventory)
 );
+
+router.patch('/inventory', 
+    inventoryController.updateInventory, 
+    (req, res) => res.status(200).json(res.locals.updatedInventory)
+);
+
 
 // routes for PROCEDURES TABLE
 router.get('/procedures', 

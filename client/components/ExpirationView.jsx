@@ -1,12 +1,22 @@
 import React, {useState, useEffect} from 'react';
-import {Typography} from '@mui/material';
+import { Typography,Box } from '@mui/material';
 import dayjs from 'dayjs';
 import columnDefinitions from './columns.js';
 import { DataGrid } from '@mui/x-data-grid';
+import { makeStyles } from '@mui/styles';
+import '../styles.scss';
 
-
+// const useStyles = makeStyles({
+// 	underline: {
+// 		borderBottom: '0px solid red !important',
+// 		'&:hover': {
+// 			borderBottom: '0px solid rgba(0,0,0,0)',
+// 		},
+// 	},
+// });
 //declared a functional component that will make a fetch request to api/inventory endpoint
 const ExpirationView = () => {
+  // const classes = useStyles();
     const [data, setData] = useState([]);
     
     const getData = () => {
@@ -35,17 +45,15 @@ const ExpirationView = () => {
         })
 
     return (
-        <div>
-        <Typography variant="h5">Expiring Soon</Typography>
-        <div style={{ height: 300, width: '100%' }}>
-        <DataGrid
-          rows={rows}
-          columns={columnDefinitions.expiration}
-        />
-      </div>
-      </div>
-        
-    )
+			
+				<div>
+        <Typography variant="h5"> Expiring soon</Typography>
+					<div style={{ height: 300, width: '150%' }}>
+						<DataGrid rows={rows} columns={columnDefinitions.expiration} />
+					</div>
+				</div>
+			
+		);
 }
 
 export default ExpirationView

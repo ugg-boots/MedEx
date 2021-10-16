@@ -7,11 +7,11 @@ import SupplierTable from './SupplierTable.js';
 const SupplierView = () => {
 	return (
 		<div>
-		<Typography variant='h4'> Suppliers</Typography>
-			<div className="supplier_addform">
+		<Typography className="supplier-view" variant='h4'> SUPPLIERS</Typography>
+			<div className="supplier-addform">
 				<SupplierAddForm />
 			</div>
-			<div className="supplier_table">
+			<div className="supplier-table">
 				<SupplierTable />
 			</div>
 		</div>

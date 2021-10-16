@@ -13,28 +13,26 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import InventoryDeleteDialog from './InventoryDeleteDialog.jsx'
 import { useDispatch, useSelector } from "react-redux";
-import {fetchInventory} from '../../slices/inventorySlice.js';
+import { fetchProducts } from "../../slices/catalogSlices.js";
+import {fetchInventory, deleteInventory, setModalClose, setModalOpen} from '../../slices/inventorySlice.js';
+
 
 
 
 export const InventoryTable = () => {
   const dispatch = useDispatch();
-
   
-  //getting all the available product names
-  useEffect(() => {
-    dispatch(fetchInventory());
-  }, []);
 
-  const {allProductNames, groupedInventory, allInventory, displayedInventory } = useSelector((state) => state.inventory);
+  const {allProductNames, groupedInventory, allInventory, displayedInventory} = useSelector((state) => state.inventory);
 
 
-  // console.log("all product names: ",allProductNames);
-  // console.log("all inventory: ",allInventory)
-  // console.log("grouped Inventory: ", groupedInventory);
-  // console.log("displayed Inventory: ", displayedInventory);
+  console.log("all product names: ",allProductNames);
+  console.log("all inventory: ",allInventory)
+  console.log("grouped Inventory: ", groupedInventory);
+  console.log("displayed Inventory: ", displayedInventory);
   
   return (
     <TableContainer component={Paper}>
@@ -48,17 +46,19 @@ export const InventoryTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {displayedInventory.map((item) => (
-            <Row key={item.product_id} row={item} />
+          {displayedInventory.map((item) => ( 
+              <Row key={item.product_id} row={item} />
           ))}
         </TableBody>
+        <InventoryDeleteDialog/>
       </Table>
     </TableContainer>
   );
 
-}
+};
 
 function Row(props) {
+  const dispatch = useDispatch();
   const {row} = props; 
   const {product_name, quantity, product_id, metadata} = row;
   const [open, setOpen] = React.useState(false);
@@ -95,6 +95,7 @@ function Row(props) {
                     <TableCell>Product Name</TableCell>
                     <TableCell>Quantity</TableCell>
                     <TableCell align="right">Expiration Date</TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -107,7 +108,16 @@ function Row(props) {
                         {el.product_name}
                       </TableCell>
                       <TableCell>{el.quantity}</TableCell>
-                      <TableCell align="right">{el.expiration_date}</TableCell>
+                      <TableCell align="right">{el.expiration_date}  
+                  </TableCell>
+                  <TableCell>
+                  <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    onClick={() =>{dispatch(setModalOpen(el))}}>
+                    <DeleteIcon />
+                  </IconButton>
+                  </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -118,7 +128,4 @@ function Row(props) {
       </TableRow>
     </React.Fragment>
   );
-}
-
-
- 
+};

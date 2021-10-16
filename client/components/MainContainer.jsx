@@ -5,12 +5,14 @@ import NavSideBar from './NavSideBar.jsx';
 import ShoppingList from './ShoppingList.jsx';
 import HomeContainer from './HomeContainer.jsx';
 import Catalog from '../components/Catalog/Catalog.js'
-import SupplierView from '../components/Supplier/SupplierView.js';
 import Procedures from './Procedures/Procedures.jsx';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { fetchProducts, fetchSuppliers, postCatalog } from '../slices/catalogSlices.js'
+import { fetchProducts, fetchSupplierName, postCatalog } from '../slices/catalogSlices.js'
 import { fetchProcedureData, fetchProductData } from '../slices/procedureSlice.js';
-import { useDispatch } from 'react-redux'
+import { fetchSuppliers,  } from '../slices/supplierSlice.js';
+import { fetchInventory } from '../slices/inventorySlice.js';
+import { useDispatch } from 'react-redux';
+import SupplierView from './Supplier/SupplierView.js';
 import Inventory from './Inventory/Inventory.jsx';
 
 
@@ -25,8 +27,10 @@ function MainContainer() {
 	useEffect(() => {
 		dispatch(fetchProcedureData());
 		dispatch(fetchProductData());
-		dispatch(fetchSuppliers());
+		dispatch(fetchSupplierName());
     dispatch(fetchProducts());
+		dispatch(fetchInventory());
+		dispatch(fetchSuppliers())
 	}, []);
   
 	return (

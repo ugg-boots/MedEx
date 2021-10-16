@@ -1,17 +1,18 @@
 import React from 'react';
 import CatalogAddForm from './CatalogAddForm.jsx';
 import CatalogTable from './CatalogTable.js';
+import { Typography } from '@material-ui/core';
 
 export default function Catalog() {
-  
   return (
-    <div>
-      <div className="catalog-add-form">
-        <CatalogAddForm />
-      </div>
-      <div className="catalog-table">
-        <CatalogTable />
-      </div>
-    </div>
-  );
+		<div>
+			<Typography className="supplier-view" variant="h4">CATALOG</Typography>
+			<div className="catalog-add-form">
+				<CatalogAddForm />
+			</div>
+			<div className="catalog-table">
+				<CatalogTable />
+			</div>
+		</div>
+	);
 };

@@ -3,6 +3,7 @@ import { Typography, Button } from '@material-ui/core';
 import { TextField, Alert, InputLabel, Modal, Box } from '@mui/material';
 import { useDispatch } from 'react-redux'; //redux
 import { postSupplier } from '../../slices/supplierSlice'; //redux
+import { createTheme } from '@mui/system'; 
 
 //the style label is styling the form
 const style = {
@@ -12,11 +13,14 @@ const style = {
 	transform: 'translate(-50%, -50%)',
 	width: 700,
 	bgcolor: 'background.paper',
-	border: '2px solid #000',
+	borderRadius: '5px',
 	boxShadow: 24,
 	p: 4,
 };
 
+const theme = createTheme({
+
+})
 //created a functional component that takes a form and adds supplies
 function SupplierAddForm() {
 	//declared the dispatched
@@ -63,7 +67,7 @@ function SupplierAddForm() {
 
 	return (
 		<div>
-			<Button onClick={handleModalOpen} variant="outlined" color="secondary" size="small" style={{ fontSize: 12 }}>
+			<Button  onClick={handleModalOpen} variant="outlined" color="inherit"  style={{ fontSize: 12 }}>
 				Add Supplier
 			</Button>
 			<Modal open={modalOpen} onClose={handleModalClose}>
@@ -112,12 +116,12 @@ function SupplierAddForm() {
 							}}
 						/>
 						<br />
-						<Button variant="contained" color="primary" type="submit">
+						<Button variant="outlined" color="inherit" type="submit">
 							Submit
 						</Button>
 					</form>
 					<br />
-					<Button variant="outlined" color="secondary" onClick={handleModalClose}>
+					<Button variant="outlined" color="inherit" onClick={handleModalClose}>
 						Exit
 					</Button>
 				</Box>

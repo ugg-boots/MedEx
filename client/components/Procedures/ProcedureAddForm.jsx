@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@material-ui/core';
+import { Button,Typography } from '@material-ui/core';
 import { TextField, Alert, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { postProcedure } from '../../slices/procedureSlice';
@@ -106,45 +106,47 @@ function ProcedureAddForm () {
   else renderWarning = null;
 
   return (
-    <div>
-      <Button variant="outlined" onClick={handleClickOpen}>Define New Procedure</Button>
-      <Dialog open={open} onClose={handleClose}>
-      {renderWarning}
-      <DialogTitle>New Procedure to Add</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          Enter new procedure information.
-        </DialogContentText>
-          <TextField
-            label="Procedure Name"
-            variant="standard"
-            value={procedureName}
-            onChange={(event) => {
-              setProcedureName(event.target.value);
-            }} />
-          <br/>
-          <TextField
-            label="Procedure Description"
-            variant="standard"
-            value={procedureDesc}
-            onChange={(event) => {
-              setProcedureDesc(event.target.value);
-            }} />
-          <br/>
-          <DialogContentText>
-          Enter quantity needed of each product.
-          </DialogContentText>
-          {productFields}
-          </DialogContent>
-      
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>Submit</Button>
-      </DialogActions>
-    
-    </Dialog>
-    </div>
-      );
+		<div>
+			<Button sx={{ pt: 2 }} variant="outlined" onClick={handleClickOpen}>
+				Add Procedure
+			</Button>
+
+			<Dialog open={open} onClose={handleClose}>
+				{renderWarning}
+				<DialogTitle>New Procedure to Add</DialogTitle>
+				<DialogContent>
+					<DialogContentText>Enter new procedure information.</DialogContentText>
+					<TextField
+						label="Procedure Name"
+						variant="standard"
+						value={procedureName}
+						onChange={(event) => {
+							setProcedureName(event.target.value);
+						}}
+					/>
+					<br />
+					<TextField
+						label="Procedure Description"
+						variant="standard"
+						value={procedureDesc}
+						onChange={(event) => {
+							setProcedureDesc(event.target.value);
+						}}
+					/>
+					<br />
+					<DialogContentText>Enter quantity needed of each product.</DialogContentText>
+					{productFields}
+				</DialogContent>
+
+				<DialogActions>
+					<Button onClick={handleClose}>Cancel</Button>
+					<Button variant="text" onClick={handleSubmit}>
+						Submit
+					</Button>
+				</DialogActions>
+			</Dialog>
+		</div>
+	);
 }
 
   export default ProcedureAddForm;

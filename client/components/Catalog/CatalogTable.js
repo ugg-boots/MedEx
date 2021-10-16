@@ -166,7 +166,6 @@ function CatalogTable() {
             id="tableTitle"
             component="div"
           >
-            Catalog
           </Typography>
         )}
 

@@ -1,39 +1,93 @@
+// * {
+// 	box-sizing: border-box;
+// }
+
 .modalContent {
-    background-color: white;
-    width: 400px;
+	background-color: white;
+	width: 400px;
 }
 
 .modal {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 999;
 }
 
-  .modalBody {
-    padding: 10px;
-    margin: 20px;
-  }
+.modalBody {
+	padding: 10px;
+	margin: 20px;
+}
 
-  .modalButton {
-    display: inline;
-  }
+.modalButton {
+	display: inline;
+}
+.main-container {
+	display: flex;
+	// justify-content: center;
+	// height: 500px;
+	// width: 1500px;
+	// background:transparent;
+	// border:3px solid;
+	// border-radius: 10px;
+}
+.home-container {
+	display: flex;
+	margin-top: 20px;
+	height: 500px;
+  width:1500px;
+  justify-content: space-evenly;
+	// background: black;
+}
 
-  .homeContainer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-  }
+.expiration_view {
+  display: flex;
+	padding: 6px 10px;
+	width: 500px;
+}
 
-  .expyView {
-    grid-column-start: first;
-    grid-column-end: 2;
-    grid-row-start: first;
-    grid-row-end: 2;
-  }
+.lowStockView {
+	padding: 6px 40px;
+	margin-left: 150px;
+}
+.expyView {
+	grid-column-start: first;
+	grid-column-end: 2;
+	grid-row-start: first;
+	grid-row-end: 2;
+}
+
+.button1 {
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+.supplier-view {
+	display: flex;
+	justify-content: center;
+}
+.supplier-addform {
+	display: flex;
+	padding: 10px;
+}
+
+.supplier-table {
+	border: 2px solid #fff;
+	border-radius: 10px;
+	// box-shadow: 1px 1px 5px ;
+}
+
+.procedure-add-form {
+	display: flex;
+	padding: 10px;
+}
+
+.procedure {
+  display: flex;
+}

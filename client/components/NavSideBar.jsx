@@ -1,17 +1,22 @@
 import React from 'react';
-import { Box, Drawer, Toolbar, List, ListItem, ListItemText } from '@mui/material';
+import { Box, Drawer, Toolbar, Button, } from '@mui/material';
 import { Link } from 'react-router-dom';
-
+import '../styles.scss';
 //this component
 function NavSideBar(props) {
-	const drawerWidth = 175;
-		const color = {
-			background: 'linear-gradient(to right, #0f2027, #203a43, #2c5364)',
-			
-		};
+
+	const drawerWidth = 180;
+	//added color to navbar 
+	// '#e0f2f1';
+	// #2c387e
+	const color = {
+		background: ' #fff',
+	};
+
+	
 	return (
 		<Drawer
-		style={{color}}
+			style={{ color }}
 			variant="permanent"
 			sx={{
 				width: drawerWidth,
@@ -20,30 +25,41 @@ function NavSideBar(props) {
 			}}
 		>
 			<Toolbar />
-			<Box sx={{ display: 'flex', flexDirection: 'column', p: 2 }}>
-				<List>
-					<ListItem>
-						<Link to="/">Home</Link>
-					</ListItem>
-					<ListItem>
-						<Link to="/shopping">Shopping List</Link>
-					</ListItem>
-					<ListItem>
-						<Link to="/inventory">Current Inventory</Link>
-					</ListItem>
-					<ListItem>
-						<Link to="/procedures">Procedures</Link>
-					</ListItem>
-					<ListItem>
-						<Link to="/catalog">Catalog</Link>
-					</ListItem>
-					<ListItem>
-						<Link to="/suppliers">Suppliers</Link>
-					</ListItem>
-				</List>
+			<Box sx={{ display: 'flex', flexDirection: 'column', height: '700px', p: 6 }}>
+				<div className="button1">
+					<Button color="primary" to="/" component={Link}>
+						Home
+					</Button>
+				</div>
+					<div className="button1">
+				<Button  color="primary" to="/shopping" component={Link}>
+					Shop
+				</Button>
+				</div>
+					<div className="button1">
+				<Button color="primary" to="/inventory" component={Link}>
+					Inventory
+				</Button>
+				</div>
+					<div className="button1">
+				<Button color="primary" to="/procedures" component={Link}>
+					Procedures
+				</Button>
+				</div>
+				<div className="button1">
+				<Button color="primary" to="/catalog" component={Link}>
+					Catalog
+				</Button>
+					</div>
+					<div className="button1">
+				<Button size="medium" color="primary" to="/suppliers" component={Link}>
+					Suppliers
+				</Button>
+				</div>
 			</Box>
 		</Drawer>
 	);
 }
 
 export default NavSideBar;
+

@@ -9,9 +9,18 @@ import { visuallyHidden } from '@mui/utils';
 import { useSelector } from 'react-redux'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
+
+//adding costume fonts 
+  const theme = createTheme({
+		typography: {
+			fontFamily: ['Roboto Mono', 'monospace'].join(','),
+		},
+	});
 
 
 function Row(props) {
+  
   const { row } = props;
   
   const [open, setOpen] = useState(false);
@@ -125,9 +134,11 @@ export default function ProcedureTable() {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell align="right">Name</TableCell>
+            <ThemeProvider theme={theme}>
+            <TableCell align="left">Name</TableCell>
             <TableCell align="right">Description</TableCell>
             <TableCell align="right">Materials Needed</TableCell>
+            </ThemeProvider>
           </TableRow>
         </TableHead>
         <TableBody>

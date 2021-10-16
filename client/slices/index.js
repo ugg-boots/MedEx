@@ -9,7 +9,7 @@ const reducers = combineReducers({
   catalog: catalogReducer,
   procedures: procedureReducer,
   inventory: inventoryReducer,
-  supplier:supplierReducer
+  supplier: supplierReducer
 });
 
 export default reducers
