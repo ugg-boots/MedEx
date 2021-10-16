@@ -89,7 +89,7 @@ proceduresController.deleteProcedure = async (req, res, next) => {
   }
 
   const deleteJunctionsQuery = `DELETE FROM junction WHERE procedure_id = $1 
-  RETURNING procedure_id``;
+  RETURNING procedure_id`;
   
   try { 
     const deletedJunctions = await pool.query(deleteJunctionsQuery, param);
@@ -101,6 +101,6 @@ proceduresController.deleteProcedure = async (req, res, next) => {
       message: { err: 'proceduresController.deleteProcedure from junction: ERROR: Check server logs for details' },
     });
   }
-};
+}
 
 module.exports = proceduresController;

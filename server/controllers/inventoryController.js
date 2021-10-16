@@ -71,7 +71,7 @@ inventoryController.deleteInventory = async (req, res, next) => {
   const {item_id} = req.params; 
   param = [item_id]
   const deleteInventoryQuery = `DELETE FROM inventory WHERE item_id = $1
-    RETURNING inventory.product_id`;
+    RETURNING inventory.product_id, item_id`;
   
   try { 
     const deletedInventory = await pool.query(deleteInventoryQuery, param);

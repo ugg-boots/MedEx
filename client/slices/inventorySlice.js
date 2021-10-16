@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, rejectWithValue } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk,rejectWithValue } from '@reduxjs/toolkit';
 import { fetchProducts } from './catalogSlices';
 // Create slice accepts an initial state, an object full of reducer functions, and a slice "name". It automatically
 // generates action creators and action types that correspond to the reducers and state. 
@@ -190,10 +190,24 @@ const inventorySlice = createSlice({
     }, 
     [deleteInventory.fulfilled] : (state,action) => {
       const productId = action.payload.rows[0].product_id;
+      const itemId = action.payload.rows[0].item_id;
       const newDisplay = []
       state.displayedInventory.forEach((el) => {
         if(+el.product_id !== productId) {
           newDisplay.push(el);
+        }
+        else {
+          const metadata = [];
+          let quantity = 0;
+          el.metadata.forEach((item) => {
+            if(+item.item_id !== itemId ){
+              quantity += item.quantity; 
+              metadata.push(item);
+            }
+          });
+          el.metadata = [...metadata];
+          el.quantity = quantity
+          newDisplay.push(el)
         }
       });
       state.displayedInventory = [...newDisplay];
