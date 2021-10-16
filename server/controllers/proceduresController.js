@@ -72,10 +72,9 @@ proceduresController.addProcedure = async (req, res, next) => {
 }
 
 proceduresController.deleteProcedure = async (req, res, next) => {
-  
-  const id = req.body[0];
-  const param = [id];
-  const deleteProcedureQuery = 'DELETE FROM procedures WHERE procedure_id = $1';
+  const {procedure_id} = req.params; 
+  const param = [procedure_id];
+  const deleteProcedureQuery = `DELETE FROM procedures WHERE procedure_id = $1`;
   
   try { 
     const deletedProcedure = await pool.query(deleteProcedureQuery, param);
@@ -83,23 +82,24 @@ proceduresController.deleteProcedure = async (req, res, next) => {
   } 
   catch(err) {
     next({
-      log: 'proceduresController.deleteInventory: ERROR:' + err.message,
-      message: { err: 'proceduresController.deleteInventory: ERROR: Check server logs for details' },
+      log: 'proceduresController.deleteProcedure: ERROR:' + err.message,
+      message: { err: 'proceduresController.deleteProcedure: ERROR: Check server logs for details' },
     });
   }
 
-  const deleteJunctionsQuery = 'DELETE FROM junction WHERE procedure_id = $1';
+  const deleteJunctionsQuery = `DELETE FROM junction WHERE procedure_id = $1 `;
   
   try { 
     const deletedJunctions = await pool.query(deleteJunctionsQuery, param);
-    res.locals.deletedJunctions = deletedJunctions;
+    res.locals.deletedJunctions = {procedure_id: procedure_id};
+    next();
   } 
   catch(err) {
     next({
-      log: 'proceduresController.deleteInventory: ERROR:' + err.message,
-      message: { err: 'proceduresController.deleteInventory: ERROR: Check server logs for details' },
+      log: 'proceduresController.deleteProcedure from junction : ERROR:' + err.message,
+      message: { err: 'proceduresController.deleteProcedure from junction: ERROR: Check server logs for details' },
     });
   }
-};
+}
 
 module.exports = proceduresController;

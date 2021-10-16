@@ -6,20 +6,21 @@ import { TargetStockChart } from './TargetStockChart/TargetStockChart.js';
 import { Container } from '@mui/material';
 
 //declared a functional component that will lift the state of ExpirationView
-const HomeContainer = (props) => {
-	return (
-		<>
-			<div className="home-Container">
-				<ExpirationView />
-				<LowStockView />
-			</div>
-			<div className="chart">
-				<Container fixed>
-					<TargetStockChart />
-				</Container>
-			</div>
-		</>
-	);
+const HomeContainer = (props)=> {
+
+  return (
+    <>
+      <div className='home-Container'>
+          <ExpirationView />
+        <LowStockView />
+      </div>
+      <div className='chart'>
+        <Container fixed>
+          <TargetStockChart />
+        </Container>
+      </div>
+    </>
+  )
 };
 
 export default HomeContainer;

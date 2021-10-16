@@ -7,6 +7,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 const initialState = {
   procedureData: [],
   productData: [],
+  isProcedureDeleteModalOpen: false, 
+  deletedProcedureName: ""
 
 }
 
@@ -46,6 +48,7 @@ export const postProcedure = createAsyncThunk(
   'catalog/postProcedure', 
   async(body,thunkAPI) => {
     try {
+      console.log("body",body)
       const postedBody = await fetch('/api/procedures', {
         method: 'POST',
         headers: {
@@ -58,6 +61,27 @@ export const postProcedure = createAsyncThunk(
     }
     catch(err) {
       console.log('ProcedureSlice postProcedure ERROR: ', err);
+      if(!err.response) throw err;
+      return thunkAPI.rejectWithValue(err.response.data)
+    }
+  }
+);
+
+export const deleteProcedure = createAsyncThunk(
+  'catalog/deleteProcedure', 
+  async(procedure_id,thunkAPI) => {
+    try {
+      const deletedBody = await fetch(`/api/procedures/${procedure_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'Application/JSON'
+        }
+      })
+        .then(resp => resp.json());
+      return deletedBody;
+    }
+    catch(err) {
+      console.log('ProcedureSlice deleteProcedure ERROR: ', err);
       if(!err.response) throw err;
       return thunkAPI.rejectWithValue(err.response.data)
     }
@@ -75,6 +99,13 @@ export const procedureSlice = createSlice({
       state.productData.forEach(product => {
         product.quantity = '';
       });
+    },
+    setModalOpen: (state, action) => {
+      state.deletedProcedureName = action.payload;
+      state.isProcedureDeleteModalOpen = true;
+    },
+    setModalClose: (state,action) =>{
+      state.isProcedureDeleteModalOpen = false; 
     }
   }, 
 
@@ -98,9 +129,19 @@ export const procedureSlice = createSlice({
         state.procedureData.push(row)
       })
     },
+    [deleteProcedure.fulfilled]: (state,action) => {
+      const {procedure_id} = action.payload;
+      const newProcedureData = [];
+      for(let i = 0; i < state.procedureData.length; i++) {
+        if (state.procedureData[i].procedure_id !== +procedure_id) {
+          newProcedureData.push(state.procedureData[i])
+        }
+      }
+      state.procedureData = [...newProcedureData];
+    }
   }
 })
 
-export const { handleProductQuantityChange, resetProductData } = procedureSlice.actions;
+export const { handleProductQuantityChange, resetProductData, setModalOpen, setModalClose } = procedureSlice.actions;
 
 export default procedureSlice.reducer;
