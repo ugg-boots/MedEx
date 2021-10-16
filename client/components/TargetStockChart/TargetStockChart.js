@@ -26,12 +26,12 @@ export const TargetStockChart = () => {
         {
           label: 'Current Inventory',
           data: inventory.map(item => item.quantity),
-          backgroundColor: '#37b4d4',
+          backgroundColor: '#36008D',
         },
         {
           label: 'Target Max Stock',
           data: products.map(item => item.max_stock),
-          backgroundColor: '#d1349d',
+          backgroundColor: '#00C9B8',
         },
       ],
       plugins: {
