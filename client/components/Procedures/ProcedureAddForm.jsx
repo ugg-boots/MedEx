@@ -4,10 +4,16 @@ import { TextField, Alert, Dialog, DialogActions, DialogContent, DialogContentTe
 import { useDispatch, useSelector } from 'react-redux'
 import { postProcedure } from '../../slices/procedureSlice';
 import { handleProductQuantityChange, resetProductData } from '../../slices/procedureSlice';
+import { fetchProcedureData, fetchProductData } from '../../slices/procedureSlice.js';
 
 function ProcedureAddForm () {
   
   const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(fetchProcedureData(userId));
+    dispatch(fetchProductData(userId));
+  }, [])
   
   // useSelector to pull out productData from dispatch(fetchProductData), need to populate form fields in render below:
   const productData = useSelector((state) => state.procedures.productData);

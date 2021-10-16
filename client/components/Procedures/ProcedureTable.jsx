@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination,
@@ -6,9 +6,10 @@ TableRow, TableSortLabel, Toolbar, Paper, Checkbox, IconButton, Tooltip, FormCon
 Switch, Collapse, Typography } from '@mui/material';
 import { DeleteIcon, FilterListIcon } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { fetchProcedureData, fetchProductData } from '../../slices/procedureSlice.js';
 
 
 function Row(props) {
@@ -82,7 +83,14 @@ Row.propTypes = {
 };
 
 export default function ProcedureTable() {
+
+  const userId = useSelector((state) => state.auth.userId);
+  const dispatch = useDispatch();
   
+  useEffect(() => {
+    dispatch(fetchProcedureData(userId));
+  }, [])
+
   const procedureData = useSelector(state => state.procedures.procedureData)
 
   // build rows for table display

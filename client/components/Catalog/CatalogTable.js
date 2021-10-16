@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination,
@@ -7,10 +7,17 @@ Switch, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-
-import { useSelector } from 'react-redux'
+import { fetchProducts, fetchSupplierName } from '../../slices/catalogSlices.js'
+import { useDispatch, useSelector } from 'react-redux'
 
 function CatalogTable() {
+
+  const userId = useSelector((state) => state.auth.userId);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(fetchProducts(userId));
+  }, [])
 
   function createData(name, desc, supplier, price, quantity, max_stock) {
     return {

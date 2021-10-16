@@ -1,20 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import { Autocomplete, TextField, Alert, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-
-import { postCatalog } from '../../slices/catalogSlices'
+import { postCatalog, fetchProducts, fetchSupplierName } from '../../slices/catalogSlices'
 
 
 function CatalogAddForm (props) {
-  
+  const userId = useSelector((state) => state.auth.userId)
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchProducts(userId));
+    dispatch(fetchSupplierName(userId));
+  }, [])
 
   // useSelector to pull out supplierNames from dispatch(fetchSupplierName), need to populate dropdown list in render below:
   const allSupplierNames = useSelector(state => state.catalog.allSuppliers)
   // useSelector to pull out all product items, needed to check for duplicates already in db
   const allProducts = useSelector(state => state.catalog.allCatalogItems)
-  const userId = useSelector((state) => state.auth.userId)
 
   // useState for modal open/close
   const [open, setOpen] = useState(false);
