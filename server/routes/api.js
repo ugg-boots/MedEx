@@ -60,7 +60,7 @@ router.post('/procedures',
 
 router.delete('/procedures/:procedure_id',
     proceduresController.deleteProcedure,
-    (req, res) => res.status(200).json(res.locals.deleteProcedure)
+    (req, res) => res.status(200).json(res.locals.deletedJunctions)
 );
 
 // routes for CATALOG TABLE

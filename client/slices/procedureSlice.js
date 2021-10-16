@@ -130,10 +130,10 @@ export const procedureSlice = createSlice({
       })
     },
     [deleteProcedure.fulfilled]: (state,action) => {
-      console.log("action.payload delete", action.payload);
+      const {procedure_id} = action.payload;
       const newProcedureData = [];
       for(let i = 0; i < state.procedureData.length; i++) {
-        if (+state.procedureData[i].procedure_id !== procedure_id) {
+        if (state.procedureData[i].procedure_id !== +procedure_id) {
           newProcedureData.push(state.procedureData[i])
         }
       }

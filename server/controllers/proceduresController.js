@@ -74,8 +74,7 @@ proceduresController.addProcedure = async (req, res, next) => {
 proceduresController.deleteProcedure = async (req, res, next) => {
   const {procedure_id} = req.params; 
   const param = [procedure_id];
-  const deleteProcedureQuery = `DELETE FROM procedures WHERE procedure_id = $1 
-    RETURNING procedure_id`;
+  const deleteProcedureQuery = `DELETE FROM procedures WHERE procedure_id = $1`;
   
   try { 
     const deletedProcedure = await pool.query(deleteProcedureQuery, param);
@@ -88,12 +87,12 @@ proceduresController.deleteProcedure = async (req, res, next) => {
     });
   }
 
-  const deleteJunctionsQuery = `DELETE FROM junction WHERE procedure_id = $1 
-  RETURNING procedure_id`;
+  const deleteJunctionsQuery = `DELETE FROM junction WHERE procedure_id = $1 `;
   
   try { 
     const deletedJunctions = await pool.query(deleteJunctionsQuery, param);
-    res.locals.deletedJunctions = deletedJunctions;
+    res.locals.deletedJunctions = {procedure_id: procedure_id};
+    next();
   } 
   catch(err) {
     next({
