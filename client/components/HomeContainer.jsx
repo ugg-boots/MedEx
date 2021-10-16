@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom';
 const HomeContainer = (props)=> {
   return (
     <div className='homeContainer'>
-      <Link to="/">
+      <div>
         <ExpirationView />
-      </Link>
-        <div className='lowStockView'>
-                <LowStockView />
-        </div>
+      </div>
+      <div className='lowStockView'>
+        <LowStockView />
+      </div>
     </div>
     )
 };

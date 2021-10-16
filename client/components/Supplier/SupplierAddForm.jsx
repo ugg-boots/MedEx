@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Typography, Button } from '@material-ui/core';
 import { TextField, Alert, InputLabel, Modal, Box } from '@mui/material';
-import { useDispatch } from 'react-redux'; //redux
+import { useDispatch, useSelector } from 'react-redux'; //redux
 import { postSupplier } from '../../slices/supplierSlice'; //redux
 
 //the style label is styling the form
@@ -29,6 +29,7 @@ function SupplierAddForm() {
 	const [warning, setWarning] = useState(null);
 	const [warningOn, setWarningOn] = useState(false);
 	const [modalOpen, setModalOpen] = useState(false);
+	const userId = useSelector((state) => state.auth.userId)
 
 	const handleModalOpen = () => {
 		setModalOpen(true);
@@ -44,6 +45,7 @@ function SupplierAddForm() {
 				key_contact: keyContact,
 				supplier_phone_number: supplierPhoneNumber,
 				supplier_address: supplierAddress,
+				user_id: userId
 			};
 			//once the Submit button is clicked the reducer will dispatch.
 			dispatch(postSupplier(body));
