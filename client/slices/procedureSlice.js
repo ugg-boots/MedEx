@@ -7,6 +7,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 const initialState = {
   procedureData: [],
   productData: [],
+  isProcedureDeleteModalOpen: false, 
+  deletedProcedureName: ""
 
 }
 
@@ -75,6 +77,13 @@ export const procedureSlice = createSlice({
       state.productData.forEach(product => {
         product.quantity = '';
       });
+    },
+    setModalOpen: (state, action) => {
+      state.deletedProcedureName = action.payload;
+      state.isProcedureDeleteModalOpen = true;
+    },
+    setModalClose: (state,action) =>{
+      state.isProcedureDeleteModalOpen = false; 
     }
   }, 
 
@@ -101,6 +110,6 @@ export const procedureSlice = createSlice({
   }
 })
 
-export const { handleProductQuantityChange, resetProductData } = procedureSlice.actions;
+export const { handleProductQuantityChange, resetProductData, setModalOpen, setModalClose } = procedureSlice.actions;
 
 export default procedureSlice.reducer;
