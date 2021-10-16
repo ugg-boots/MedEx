@@ -1,22 +1,17 @@
 import React from 'react';
-import { Box, Drawer, Toolbar, Button, } from '@mui/material';
+import { Box, Drawer, Toolbar, List, ListItem } from '@mui/material';
 import { Link } from 'react-router-dom';
-import '../styles.scss';
-//this component
-function NavSideBar(props) {
 
-	const drawerWidth = 180;
-	//added color to navbar 
-	// '#e0f2f1';
-	// #2c387e
+//this component
+function NavSideBar() {
+	const drawerWidth = 195;
 	const color = {
-		background: ' #fff',
+		background: '#fff',
 	};
 
-	
+
 	return (
 		<Drawer
-			style={{ color }}
 			variant="permanent"
 			sx={{
 				width: drawerWidth,
@@ -25,41 +20,42 @@ function NavSideBar(props) {
 			}}
 		>
 			<Toolbar />
-			<Box sx={{ display: 'flex', flexDirection: 'column', height: '700px', p: 6 }}>
-				<div className="button1">
-					<Button color="primary" to="/" component={Link}>
-						Home
-					</Button>
-				</div>
-					<div className="button1">
-				<Button  color="primary" to="/shopping" component={Link}>
-					Shop
-				</Button>
-				</div>
-					<div className="button1">
-				<Button color="primary" to="/inventory" component={Link}>
-					Inventory
-				</Button>
-				</div>
-					<div className="button1">
-				<Button color="primary" to="/procedures" component={Link}>
-					Procedures
-				</Button>
-				</div>
-				<div className="button1">
-				<Button color="primary" to="/catalog" component={Link}>
-					Catalog
-				</Button>
-					</div>
-					<div className="button1">
-				<Button size="medium" color="primary" to="/suppliers" component={Link}>
-					Suppliers
-				</Button>
-				</div>
+			<Box sx={{ display: 'flex', flexDirection: 'column', p: 2 }}>
+				<List>
+					<ListItem>
+						<Link class="navLink" to="/main">
+							Home
+						</Link>
+					</ListItem>
+					<ListItem>
+						<Link class="navLink" to="/shopping">
+							Shopping List
+						</Link>
+					</ListItem>
+					<ListItem>
+						<Link class="navLink" to="/inventory">
+							Current Inventory
+						</Link>
+					</ListItem>
+					<ListItem>
+						<Link class="navLink" to="/procedures">
+							Procedures
+						</Link>
+					</ListItem>
+					<ListItem>
+						<Link class="navLink" to="/catalog">
+							Catalog
+						</Link>
+					</ListItem>
+					<ListItem>
+						<Link class="navLink" to="/suppliers">
+							Suppliers
+						</Link>
+					</ListItem>
+				</List>
 			</Box>
 		</Drawer>
 	);
 }
 
 export default NavSideBar;
-

@@ -6,7 +6,9 @@ import { Typography } from '@material-ui/core';
 export default function Catalog() {
   return (
 		<div>
-			<Typography className="supplier-view" variant="h4">CATALOG</Typography>
+			<Typography className="global-header" variant="h4">
+				CATALOG
+			</Typography>
 			<div className="catalog-add-form">
 				<CatalogAddForm />
 			</div>

@@ -6,7 +6,7 @@ import { Typography } from '@material-ui/core';
 export default function Inventory() {
 	return (
 		<div>
-			<Typography className="supplier-view" variant="h4">INVENTORY</Typography>
+			<Typography className="global-header" variant="h4">INVENTORY</Typography>
 			<div className="inventory-add-form">
 				<InventoryAddForm />
 			</div>

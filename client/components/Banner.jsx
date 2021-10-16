@@ -14,8 +14,9 @@ function Banner() {
 			backgroundColor: '#3c52b2',
 			color: '#fff',
 			'&:hover': {
-				backgroundColor: 'rgb(245, 245, 245)',
+				backgroundColor: '#bbdefb',
 				color: '#212121',
+				borderRadius: '2px',
 			},
 		},
 	}));
@@ -42,7 +43,7 @@ function Banner() {
 // #f5f5f5
 // #2c387e
 	return (
-		<AppBar style={{ background: '#fff', color: 'black' }} position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+		<AppBar style={{ background: 'primary', color: 'black' }} position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
 			<Toolbar>
 				<Typography variant="h5" noWrap component="div" sx={{ flexGrow: 1 }}>
 					MedEx

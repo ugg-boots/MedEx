@@ -8,7 +8,7 @@ export const fetchProductId = createAsyncThunk(
   'inventory/fetchProductId',
   async (id, thunkAPI) => {
     try{
-      const fetchedData =  await fetch(`/api/inventory/query?product_id=${id}`).then((res) => res.json());
+      let fetchedData =  await fetch(`/api/inventory/query?product_id=${id}`).then((res) => res.json());
       // console.log("fetchProductId data ", fetchedData);
       if(!Array.isArray(fetchedData)) fetchedData = [];
         return fetchedData;
