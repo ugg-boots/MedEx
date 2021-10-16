@@ -1,5 +1,4 @@
-import { ConstructionOutlined, NetworkCheckSharp, UpdateDisabled } from '@mui/icons-material';
-import { createSlice, createAsyncThunk, rejectWithValue, current } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk,rejectWithValue } from '@reduxjs/toolkit';
 import { fetchProducts } from './catalogSlices';
 // Create slice accepts an initial state, an object full of reducer functions, and a slice "name". It automatically
 // generates action creators and action types that correspond to the reducers and state. 
@@ -23,10 +22,10 @@ export const fetchProductId = createAsyncThunk(
 );
 export const fetchInventory = createAsyncThunk(
   'inventory/fetchInventory',
-  async (_, thunkAPI) => {
+  async (userId, thunkAPI) => {
     try{
-      let fetchedData =  await fetch(`/api/inventory`).then((res) => res.json());
-      // console.log("fetchInventory data ", fetchedData);
+      let fetchedData =  await fetch(`/api/inventory/${userId}`).then((res) => res.json());
+      console.log("fetchInventory data ", fetchedData);
       if(!Array.isArray(fetchedData)) fetchedData = [];
         return fetchedData;
       }

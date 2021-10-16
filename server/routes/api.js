@@ -7,25 +7,26 @@ const inventoryController = require('../controllers/inventoryController');
 const proceduresController = require('../controllers/proceduresController')
 const catalogController = require('../controllers/catalogController');
 const supplierController = require('../controllers/supplierController');
+const authController = require('../controllers/authController');
 
 // routes for HOME display
-router.get('/shop',
+router.get('/shop/:userId',
     homeController.getShoppingData,
     (req, res) => res.status(200).json(res.locals.shoppingData)
 );
 
-router.get('/lowStock', 
+router.get('/lowStock/:userId', 
     homeController.getLowStockData, 
     (req, res) => res.status(200).json(res.locals.lowStockData)
 );
 
-router.get('/expiration', 
+router.get('/expiration/:userId', 
     homeController.getExpirationData, 
     (req, res) => res.status(200).json(res.locals.expirationData)
 );
 
 // routes for INVENTORY TABLE
-router.get('/inventory', 
+router.get('/inventory/:userId', 
     inventoryController.getAllInventory, 
     (req, res) => res.status(200).json(res.locals.inventory)
 );
@@ -47,7 +48,7 @@ router.patch('/inventory',
 
 
 // routes for PROCEDURES TABLE
-router.get('/procedures', 
+router.get('/procedures/:userId', 
     proceduresController.getAllProcedures, 
     (req, res) => res.status(200).json(res.locals.procedures)
 );
@@ -63,7 +64,7 @@ router.delete('/procedures',
 );
 
 // routes for CATALOG TABLE
-router.get('/catalog', 
+router.get('/catalog/:userId', 
     catalogController.getAllProducts, 
     (req, res) => res.status(200).json(res.locals.products)
 );
@@ -74,7 +75,7 @@ router.post('/catalog',
 );
 
 // routes for SUPPLIER TABLE
-router.get('/suppliers', 
+router.get('/suppliers/:userId', 
     supplierController.getAllSuppliers, 
     (req, res) => res.status(200).json(res.locals.suppliers)
 );
@@ -83,5 +84,16 @@ router.post('/suppliers',
     supplierController.addNewSupplier, 
     (req, res) => res.status(200).json(res.locals.newSupplier)
 );
+
+//routes for AUTH
+router.post('/login', 
+    authController.login,
+    (req, res) => {res.status(200).json(res.locals.verifiedUser)
+});
+  
+router.post('/register', 
+    authController.register,
+    (req, res) => {res.status(200).json(res.locals.registerMessage)
+});
 
 module.exports = router;

@@ -1,3 +1,11 @@
+.navLink {
+  text-decoration: none;
+}
+
+.navLink:visited {
+  color: black;
+}
+
 .modalContent {
     background-color: white;
     width: 400px;
