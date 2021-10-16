@@ -15,8 +15,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchSuppliers  } from '../slices/supplierSlice.js';
 import { fetchInventory } from '../slices/inventorySlice.js';
 
-
-
 //functional component will take care of all the routing to all components
 
 function MainContainer() {
