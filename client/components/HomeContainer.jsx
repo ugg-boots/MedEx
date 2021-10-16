@@ -2,7 +2,7 @@ import React from 'react';
 import LowStockView from './LowStockView.jsx';
 import ExpirationView from './ExpirationView.jsx';
 import { Link } from 'react-router-dom';
-import { LowStockBarChart } from './LowStock/LowStockChart.js';
+import { TargetStockChart } from './TargetStockChart/TargetStockChart.js';
 import { Container } from '@mui/material';
 
 //declared a functional component that will lift the state of ExpirationView
@@ -18,7 +18,7 @@ const HomeContainer = (props)=> {
       </div>
       <div className='chart'>
         <Container fixed>
-          <LowStockBarChart />
+          <TargetStockChart />
         </Container>
       </div>
     </>

@@ -1,9 +1,9 @@
 import { Bar } from "react-chartjs-2";
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useSelector } from "react-redux";
-import { createSelector } from "reselect";
+import { Bloodtype } from "@mui/icons-material";
 
-export const LowStockBarChart = () => {
+export const TargetStockChart = () => {
 
   const [chartData, setChartData] = useState({});
 
@@ -11,8 +11,8 @@ export const LowStockBarChart = () => {
   const products = useSelector(state => state.catalog.allCatalogItems)
   const labels = useMemo(() => products.map(item => item.product_name), [products])
 
+  // grab from inventory the displayedInventory which gives the total number of quantities at the moment
   const inventory = useSelector(state => state.inventory.displayedInventory)
-  console.log('this is the labels from useMemo ', labels)
 
   /* React will load before Redux, so inside useEffect, pass in the memoized value of labels once it's re-rendered. Because it only re-renders when
   anything changes within state.catalog.allCatalogItems, in our case it will only render 1 time after information has been loaded, this will stop the
@@ -25,34 +25,45 @@ export const LowStockBarChart = () => {
       datasets: [
         {
           label: 'Current Inventory',
-          data: [1, 2, 3, 4],
+          data: inventory.map(item => item.quantity),
           backgroundColor: '#37b4d4',
         },
         {
           label: 'Target Max Stock',
-          data: [5, 8, 10, 13],
+          data: products.map(item => item.max_stock),
           backgroundColor: '#d1349d',
         },
       ],
       plugins: {
         title: {
           display: true,
-          text: 'Target Stock vs. Current Inventory'
+          text: 'Target Stock vs. Current Inventory',
         },
       },
       responsive: true,
       scales: {
         x: {
+          display: true,
+          title: {
+            display: true,
+            text: 'Items'
+          },
           stacked: true,
         },
         y: {
+          display: true,
+          title: {
+            display: true,
+            text: 'Quantity',
+            weight: 'bold',
+          },
           ticks: {
             beginAtZero: true
           }
         }
       }
     })
-  }, [labels])
+  }, [labels, inventory])
 
 
   return (
