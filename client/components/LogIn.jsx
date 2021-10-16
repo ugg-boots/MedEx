@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Alert, Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Grid, Box, Typography, Container } from '@mui/material';
+import { Alert, Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Grid, Box, Typography, Container, Paper } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Redirect, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { validateUser, resetLoginError } from '../slices/authSlice.js';
+import medexLogo from '../../assests/medexLogo.png'
 
 const theme = createTheme();
 
@@ -58,9 +59,8 @@ function Login() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
+          <img width="400" height="110" src={medexLogo} />
+          <br/>
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
