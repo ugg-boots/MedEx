@@ -18,9 +18,9 @@ const style = {
 	p: 4,
 };
 
-const theme = createTheme({
+// const theme = createTheme({
 
-})
+// })
 //created a functional component that takes a form and adds supplies
 function SupplierAddForm() {
 	//declared the dispatched
