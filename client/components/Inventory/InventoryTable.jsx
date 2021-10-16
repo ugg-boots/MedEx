@@ -31,7 +31,7 @@ export const InventoryTable = () => {
   // console.log("all product names: ",allProductNames);
   // console.log("all inventory: ",allInventory)
   // console.log("grouped Inventory: ", groupedInventory);
-  // console.log("displayed Inventory: ", displayedInventory);
+  console.log("displayed Inventory: ", displayedInventory);
   
   return (
     <TableContainer component={Paper}>
