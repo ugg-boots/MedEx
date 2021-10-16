@@ -12,9 +12,9 @@ const initialState = {
 
 export const fetchProcedureData = createAsyncThunk(
   'procedures/fetchProcedures',
-  async (_, thunkAPI) => {
+  async (userId, thunkAPI) => {
     try{
-      let fetchedData =  await fetch('/api/procedures').then((res) => res.json());
+      let fetchedData =  await fetch(`/api/procedures/${userId}`).then((res) => res.json());
         if(!Array.isArray(fetchedData)) fetchedData = [];
         return fetchedData;
       }
@@ -28,9 +28,9 @@ export const fetchProcedureData = createAsyncThunk(
 
 export const fetchProductData = createAsyncThunk(
   'procedures/fetchProducts',
-  async (_, thunkAPI) => {
+  async (userId, thunkAPI) => {
     try{
-      let fetchedData =  await fetch('/api/catalog').then((res) => res.json());
+      let fetchedData =  await fetch(`/api/catalog/${userId}`).then((res) => res.json());
         if(!Array.isArray(fetchedData)) fetchedData = [];
         return fetchedData;
       }

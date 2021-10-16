@@ -10,10 +10,11 @@ function CatalogAddForm (props) {
   
   const dispatch = useDispatch();
 
-  // useSelector to pull out supplierNames from dispatch(fetchSuppliers), need to populate dropdown list in render below:
+  // useSelector to pull out supplierNames from dispatch(fetchSupplierName), need to populate dropdown list in render below:
   const allSupplierNames = useSelector(state => state.catalog.allSuppliers)
   // useSelector to pull out all product items, needed to check for duplicates already in db
   const allProducts = useSelector(state => state.catalog.allCatalogItems)
+  const userId = useSelector((state) => state.auth.userId)
 
   // useState for modal open/close
   const [open, setOpen] = useState(false);
@@ -29,6 +30,7 @@ function CatalogAddForm (props) {
   // useState for warnings in case of incorrect/duplicate data:
   const [warning, setWarning] = useState(null);
   const [warningOn, setWarningOn] = useState(false);
+  
 
 
   const handleClickOpen = () => {
@@ -73,7 +75,8 @@ function CatalogAddForm (props) {
       supplier_name: supplierName,
       unit_price: unitPrice,
       qty_per_unit: qtyPerUnit,
-      max_stock: maxStock
+      max_stock: maxStock,
+      user_id: userId
     };
 
     // dispatch the add post to Catalog action to add item to the catalog store:

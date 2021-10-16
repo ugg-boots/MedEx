@@ -2,12 +2,14 @@ import React, {useState, useEffect} from 'react';
 import {Typography} from '@mui/material';
 import columnDefinitions from './columns.js';
 import { DataGrid } from '@mui/x-data-grid';
+import { useSelector } from 'react-redux';
 
 function LowStockView () {
     const [data, setData] = useState([]);
+    const userId = useSelector((state) => state.auth.userId)
     
     const getData = () => {
-        fetch('/api/lowstock')
+        fetch(`/api/lowstock/${userId}`)
         .then(res => res.json())
         .then((tableElements) => {
           if (!Array.isArray(tableElements)) tableElements = [];
@@ -17,7 +19,7 @@ function LowStockView () {
       }
     
       useEffect(() => {
-        getData();
+         getData();
       }, [])
 
       const rows = [];
