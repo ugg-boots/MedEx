@@ -5,17 +5,15 @@ import NavSideBar from './NavSideBar.jsx';
 import ShoppingList from './ShoppingList.jsx';
 import HomeContainer from './HomeContainer.jsx';
 import Catalog from '../components/Catalog/Catalog.js'
+import SupplierView from '../components/Supplier/SupplierView.js';
 import Procedures from './Procedures/Procedures.jsx';
 import Inventory from './Inventory/Inventory.jsx';
-import SupplierView from './Supplier/SupplierView.js';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { fetchProducts, fetchSupplierName } from '../slices/catalogSlices.js'
 import { fetchProcedureData, fetchProductData } from '../slices/procedureSlice.js';
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchSuppliers  } from '../slices/supplierSlice.js';
 import { fetchInventory } from '../slices/inventorySlice.js';
-
-
 
 //functional component will take care of all the routing to all components
 
@@ -40,9 +38,11 @@ function MainContainer() {
 			<Box sx={{ display: 'flex' }}>
 				<CssBaseline />
 				<Banner />
+
 				<NavSideBar />
 				<Box component="main" sx={{ flexGrow: 1, p: 2 }}>
 					<Toolbar />
+
 					<Switch>
 						<Route exact path="/main" exact component={HomeContainer} />
 						<Route path="/shopping" component={ShoppingList} />
