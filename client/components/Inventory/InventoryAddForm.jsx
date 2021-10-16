@@ -22,6 +22,7 @@ export default function InventoryAddForm() {
   const {
     allProductNames
   } = useSelector((state) => state.inventory);
+  const userId = useSelector((state) => state.auth.userId)
 
   // useState for modal open/close
   const [open, setOpen] = useState(false);
@@ -75,6 +76,7 @@ export default function InventoryAddForm() {
         product_name: productName,
         quantity: quantity,
         expiration_date: expDate,
+        user_id: userId
       };
       //dispatch the postInventory actionb to add inventory item to the inventory
       dispatch(postInventory(body));

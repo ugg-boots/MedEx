@@ -8,12 +8,12 @@ import { useSelector } from 'react-redux'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {setModalOpen} from "../../slices/procedureSlice.js";
-import ProcedureDeleteDialog from './ProcedureDelete.jsx';
-
+import ProcedureDeleteDialog from './ProcedureDeleteDialog.jsx';
+import { useDispatch } from "react-redux";
 
 function Row(props) {
   const { row } = props;
-  
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
   return (

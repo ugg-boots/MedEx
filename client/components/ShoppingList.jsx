@@ -3,6 +3,7 @@ import { Typography } from '@material-ui/core';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, InputLabel, MenuItem, Select, TextField, Button } from '@mui/material';
 import columnDefinitions from './columns.js';
+import { useSelector } from 'react-redux';
 
 const ShoppingList = (props) => {
   const [procedure, setProcedure] = useState('');
@@ -10,13 +11,14 @@ const ShoppingList = (props) => {
   const [procedureData, setProcedureData] = useState([]);
   const [rows, setRows] = useState([]);
   const [inventory, setInventory] = useState([]);
+  const userId = useSelector((state) => state.auth.userId);
 
   const handleChange = (event) => {
     setProcedure(event.target.value);
   };
   
   const getProcedureData = () => {
-    fetch('/api/shop')
+    fetch(`/api/shop/${userId}`)
     .then(res => res.json())
     .then((tableElements) => {
       if (!Array.isArray(tableElements)) tableElements = [];
@@ -26,7 +28,7 @@ const ShoppingList = (props) => {
   }
 
   const getInventoryData = () => {
-    fetch('/api/inventory')
+    fetch(`/api/inventory/${userId}`)
     .then(res => res.json())
     .then((tableElements) => {
       if (!Array.isArray(tableElements)) tableElements = [];

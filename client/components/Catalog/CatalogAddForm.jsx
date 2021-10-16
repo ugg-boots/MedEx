@@ -14,6 +14,7 @@ function CatalogAddForm (props) {
   const allSupplierNames = useSelector(state => state.catalog.allSuppliers)
   // useSelector to pull out all product items, needed to check for duplicates already in db
   const allProducts = useSelector(state => state.catalog.allCatalogItems)
+  const userId = useSelector((state) => state.auth.userId)
 
   // useState for modal open/close
   const [open, setOpen] = useState(false);
@@ -74,7 +75,8 @@ function CatalogAddForm (props) {
       supplier_name: supplierName,
       unit_price: unitPrice,
       qty_per_unit: qtyPerUnit,
-      max_stock: maxStock
+      max_stock: maxStock,
+      user_id: userId
     };
 
     // dispatch the add post to Catalog action to add item to the catalog store:

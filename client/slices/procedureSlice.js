@@ -14,9 +14,9 @@ const initialState = {
 
 export const fetchProcedureData = createAsyncThunk(
   'procedures/fetchProcedures',
-  async (_, thunkAPI) => {
+  async (userId, thunkAPI) => {
     try{
-      let fetchedData =  await fetch('/api/procedures').then((res) => res.json());
+      let fetchedData =  await fetch(`/api/procedures/${userId}`).then((res) => res.json());
         if(!Array.isArray(fetchedData)) fetchedData = [];
         return fetchedData;
       }
@@ -30,9 +30,9 @@ export const fetchProcedureData = createAsyncThunk(
 
 export const fetchProductData = createAsyncThunk(
   'procedures/fetchProducts',
-  async (_, thunkAPI) => {
+  async (userId, thunkAPI) => {
     try{
-      let fetchedData =  await fetch('/api/catalog').then((res) => res.json());
+      let fetchedData =  await fetch(`/api/catalog/${userId}`).then((res) => res.json());
         if(!Array.isArray(fetchedData)) fetchedData = [];
         return fetchedData;
       }
@@ -48,6 +48,7 @@ export const postProcedure = createAsyncThunk(
   'catalog/postProcedure', 
   async(body,thunkAPI) => {
     try {
+      console.log("body",body)
       const postedBody = await fetch('/api/procedures', {
         method: 'POST',
         headers: {
@@ -60,6 +61,27 @@ export const postProcedure = createAsyncThunk(
     }
     catch(err) {
       console.log('ProcedureSlice postProcedure ERROR: ', err);
+      if(!err.response) throw err;
+      return thunkAPI.rejectWithValue(err.response.data)
+    }
+  }
+);
+
+export const deleteProcedure = createAsyncThunk(
+  'catalog/deleteProcedure', 
+  async(procedure_id,thunkAPI) => {
+    try {
+      const deletedBody = await fetch(`/api/procedures/${procedure_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'Application/JSON'
+        }
+      })
+        .then(resp => resp.json());
+      return deletedBody;
+    }
+    catch(err) {
+      console.log('ProcedureSlice deleteProcedure ERROR: ', err);
       if(!err.response) throw err;
       return thunkAPI.rejectWithValue(err.response.data)
     }
@@ -107,6 +129,16 @@ export const procedureSlice = createSlice({
         state.procedureData.push(row)
       })
     },
+    [deleteProcedure.fulfilled]: (state,action) => {
+      console.log("action.payload delete", action.payload);
+      const newProcedureData = [];
+      for(let i = 0; i < state.procedureData.length; i++) {
+        if (+state.procedureData[i].procedure_id !== procedure_id) {
+          newProcedureData.push(state.procedureData[i])
+        }
+      }
+      state.procedureData = [...newProcedureData];
+    }
   }
 })
 

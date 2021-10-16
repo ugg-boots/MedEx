@@ -5,13 +5,15 @@ const proceduresController = {};
 
 proceduresController.getAllProcedures = async (req, res, next) => {
     
+  const user_id = req.params.userId;
   const allProceduresQuery = 
     `SELECT procedures.procedure_name, procedures.procedure_id, procedures.procedure_desc, catalog.product_name, junction.qty_per_procedure FROM procedures 
     INNER JOIN junction ON procedures.procedure_id = junction.procedure_id
-    INNER JOIN catalog ON catalog.product_id = junction.product_id`; 
+    INNER JOIN catalog ON catalog.product_id = junction.product_id
+    WHERE procedures.user_id = $1`; 
 
   try {
-    const procedures = await pool.query(allProceduresQuery);
+    const procedures = await pool.query(allProceduresQuery, [user_id]);
     res.locals.procedures = procedures.rows;
     next();
   } 
@@ -25,11 +27,11 @@ proceduresController.getAllProcedures = async (req, res, next) => {
 };
 
 proceduresController.addProcedure = async (req, res, next) => {
-  const { procedure_name, procedure_desc, materials } = req.body;
-  const procedureParams = [procedure_name, procedure_desc];
+  const { procedure_name, procedure_desc, materials, user_id } = req.body;
+  const procedureParams = [procedure_name, procedure_desc, user_id];
   
-  const addProcedureQuery = `INSERT INTO procedures (procedure_name, procedure_desc) 
-  VALUES ($1, $2)
+  const addProcedureQuery = `INSERT INTO procedures (procedure_name, procedure_desc, user_id) 
+  VALUES ($1, $2, $3)
   RETURNING procedure_id`;
 
   try {
@@ -46,10 +48,10 @@ proceduresController.addProcedure = async (req, res, next) => {
 
   const junctionParams = [];
   materials.forEach(product => {
-    if (product.quantity && product.quantity > 0) junctionParams.push([res.locals.procedureID, product.productID, product.quantity]);
+    if (product.quantity && product.quantity > 0) junctionParams.push([res.locals.procedureID, product.productID, product.quantity, user_id]);
   })
   
-  const addJunctionQuery = format(`WITH inserted AS (INSERT INTO junction (procedure_id, product_id, qty_per_procedure) VALUES %L RETURNING 
+  const addJunctionQuery = format(`WITH inserted AS (INSERT INTO junction (procedure_id, product_id, qty_per_procedure, user_id) VALUES %L RETURNING 
   *) SELECT procedures.procedure_name, procedures.procedure_id, procedures.procedure_desc, catalog.product_name, inserted.qty_per_procedure FROM inserted 
   INNER JOIN procedures ON procedures.procedure_id = inserted.procedure_id
   INNER JOIN catalog ON catalog.product_id = inserted.product_id`, junctionParams);
@@ -70,10 +72,10 @@ proceduresController.addProcedure = async (req, res, next) => {
 }
 
 proceduresController.deleteProcedure = async (req, res, next) => {
-  
-  const id = req.body[0];
-  const param = [id];
-  const deleteProcedureQuery = 'DELETE FROM procedures WHERE procedure_id = $1';
+  const {procedure_id} = req.params; 
+  const param = [procedure_id];
+  const deleteProcedureQuery = `DELETE FROM procedures WHERE procedure_id = $1 
+    RETURNING procedure_id`;
   
   try { 
     const deletedProcedure = await pool.query(deleteProcedureQuery, param);
@@ -81,12 +83,13 @@ proceduresController.deleteProcedure = async (req, res, next) => {
   } 
   catch(err) {
     next({
-      log: 'proceduresController.deleteInventory: ERROR:' + err.message,
-      message: { err: 'proceduresController.deleteInventory: ERROR: Check server logs for details' },
+      log: 'proceduresController.deleteProcedure: ERROR:' + err.message,
+      message: { err: 'proceduresController.deleteProcedure: ERROR: Check server logs for details' },
     });
   }
 
-  const deleteJunctionsQuery = 'DELETE FROM junction WHERE procedure_id = $1';
+  const deleteJunctionsQuery = `DELETE FROM junction WHERE procedure_id = $1 
+  RETURNING procedure_id``;
   
   try { 
     const deletedJunctions = await pool.query(deleteJunctionsQuery, param);
@@ -94,8 +97,8 @@ proceduresController.deleteProcedure = async (req, res, next) => {
   } 
   catch(err) {
     next({
-      log: 'proceduresController.deleteInventory: ERROR:' + err.message,
-      message: { err: 'proceduresController.deleteInventory: ERROR: Check server logs for details' },
+      log: 'proceduresController.deleteProcedure from junction : ERROR:' + err.message,
+      message: { err: 'proceduresController.deleteProcedure from junction: ERROR: Check server logs for details' },
     });
   }
 };

@@ -12,19 +12,20 @@ import { useSelector } from 'react-redux'
 
 function CatalogTable() {
 
-  function createData(name, desc, supplier, price, quantity) {
+  function createData(name, desc, supplier, price, quantity, max_stock) {
     return {
       name,
       desc,
       supplier,
       price,
       quantity,
+      max_stock,
     };
   }
   
   const products = useSelector(state => state.catalog.allCatalogItems)
   const rows = [];
-  products.forEach(el => rows.push(createData(el.product_name, el.product_desc, el.supplier_name, Number(el.unit_price).toFixed(2), el.qty_per_unit)));
+  products.forEach(el => rows.push(createData(el.product_name, el.product_desc, el.supplier_name, Number(el.unit_price).toFixed(2), el.qty_per_unit, el.max_stock)));
 
   function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -87,6 +88,12 @@ function CatalogTable() {
       disablePadding: false,
       label: 'Quantity per Unit',
     },
+    {
+      id: 'max_stock',
+      numeric: true,
+      disablePadding: false,
+      label: 'Target Max Stock',
+    }
   ];
 
   function EnhancedTableHead(props) {
@@ -312,6 +319,7 @@ function CatalogTable() {
                       <TableCell align="right">{row.supplier}</TableCell>
                       <TableCell align="right">{row.price}</TableCell>
                       <TableCell align="right">{row.quantity}</TableCell>
+                      <TableCell align="right">{row.max_stock}</TableCell>
                     </TableRow>
                   );
                 })}

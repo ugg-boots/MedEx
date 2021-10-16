@@ -1,10 +1,10 @@
 import React from 'react';
-import { Box, Drawer, Toolbar, List, ListItem, ListItemText } from '@mui/material';
+import { Box, Drawer, Toolbar, List, ListItem } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 //this component
-function NavSideBar(props) {
-	const drawerWidth = 175;
+function NavSideBar() {
+	const drawerWidth = 195;
 
 	return (
 		<Drawer
@@ -19,22 +19,22 @@ function NavSideBar(props) {
 			<Box sx={{ display: 'flex', flexDirection: 'column', p: 2 }}>
 				<List>
 					<ListItem>
-						<Link to="/">Home</Link>
+						<Link class ="navLink" to="/main">Home</Link>
 					</ListItem>
 					<ListItem>
-						<Link to="/shopping">Shopping List</Link>
+						<Link class ="navLink" to="/shopping">Shopping List</Link>
 					</ListItem>
 					<ListItem>
-						<Link to="/inventory">Current Inventory</Link>
+						<Link class="navLink" to="/inventory">Current Inventory</Link>
 					</ListItem>
 					<ListItem>
-						<Link to="/procedures">Procedures</Link>
+						<Link class="navLink" to="/procedures">Procedures</Link>
 					</ListItem>
 					<ListItem>
-						<Link to="/catalog">Catalog</Link>
+						<Link class="navLink" to="/catalog">Catalog</Link>
 					</ListItem>
 					<ListItem>
-						<Link to="/suppliers">Suppliers</Link>
+						<Link class="navLink" to="/suppliers">Suppliers</Link>
 					</ListItem>
 				</List>
 			</Box>
