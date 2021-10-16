@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination,
-TableRow, TableSortLabel, Toolbar, Paper, Checkbox, IconButton, Tooltip, FormControlLabel,
-Switch, Collapse, Typography } from '@mui/material';
-import { DeleteIcon, FilterListIcon } from '@mui/icons-material';
-import { visuallyHidden } from '@mui/utils';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead,
+TableRow, Paper, Collapse, Typography } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
 import { useSelector } from 'react-redux'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-
+import {setModalOpen} from "../../slices/procedureSlice.js";
+import ProcedureDeleteDialog from './ProcedureDeleteDialog.jsx';
+import { useDispatch } from "react-redux";
 
 function Row(props) {
   const { row } = props;
-  
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
   return (
@@ -33,6 +33,14 @@ function Row(props) {
         </TableCell>
         <TableCell align="right">{row.procedureDesc}</TableCell>
         <TableCell align="right">{row.materials}</TableCell>
+        <TableCell> 
+        <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    onClick={() =>{dispatch(setModalOpen(row.procedureName))}}>
+                    <DeleteIcon/>
+                  </IconButton>
+                  </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -128,6 +136,7 @@ export default function ProcedureTable() {
             <TableCell align="right">Name</TableCell>
             <TableCell align="right">Description</TableCell>
             <TableCell align="right">Materials Needed</TableCell>
+            <TableCell />
           </TableRow>
         </TableHead>
         <TableBody>
@@ -135,6 +144,7 @@ export default function ProcedureTable() {
             <Row key={row.name} row={row} />
           ))}
         </TableBody>
+        <ProcedureDeleteDialog/>
       </Table>
     </TableContainer>
   );

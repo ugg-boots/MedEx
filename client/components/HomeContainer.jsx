@@ -11,9 +11,7 @@ const HomeContainer = (props)=> {
   return (
     <>
       <div className='home-Container'>
-        <Link to="/">
           <ExpirationView />
-        </Link>
         <LowStockView />
       </div>
       <div className='chart'>
