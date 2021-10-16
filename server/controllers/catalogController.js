@@ -6,9 +6,8 @@ catalogController.getAllProducts = async (req, res, next) => {
   
   const user_id = req.params.userId;
   const allProductsQuery = 
-        `SELECT product_id, product_name, product_desc, suppliers.supplier_name, unit_price, qty_per_unit FROM catalog
+        `SELECT product_id, product_name, product_desc, suppliers.supplier_name, unit_price, qty_per_unit, max_stock FROM catalog
         INNER JOIN suppliers ON catalog.supplier_id = suppliers.supplier_id WHERE catalog.user_id = $1`; 
-
     try {
         const products = await pool.query(allProductsQuery, [user_id]);
         res.locals.products = products.rows

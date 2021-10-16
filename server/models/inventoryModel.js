@@ -1,8 +1,7 @@
 const { Pool } = require("pg");
 
 // old database from Lynda:
-// const PG_URI = "postgres://rocfqfgu:0E_896SmK-YxM-PPLgz6PZXWNxNTdjKc@fanny.db.elephantsql.com/rocfqfgu";
-  // "postgres://sowqmvmc:C8VcOF5uXm7v7Utsy-wL7WEor3YPR-Tq@fanny.db.elephantsql.com/sowqmvmc"
+// const PG_URI = "postgres://sowqmvmc:C8VcOF5uXm7v7Utsy-wL7WEor3YPR-Tq@fanny.db.elephantsql.com/sowqmvmc"
 
 // old database from Heather:
 const PG_URI = "postgres://rocfqfgu:0E_896SmK-YxM-PPLgz6PZXWNxNTdjKc@fanny.db.elephantsql.com/rocfqfgu"
