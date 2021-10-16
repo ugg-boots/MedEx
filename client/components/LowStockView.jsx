@@ -16,9 +16,9 @@ function LowStockView () {
         .catch(err => console.log('Table.componentDidMount: get tableElement: ERROR: ', err));
       }
     
-      useEffect(() => {
-        getData();
-      }, [])
+      // useEffect(() => {
+      //   getData();
+      // }, [])
 
       const rows = [];
       const cutoff = 0.25;
