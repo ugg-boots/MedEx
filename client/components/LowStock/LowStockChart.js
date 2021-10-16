@@ -4,20 +4,19 @@ import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 
 export const LowStockBarChart = () => {
-  
-  // const labels = useSelector(state => state.catalog.allCatalogItems);
-  
-
-  // const selectLabels = createSelector((state) => state.catalog.allCatalogItems, (catalogItems) => catalogItems.map(items => items.product_name));
-  // const labels = useSelector(selectLabels)
 
   const [chartData, setChartData] = useState({});
+
+  // grab product data, useMemo will memoize any changes/re-renders
   const products = useSelector(state => state.catalog.allCatalogItems)
   const labels = useMemo(() => products.map(item => item.product_name), [products])
+
   const inventory = useSelector(state => state.inventory.displayedInventory)
-  // const labels = catalog.map(item => item.product_name); //useMemo / useSelector
   console.log('this is the labels from useMemo ', labels)
 
+  /* React will load before Redux, so inside useEffect, pass in the memoized value of labels once it's re-rendered. Because it only re-renders when
+  anything changes within state.catalog.allCatalogItems, in our case it will only render 1 time after information has been loaded, this will stop the
+  useEffect infinite loop */
 
   useEffect(() => {
     console.log('this is the labels inside useEffect: ', labels)

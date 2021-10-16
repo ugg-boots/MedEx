@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { fetchProducts, fetchSupplierName } from '../slices/catalogSlices.js'
 import { fetchProcedureData, fetchProductData } from '../slices/procedureSlice.js';
 import { fetchInventory } from '../slices/inventorySlice.js';
+import { fetchSuppliers } from '../slices/supplierSlice.js';
 import { useDispatch } from 'react-redux'
 import Inventory from './Inventory/Inventory.jsx';
 
@@ -28,7 +29,8 @@ function MainContainer() {
 		dispatch(fetchProductData());
 		dispatch(fetchSupplierName());
     dispatch(fetchProducts());
-		dispatch(fetchInventory());
+		dispatch(fetchInventory())
+		dispatch(fetchSuppliers());
 	}, []);
   
 	return (
