@@ -1,12 +1,10 @@
 const { Pool } = require("pg");
 
-const PG_URI = "postgres://sssalwhd:qu-2RjmASG1jsAJZIuwVDbJnd8M1Sh7V@fanny.db.elephantsql.com/sssalwhd"
-
 // old database from Lynda:
-// "postgres://sowqmvmc:C8VcOF5uXm7v7Utsy-wL7WEor3YPR-Tq@fanny.db.elephantsql.com/sowqmvmc"
+// const PG_URI = "postgres://sowqmvmc:C8VcOF5uXm7v7Utsy-wL7WEor3YPR-Tq@fanny.db.elephantsql.com/sowqmvmc"
 
 // old database from Heather:
-// "postgres://rocfqfgu:0E_896SmK-YxM-PPLgz6PZXWNxNTdjKc@fanny.db.elephantsql.com/rocfqfgu"
+const PG_URI = "postgres://rocfqfgu:0E_896SmK-YxM-PPLgz6PZXWNxNTdjKc@fanny.db.elephantsql.com/rocfqfgu"
 
 // new database to be used once ready:
 // const PG_URI = "postgres://sssalwhd:qu-2RjmASG1jsAJZIuwVDbJnd8M1Sh7V@fanny.db.elephantsql.com/sssalwhd"
