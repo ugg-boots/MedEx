@@ -43,10 +43,3 @@ function NavSideBar() {
 }
 
 export default NavSideBar;
-// {
-// 	['Home', 'Shopping List', 'Current Inventory', 'Procedures', 'Catalog', 'Suppliers'].map((text) => (
-// 		<ListItem button key={text}>
-// 			<ListItemText primary={text} />
-// 		</ListItem>
-// 	));
-// }
