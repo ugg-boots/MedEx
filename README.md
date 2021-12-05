@@ -1,1 +1,1 @@
-# Medical-Practice-Inventory-Tracker
+# MedEX
