@@ -1,4 +1,4 @@
-# MedEX
+#                                             <h2 align="center"> MedEx </h2>    
 
 Open Source application that gives multiple users the ability to use a  medical practice inventory tracker.
 
