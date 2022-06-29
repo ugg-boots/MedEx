@@ -1,3 +1,11 @@
+.navLink {
+  text-decoration: none;
+}
+
+.navLink:visited {
+  color: black;
+}
+
 .modalContent {
     background-color: white;
     width: 400px;
@@ -26,5 +34,14 @@
   }
 
   .homeContainer {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .expyView {
+    grid-column-start: first;
+    grid-column-end: 2;
+    grid-row-start: first;
+    grid-row-end: 2;
   }

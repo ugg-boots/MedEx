@@ -1,78 +1,109 @@
+const { ConstructionOutlined } = require("@mui/icons-material");
 const pool = require("../models/inventoryModel")
 
 const inventoryController = {};
 
 inventoryController.getAllInventory = async (req, res, next) => {
+
+  const user_id = req.params.userId;
+  const inventoryQuery = `SELECT item_id, inventory.product_id, catalog.product_name, quantity, expiration_date FROM inventory 
+    INNER JOIN catalog ON inventory.product_id = catalog.product_id
+    WHERE inventory.user_id = $1`;
+  
   try {
-    const inventory = await pool.query('SELECT item_id, catalog.product_name, quantity, expiration_date FROM inventory INNER JOIN catalog ON inventory.product_id = catalog.product_id');
-    // STRETCH FEATURE: have filter / dropdown on front end that toggles out-of-stock vs in-stock items. Update db query accordingly.
+    const inventory = await pool.query(inventoryQuery, [user_id]);
     res.locals.inventory = inventory.rows;
-  } catch (err) {
-    next(err);
+    next();
+  } 
+  
+  catch (err) {
+    next({
+      log: 'inventoryController.getAllInventory: ERROR:' + err.message,
+      message: { err: 'inventoryController.getAllInventory: ERROR: Check server logs for details' },
+    });
   }
-  next();
 };
 
-inventoryController.getInventoryById = async (req, res, next) => {
-      try {
-        const { id } = req.params;
-        const inventoryById = await pool.query("SELECT * FROM inventory WHERE supplier_id = $1",
-        [id]
-        );
-        res.json(inventoryById.row)
-      } catch (err) {
-        console.error(err.message);
-        next(err);
-      }
-      next();
-    };
+// inventoryController.getOneInventory = async (req, res, next) => {
+  
+//   const inventoryQuery = `SELECT item_id, inventory.product_id, catalog.product_name, quantity, expiration_date FROM inventory
+//   INNER JOIN catalog ON inventory.product_id = catalog.product_id WHERE inventory.product_id = ${req.query.product_id}`;
+  
+//   try {
+//     const inventory = await pool.query(inventoryQuery);
+//     res.locals.product = inventory;
+//     next();
+//   } 
+  
+//   catch (err) {
+//     next({
+//       log: 'inventoryController.getAllInventory: ERROR:' + err.message,
+//       message: { err: 'inventoryController.getAllInventory: ERROR: Check server logs for details' },
+//     });
+//   }
+// };
 
 inventoryController.addNewInventory = async (req, res, next) => {
+  
+  const { product_name, quantity, expiration_date, user_id } = req.body;
+  const params = [quantity, expiration_date, product_name, user_id];
+  const addInventoryQuery = `INSERT INTO inventory (quantity, expiration_date, product_id, user_id) 
+    VALUES($1, $2, (SELECT product_id FROM catalog WHERE product_name = $3 AND user_id = $4), $4)
+    RETURNING quantity, $3 as product_name,product_id, product_id, expiration_date, item_id`;
+  
   try {
-    const { product_name, quantity, expiration_date } = req.body;
-    const newInventory = await pool.query(`INSERT INTO inventory (quantity, expiration_date, product_id) VALUES
-    ($1, $2, (SELECT product_id FROM catalog WHERE product_name = $3))`, [quantity, expiration_date, product_name]);
-     res.locals.newInventory = newInventory;
-    } catch (err) {
-    console.log(err)
-    next(err)
-  }
-  next();
-};
-
-inventoryController.updateInventory = async (req, res, next) => {
-  try {
-    console.log(req.params)
-    const { id } = req.params
-    const { quantity, expiration_date, product_name } = req.body;
-
-    const updatedInventory = await pool.query('UPDATE inventory SET quantity = $1, expiration_date = $2, (SET inventory.product_name = $3 FROM catalog WHERE inventory.product_id = catalog.product_id) WHERE item_id = $4',
-    [quantity, expiration_date, product_name, id]);
-    //no product_name in inventory table
-    //ALTER TABLE inventory ADD COLUMN product_name varchar(255);
-    res.locals.updatedInventory = updatedInventory;
+    const newInventory = await pool.query(addInventoryQuery, params);
+    res.locals.newInventory = newInventory;
+    next();
+  } 
     
-  } catch(err) {
-    console.error(err.message)
-    next(err);
+  catch (err) {
+    next({
+      log: 'inventoryController.addNewInventory: ERROR:' + err.message,
+      message: { err: 'inventoryController.addNewInventory: ERROR: Check server logs for details' },
+    });
   }
-  next();
 };
+
+
 
 inventoryController.deleteInventory = async (req, res, next) => {
-      try {
-        // console.log(req.body);
-        const id = req.body[0];
-        const deletedInventory = await pool.query("DELETE FROM inventory WHERE item_id = $1", [id]);
-        res.locals.deletedInventory = deletedInventory;
-      } catch(err) {
-        console.log(err)
-        next(err)
-      }
-      next();
-    };
+  const {item_id} = req.params; 
+  param = [item_id]
+  const deleteInventoryQuery = `DELETE FROM inventory WHERE item_id = $1
+    RETURNING inventory.product_id, item_id`;
+  
+  try { 
+    const deletedInventory = await pool.query(deleteInventoryQuery, param);
+    res.locals.deletedInventory = deletedInventory;
+    next();
+  } 
+  catch(err) {
+    next({
+      log: 'inventoryController.deleteInventory: ERROR:' + err.message,
+      message: { err: 'inventoryController.deleteInventory: ERROR: Check server logs for details' },
+    });
+  }
+};
 
-// // STRETCH: handle multiple rows from req.body (array of objects) to be deleted
 
+inventoryController.updateInventory = async (req, res, next) => {
+  const {item_id, quantity} = req.body; 
+  param = [item_id, quantity]
+  const updateInventoryQuery = `UPDATE inventory SET quantity = $2 WHERE item_id = $1
+  RETURNING *`;
+  
+  try { 
+    const updatedInventory = await pool.query(updateInventoryQuery, param);
+    res.locals.updatedInventory = updatedInventory;
+    next();
+  } 
+  catch(err) {
+    next({
+      log: 'inventoryController.updateInventory: ERROR:' + err.message,
+      message: { err: 'inventoryController.updateInventory: ERROR: Check server logs for details' },
+    });
+  }
+};
 
 module.exports = inventoryController;

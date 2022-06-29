@@ -3,12 +3,16 @@ import {Typography} from '@mui/material';
 import dayjs from 'dayjs';
 import columnDefinitions from './columns.js';
 import { DataGrid } from '@mui/x-data-grid';
+import { useSelector } from 'react-redux';
 
-function ExpirationView () {
+
+//declared a functional component that will make a fetch request to api/inventory endpoint
+const ExpirationView = () => {
     const [data, setData] = useState([]);
+    const userId = useSelector((state) => state.auth.userId)
     
     const getData = () => {
-        fetch('/api/inventory')
+        fetch(`/api/expiration/${userId}`)
         .then(res => res.json())
         .then((tableElements) => {
           if (!Array.isArray(tableElements)) tableElements = [];
@@ -19,6 +23,7 @@ function ExpirationView () {
     
       useEffect(() => {
         getData();
+        return undefined;
       }, [])
 
       const rows = [];

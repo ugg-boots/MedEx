@@ -2,80 +2,44 @@ const pool = require("../models/inventoryModel")
 
 const supplierController = {};
 
-// add middleware
 supplierController.getAllSuppliers = async (req, res, next) => {
-      try {
-        // console.log("Supplier Controller....")
-        const suppliers = await pool.query("SELECT * FROM suppliers");
-        res.locals.suppliers = suppliers.rows
-        } catch (err) {
-            next(err);
-        }
-      next();
-};
-
-supplierController.getSupplierById = async (req, res, next) => {
+  
+  const user_id = req.params.userId;
+  const supplierQuery = 'SELECT * FROM suppliers WHERE user_id = $1';
+  
   try {
-    const id = req.body;
-    const supplierById = await pool.query("SELECT * FROM suppliers WHERE supplier_id = $1",
-    [id]
-    );
-    res.locals.supplierById = supplierById.row;
-  } catch (err) {
-    console.error(err.message);
-    next(err);
+    const suppliers = await pool.query(supplierQuery, [user_id]);
+    res.locals.suppliers = suppliers.rows;
+    next();
+  } 
+  
+  catch (err) {
+    next({
+      log: 'supplierController.getAllSuppliers: ERROR:' + err.message,
+      message: { err: 'supplierController.getAllSuppliers: ERROR: Check server logs for details' },
+    });
   }
-  next();
 };
 
 supplierController.addNewSupplier = async (req, res, next) => {
-    try {
-      console.log(req.body)
-      const { supplier_name, key_contact, supplier_phone_number, supplier_address } = req.body;
-      const newSupplier = await pool.query("INSERT INTO suppliers (supplier_name, key_contact, supplier_phone_number, supplier_address) VALUES($1, $2, $3, $4) RETURNING *",
-      [supplier_name, key_contact, supplier_phone_number, supplier_address]
-      );
-      res.locals.newSupplier = newSupplier;
-    } catch(err) {
-      console.log(err);
-      next(err);
-    }
-    next()
-  };
   
-supplierController.updateSupplier = async(req, res, next) => {
-    try {
-      // console.log(req.body)
-      const id = req.body.supplier_id;
-      
-      const { supplier_name, key_contact, supplier_phone_number, supplier_address } = req.body;
+  const { supplier_name, key_contact, supplier_phone_number, supplier_address, user_id } = req.body;
+  const params = [supplier_name, key_contact, supplier_phone_number, supplier_address, user_id];
+  const newSupplierQuery = `INSERT INTO suppliers (supplier_name, key_contact, supplier_phone_number, supplier_address, user_id) 
+    VALUES($1, $2, $3, $4, $5) RETURNING *`;
   
-      const updatedSupplier = await pool.query("UPDATE suppliers SET supplier_name = $1, key_contact = $2, supplier_phone_number = $3, supplier_address = $4 WHERE supplier_id = $5",
-      [supplier_name, key_contact, supplier_phone_number, supplier_address, id]
-      );
-      res.locals.updatedSupplier = updatedSupplier;
-    
-    } catch(err) {
-      console.error(err.message)
-      next(err);
-    }
-
-  next();
-  };
-
-supplierController.deleteSupplier = async (req, res, next) => {
   try {
-    console.log(req.body)
-    const id = req.body.supplier_id;
-    const deletedSupplier = await pool.query("DELETE FROM suppliers WHERE supplier_id = $1", [id]);
-    res.locals.deletedSupplier = deletedSupplier;
-  } catch(err) {
-    console.log(err);
-    next(err);
+    const newSupplier = await pool.query(newSupplierQuery, params);
+    res.locals.newSupplier = newSupplier;
+    next();
+  } 
+  
+  catch(err) {
+    next({
+      log: 'supplierController.addNewSupplier: ERROR:' + err.message,
+      message: { err: 'supplierController.addNewSupplier: ERROR: Check server logs for details' },
+    });
   }
-  next();
 };
-  
-  
 
 module.exports = supplierController;
